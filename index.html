@@ -554,8 +554,6 @@
   </footer>
 
   <script>
-    // --- API base for Cloudflare Worker ---
-    const API_BASE = 'https://submissionssq2.dwallace87.workers.dev';
 
     // (optional) light engagement tracker
     const engagement = { tabSwitches: 0, hiddenSeconds: 0, startedAt: Date.now(), lastHiddenAt: null };
@@ -652,78 +650,6 @@
 
       // Save before unload as safety
       window.addEventListener('beforeunload', saveProgress);
-
-      // Compute a safe base path for GitHub Pages, whether your site is / or /REPO/
-      const BASE = document.querySelector('base')?.href
-        || `${location.origin}${location.pathname.replace(/[^/]*$/, '')}`;
-
-      form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // validate top fields
-        const fn = document.getElementById('first-name');
-        const ln = document.getElementById('last-name');
-        const cp = document.getElementById('class-period');
-        if (!fn.value.trim() || !ln.value.trim() || !cp.value) {
-          setSavedStatus('Please enter name and class period');
-          fn.focus();
-          return;
-        }
-
-        // finalize engagement if tab currently hidden
-        if (document.hidden && engagement.lastHiddenAt) {
-          engagement.hiddenSeconds += Math.round((Date.now() - engagement.lastHiddenAt) / 1000);
-        }
-
-        // collect timeline answers
-        const get = (id) => document.getElementById(id)?.value?.trim() || '';
-        const answers = {
-          'date-a':get('date-a'),'cause-a':get('cause-a'),'effect-a':get('effect-a'),
-          'date-b':get('date-b'),'cause-b':get('cause-b'),'effect-b':get('effect-b'),
-          'date-c':get('date-c'),'cause-c':get('cause-c'),'effect-c':get('effect-c'),
-          'date-d':get('date-d'),'cause-d':get('cause-d'),'effect-d':get('effect-d'),
-          'date-e':get('date-e'),'cause-e':get('cause-e'),'effect-e':get('effect-e'),
-        };
-
-        // payload expected by the Worker
-        const payload = {
-          first_name: fn.value.trim(),
-          last_name: ln.value.trim(),
-          class_period: cp.value.trim(),
-          answers,
-          timestamp_iso: new Date().toISOString(),
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          screen: { w: screen.width, h: screen.height, dpr: devicePixelRatio || 1 },
-          engagement
-        };
-
-        // keep your local autosave
-        saveProgress();
-
-        try {
-          const resp = await fetch(`${API_BASE}/submit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          let id = '';
-          try { const j = await resp.json(); id = j?.id || ''; } catch {}
-
-          // success modal, then go to dashboard (works for root or /REPO/)
-          successModal?.classList.remove('hidden');
-          setTimeout(() => {
-            const params = new URLSearchParams({
-              id, first: payload.first_name, last: payload.last_name, period: payload.class_period
-            });
-            window.location.href = new URL(`submissions.html?${params}`, BASE).href;
-          }, 900);
-
-        } catch (err) {
-          console.error(err);
-          setSavedStatus('Network problem. Your work is saved locally—try Submit again.');
-        }
-      });
 
       const closeSuccessModal = () => successModal?.classList.add('hidden');
       closeModalBtn?.addEventListener('click', closeSuccessModal);
@@ -849,6 +775,101 @@
 
       vocabModal?.addEventListener('click', (e) => {
         if (e.target === vocabModal) vocabModal.classList.add('hidden');
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('timeline-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const successModal = document.getElementById('success-modal');
+
+      // your deployed Apps Script URL:
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbysN2uMbFHEp9OB1Jr8O7XM0sf4D-pJT7_rRmuCpfgw5jS7Rg82Gv30y8-nKCznRKyD/exec';
+
+      const v = id => (document.getElementById(id)?.value || '').trim();
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // quick top-of-form validation you already do
+        const fn = v('first-name'), ln = v('last-name'), cp = v('class-period');
+        if (!fn || !ln || !cp) {
+          document.getElementById('save-status').textContent = 'Please enter name and class period';
+          return;
+        }
+
+        // build payload (keys match your sheet headers / FormEasy setFields)
+        const payload = {
+          'first_name': fn,
+          'last_name': ln,
+          'class_period': cp,
+          'date-a': v('date-a'),  'cause-a': v('cause-a'),  'effect-a': v('effect-a'),
+          'date-b': v('date-b'),  'cause-b': v('cause-b'),  'effect-b': v('effect-b'),
+          'date-c': v('date-c'),  'cause-c': v('cause-c'),  'effect-c': v('effect-c'),
+          'date-d': v('date-d'),  'cause-d': v('cause-d'),  'effect-d': v('effect-d'),
+          'date-e': v('date-e'),  'cause-e': v('cause-e'),  'effect-e': v('effect-e'),
+          // optional metadata:
+          '_submitted_at': new Date().toISOString(),
+          '_ua': navigator.userAgent
+        };
+
+        // disable button to prevent double submits
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-60','cursor-not-allowed');
+
+        try {
+          // Apps Script tip: use text/plain to avoid CORS preflight
+          const res = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+
+          // many Apps Script endpoints return 200 OK with JSON
+          let ok = res.ok;
+          try {
+            const j = await res.json();
+            ok = ok && (j.ok !== false); // treat {ok:false} as failure if your script returns it
+          } catch { /* ignore parse errors; some scripts return HTML */ }
+
+          if (!ok) throw new Error('Submit failed');
+
+          // show your existing success modal
+          successModal?.classList.remove('hidden');
+
+          // OPTIONAL: also download a CSV per-student (no server) — uncomment if you want
+          /*
+          const header = ['timestamp','last','first','period',
+            'date-a','cause-a','effect-a','date-b','cause-b','effect-b',
+            'date-c','cause-c','effect-c','date-d','cause-d','effect-d',
+            'date-e','cause-e','effect-e'];
+          const a = payload;
+          const row = [
+            a._submitted_at, a['last_name'], a['first_name'], a['class_period'],
+            a['date-a'], a['cause-a'], a['effect-a'],
+            a['date-b'], a['cause-b'], a['effect-b'],
+            a['date-c'], a['cause-c'], a['effect-c'],
+            a['date-d'], a['cause-d'], a['effect-d'],
+            a['date-e'], a['cause-e'], a['effect-e'],
+          ];
+          const esc = s => /[",\n]/.test(String(s ?? '')) ? `"${String(s).replace(/"/g,'""')}"` : String(s ?? '');
+          const csv = header.join(',') + '\n' + row.map(esc).join(',');
+          const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const ts = a._submitted_at.replace(/[:T]/g,'-').replace(/\..+/, '');
+          const file = `submission_${a['last_name']}_${a['first_name']}_${ts}.csv`.replace(/\s+/g,'');
+          const aTag = Object.assign(document.createElement('a'), { href:url, download:file });
+          document.body.appendChild(aTag); aTag.click(); aTag.remove(); URL.revokeObjectURL(url);
+          */
+        } catch (err) {
+          console.error(err);
+          alert('Submission failed. Please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-60','cursor-not-allowed');
+        }
       });
     });
   </script>
