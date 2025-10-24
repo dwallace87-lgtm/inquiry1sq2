@@ -12,6 +12,22 @@
 
   function byId(id){ return document.getElementById(id); }
 
+  function injectSpine(){
+    if(document.getElementById('seq2-spine')) return;
+    const nav = document.createElement('nav');
+    nav.id = 'seq2-spine';
+    nav.innerHTML = `
+      <div class="bar"></div>
+      <ul aria-label="Sequence progress">
+        <li><div class="step-chip" data-step="A">A</div></li>
+        <li><div class="step-chip" data-step="B">B</div></li>
+        <li><div class="step-chip" data-step="C">C</div></div></li>
+        <li><div class="step-chip" data-step="D">D</div></li>
+        <li><div class="step-chip" data-step="E">E</div></li>
+      </ul>`;
+    document.body.appendChild(nav);
+  }
+
   function injectOverlay(){
     if(document.getElementById('causal-overlay')) return;
     const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -116,6 +132,7 @@
   }
 
   function wire(){
+    injectSpine();
     injectOverlay();
     decorateFields();
     drawConnectors();
