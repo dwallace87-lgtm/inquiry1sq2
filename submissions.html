@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>SEQ 2 Submissions Log</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f172a; --muted:#9aa9c2; --border:#1f2a44; --text:#e5e7eb; --accent:#38bdf8; --ok:#22c55e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--text)}
+    .wrap{max-width:1400px; margin:0 auto; padding:24px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px}
+    h1{margin:0 0 6px 0; font-weight:800; letter-spacing:.2px}
+    .muted{color:var(--muted); font-size:14px}
+    .controls{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0}
+    input, select, button{
+      font:inherit; color:var(--text); background:#0b1833; border:1px solid var(--border);
+      border-radius:10px; padding:10px 12px
+    }
+    input::placeholder{color:#7f8fb0}
+    button{cursor:pointer; font-weight:700}
+    .btn{background:var(--accent); color:#07263a; border-color:transparent}
+    .btn.secondary{background:var(--ok); color:#052e16}
+    .table-wrap{overflow:auto; border:1px solid var(--border); border-radius:14px}
+    table{width:100%; border-collapse:separate; border-spacing:0; min-width:1200px}
+    thead th{
+      position:sticky; top:0; background:#0b1220; z-index:2; text-align:left; font-weight:700;
+      border-bottom:1px solid var(--border); padding:10px
+    }
+    tbody td{border-bottom:1px solid var(--border); padding:10px; vertical-align:top; line-height:1.35}
+    tbody tr:hover{background:#0e1a33}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; color:#93a5c9}
+    .pill{display:inline-block; padding:2px 8px; border-radius:999px; background:#12203d; font-size:12px; margin-right:6px}
+    .counts{display:flex; gap:12px; flex-wrap:wrap}
+    .count{background:#0b1833; border:1px solid var(--border); border-radius:12px; padding:8px 10px; font-weight:700}
+    .right{margin-left:auto}
+    .sr{position:absolute; left:-9999px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>SEQ 2 Submissions Log</h1>
+      <p class="muted">Live feed of student rows. Search by name, text, or filter by period. Export to CSV when ready.</p>
+
+      <div class="controls">
+        <input id="q" placeholder="Search name, period, or any answer…" />
+        <select id="period">
+          <option value="">All periods</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+        </select>
+        <select id="sort">
+          <option value="new">Newest first</option>
+          <option value="old">Oldest first</option>
+          <option value="name">Name A→Z</option>
+          <option value="period">Period, then name</option>
+        </select>
+        <div class="right"></div>
+        <button id="refresh" title="Reload latest">Refresh</button>
+        <button id="csv" class="btn" title="Download CSV">Export CSV</button>
+        <button id="print" class="btn secondary" title="Print / Save PDF">Print</button>
+      </div>
+
+      <div class="counts" id="counts"></div>
+
+      <div class="table-wrap" id="tblwrap" role="region" aria-labelledby="caption">
+        <table id="tbl">
+          <caption id="caption" class="sr">Submissions table</caption>
+          <thead>
+            <tr>
+              <th style="min-width:170px">When</th>
+              <th style="min-width:180px">Student</th>
+              <th style="min-width:80px">Period</th>
+              <th colspan="3">A • Inter Caetera (Event / Cause / Effect)</th>
+              <th colspan="3">B • Jackson (Event / Cause / Effect)</th>
+              <th colspan="3">C • O’Sullivan (Event / Cause / Effect)</th>
+              <th colspan="3">D • Map (Event / Cause / Effect)</th>
+              <th colspan="3">E • Miller (Event / Cause / Effect)</th>
+              <th style="min-width:220px">Meta</th>
+            </tr>
+            <tr class="mono" style="font-weight:600">
+              <th></th><th></th><th></th>
+              <th style="min-width:180px">Event</th><th style="min-width:240px">Cause</th><th style="min-width:240px">Effect</th>
+              <th style="min-width:180px">Event</th><th style="min-width:240px">Cause</th><th style="min-width:240px">Effect</th>
+              <th style="min-width:180px">Event</th><th style="min-width:240px">Cause</th><th style="min-width:240px">Effect</th>
+              <th style="min-width:180px">Event</th><th style="min-width:240px">Cause</th><th style="min-width:240px">Effect</th>
+              <th style="min-width:180px">Event</th><th style="min-width:240px">Cause</th><th style="min-width:240px">Effect</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ======= config =======
+    const API_BASE = 'https://your-worker.workers.dev'; // ← replace with your Worker URL
+
+    // Column order for CSV/table
+    const COLS = [
+      'when','first_name','last_name','class_period',
+      'date-a','cause-a','effect-a',
+      'date-b','cause-b','effect-b',
+      'date-c','cause-c','effect-c',
+      'date-d','cause-d','effect-d',
+      'date-e','cause-e','effect-e',
+      'tz','ua','switches','hidden_s','screen'
+    ];
+
+    const tbody = document.querySelector('#tbl tbody');
+    const q = document.getElementById('q');
+    const periodSel = document.getElementById('period');
+    const sortSel = document.getElementById('sort');
+    const refreshBtn = document.getElementById('refresh');
+    const csvBtn = document.getElementById('csv');
+    const printBtn = document.getElementById('print');
+    const counts = document.getElementById('counts');
+
+    let all = [];
+    let view = [];
+
+    function escapeHtml(str){ return String(str ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s])); }
+    function fmtWhen(iso){ try{ return new Date(iso).toLocaleString(); }catch(e){ return iso || ''; } }
+    function getAns(s, key){ return (s.answers && (s.answers[key] ?? s.answers[key.replace('-', '_')])) ?? ''; }
+
+    function summarizeCounts(list){
+      const byP = {};
+      list.forEach(s => { const p = String(s.class_period || ''); byP[p] = (byP[p]||0)+1; });
+      const total = list.length;
+      const parts = [`<span class="count">Total: ${total}</span>`];
+      Object.keys(byP).sort((a,b)=>(a||'').localeCompare(b||'')).forEach(p=>{
+        const label = p ? `Period ${p}` : 'Period ?';
+        parts.push(`<span class="count">${label}: ${byP[p]}</span>`);
+      });
+      counts.innerHTML = parts.join(' ');
+    }
+
+    function applyFilters(){
+      const term = (q.value || '').toLowerCase().trim();
+      const p = periodSel.value;
+      let rows = [...all];
+
+      if (term){
+        rows = rows.filter(s=>{
+          const hay = [
+            s.first_name, s.last_name, s.class_period,
+            getAns(s,'date-a'),getAns(s,'cause-a'),getAns(s,'effect-a'),
+            getAns(s,'date-b'),getAns(s,'cause-b'),getAns(s,'effect-b'),
+            getAns(s,'date-c'),getAns(s,'cause-c'),getAns(s,'effect-c'),
+            getAns(s,'date-d'),getAns(s,'cause-d'),getAns(s,'effect-d'),
+            getAns(s,'date-e'),getAns(s,'cause-e'),getAns(s,'effect-e')
+          ].join(' ').toLowerCase();
+          return hay.includes(term);
+        });
+      }
+      if (p){
+        rows = rows.filter(s => String(s.class_period) === String(p));
+      }
+
+      const sort = sortSel.value;
+      if (sort === 'new'){
+        rows.sort((a,b)=> (a.created_at < b.created_at ? 1 : -1));
+      } else if (sort === 'old'){
+        rows.sort((a,b)=> (a.created_at > b.created_at ? 1 : -1));
+      } else if (sort === 'name'){
+        rows.sort((a,b)=> (a.last_name||'').localeCompare(b.last_name||'') || (a.first_name||'').localeCompare(b.first_name||''));
+      } else if (sort === 'period'){
+        rows.sort((a,b)=> String(a.class_period||'').localeCompare(String(b.class_period||'')) ||
+                          (a.last_name||'').localeCompare(b.last_name||'') ||
+                          (a.first_name||'').localeCompare(b.first_name||''));
+      }
+
+      view = rows;
+      summarizeCounts(view);
+      render();
+    }
+
+    function render(){
+      tbody.innerHTML = view.map(s=>{
+        const meta = [
+          s.meta?.timezone ? `<div class="mono">TZ: ${escapeHtml(s.meta.timezone)}</div>` : '',
+          s.ua ? `<div class="mono">UA: ${escapeHtml(String(s.ua)).slice(0,140)}…</div>` : '',
+          s.meta?.engagement ? `<div class="mono">Switches: ${s.meta.engagement.tabSwitches||0} • Hidden s: ${s.meta.engagement.hiddenSeconds||0}</div>` : '',
+          s.meta?.screen ? `<div class="mono">Screen: ${s.meta.screen.w||'?'}×${s.meta.screen.h||'?'} @${s.meta.screen.dpr||'?'}x</div>` : ''
+        ].join('');
+
+        const cell = (k)=> `<td>${escapeHtml(getAns(s,k))}</td>`;
+
+        return `<tr>
+          <td>${escapeHtml(fmtWhen(s.created_at || s.meta?.timestamp_iso))}</td>
+          <td>${escapeHtml(`${s.last_name||''}, ${s.first_name||''}`.replace(/^,\s*/,''))}</td>
+          <td>${escapeHtml(String(s.class_period||''))}</td>
+          ${cell('date-a')}${cell('cause-a')}${cell('effect-a')}
+          ${cell('date-b')}${cell('cause-b')}${cell('effect-b')}
+          ${cell('date-c')}${cell('cause-c')}${cell('effect-c')}
+          ${cell('date-d')}${cell('cause-d')}${cell('effect-d')}
+          ${cell('date-e')}${cell('cause-e')}${cell('effect-e')}
+          <td>${meta || '<span class="mono">—</span>'}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function load(){
+      try{
+        const r = await fetch(`${API_BASE}/submissions`, { cache:'no-store' });
+        const data = await r.json();
+        const subs = data.submissions || [];
+
+        // Normalize names/period and move timeline fields into answers if needed
+        all = subs.map(s=>{
+          const answers = {...(s.answers||{})};
+
+          // If your worksheet sends raw fields instead of answers{}, map them in
+          // (keeps this page resilient)
+          ['date-a','cause-a','effect-a','date-b','cause-b','effect-b',
+           'date-c','cause-c','effect-c','date-d','cause-d','effect-d',
+           'date-e','cause-e','effect-e'].forEach(k=>{
+            if (k in s && !(k in answers)) answers[k] = s[k];
+          });
+
+          return {
+            id: s.id,
+            created_at: s.created_at || s.meta?.timestamp_iso || new Date().toISOString(),
+            first_name: s.first_name || s.first || '',
+            last_name:  s.last_name  || s.last  || '',
+            class_period: s.class_period || s.period || '',
+            ua: s.ua || s.user_agent || '',
+            meta: s.meta || {},
+            answers
+          };
+        });
+
+        applyFilters();
+      }catch(e){
+        alert('Could not load submissions. Check your Worker URL.');
+        console.error(e);
+      }
+    }
+
+    function toCsv(rows){
+      const safe = v => `\"${String(v ?? '').replace(/\"/g,'\"\"')}\"`;
+      const header = [
+        'When','First Name','Last Name','Period',
+        'A Event','A Cause','A Effect',
+        'B Event','B Cause','B Effect',
+        'C Event','C Cause','C Effect',
+        'D Event','D Cause','D Effect',
+        'E Event','E Cause','E Effect',
+        'Timezone','User Agent','Tab Switches','Hidden Seconds','Screen'
+      ];
+      const out = [header.join(',')];
+
+      rows.forEach(s=>{
+        const row = [];
+        row.push(fmtWhen(s.created_at));
+        row.push(s.first_name||''); row.push(s.last_name||''); row.push(s.class_period||'');
+        ['date-a','cause-a','effect-a',
+         'date-b','cause-b','effect-b',
+         'date-c','cause-c','effect-c',
+         'date-d','cause-d','effect-d',
+         'date-e','cause-e','effect-e'].forEach(k=> row.push(getAns(s,k)||''));
+        row.push(s.meta?.timezone||'');
+        row.push(s.ua||'');
+        row.push(s.meta?.engagement?.tabSwitches||0);
+        row.push(s.meta?.engagement?.hiddenSeconds||0);
+        row.push(`${s.meta?.screen?.w||'?'}x${s.meta?.screen?.h||'?'}@${s.meta?.screen?.dpr||'?'}x`);
+        out.push(row.map(safe).join(','));
+      });
+      return out.join('\n');
+    }
+
+    function download(filename, text){
+      const blob = new Blob([text], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
+    }
+
+    // wire up
+    q.addEventListener('input', applyFilters);
+    periodSel.addEventListener('change', applyFilters);
+    sortSel.addEventListener('change', applyFilters);
+    refreshBtn.addEventListener('click', load);
+    csvBtn.addEventListener('click', ()=> download('seq2_submissions.csv', toCsv(view)));
+    printBtn.addEventListener('click', ()=> window.print());
+
+    // go
+    load();
+  </script>
+</body>
+</html>
