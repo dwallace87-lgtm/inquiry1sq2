@@ -554,19 +554,6 @@
   </footer>
 
   <script>
-    // --- API base for Cloudflare Worker ---
-    const API_BASE = 'https://submissionssq2.dwallace87.workers.dev';
-
-    // (optional) light engagement tracker
-    const engagement = { tabSwitches: 0, hiddenSeconds: 0, startedAt: Date.now(), lastHiddenAt: null };
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { engagement.tabSwitches++; engagement.lastHiddenAt = Date.now(); }
-      else if (engagement.lastHiddenAt) {
-        engagement.hiddenSeconds += Math.round((Date.now() - engagement.lastHiddenAt) / 1000);
-        engagement.lastHiddenAt = null;
-      }
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
       const FORM_STORAGE_KEY = 'cause_effect_timeline_v1';
       const form = document.getElementById('timeline-form');
@@ -653,76 +640,20 @@
       // Save before unload as safety
       window.addEventListener('beforeunload', saveProgress);
 
-      // Compute a safe base path for GitHub Pages, whether your site is / or /REPO/
-      const BASE = document.querySelector('base')?.href
-        || `${location.origin}${location.pathname.replace(/[^/]*$/, '')}`;
-
-      form?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // validate top fields
+      // Submit flow with simple validation for top fields
+      form?.addEventListener('submit', (e) => {
         const fn = document.getElementById('first-name');
         const ln = document.getElementById('last-name');
         const cp = document.getElementById('class-period');
         if (!fn.value.trim() || !ln.value.trim() || !cp.value) {
+          e.preventDefault();
           setSavedStatus('Please enter name and class period');
           fn.focus();
           return;
         }
-
-        // finalize engagement if tab currently hidden
-        if (document.hidden && engagement.lastHiddenAt) {
-          engagement.hiddenSeconds += Math.round((Date.now() - engagement.lastHiddenAt) / 1000);
-        }
-
-        // collect timeline answers
-        const get = (id) => document.getElementById(id)?.value?.trim() || '';
-        const answers = {
-          'date-a':get('date-a'),'cause-a':get('cause-a'),'effect-a':get('effect-a'),
-          'date-b':get('date-b'),'cause-b':get('cause-b'),'effect-b':get('effect-b'),
-          'date-c':get('date-c'),'cause-c':get('cause-c'),'effect-c':get('effect-c'),
-          'date-d':get('date-d'),'cause-d':get('cause-d'),'effect-d':get('effect-d'),
-          'date-e':get('date-e'),'cause-e':get('cause-e'),'effect-e':get('effect-e'),
-        };
-
-        // payload expected by the Worker
-        const payload = {
-          first_name: fn.value.trim(),
-          last_name: ln.value.trim(),
-          class_period: cp.value.trim(),
-          answers,
-          timestamp_iso: new Date().toISOString(),
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          screen: { w: screen.width, h: screen.height, dpr: devicePixelRatio || 1 },
-          engagement
-        };
-
-        // keep your local autosave
+        e.preventDefault();
         saveProgress();
-
-        try {
-          const resp = await fetch(`${API_BASE}/submit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          let id = '';
-          try { const j = await resp.json(); id = j?.id || ''; } catch {}
-
-          // success modal, then go to dashboard (works for root or /REPO/)
-          successModal?.classList.remove('hidden');
-          setTimeout(() => {
-            const params = new URLSearchParams({
-              id, first: payload.first_name, last: payload.last_name, period: payload.class_period
-            });
-            window.location.href = new URL(`submissions.html?${params}`, BASE).href;
-          }, 900);
-
-        } catch (err) {
-          console.error(err);
-          setSavedStatus('Network problem. Your work is saved locally—try Submit again.');
-        }
+        successModal?.classList.remove('hidden');
       });
 
       const closeSuccessModal = () => successModal?.classList.add('hidden');
