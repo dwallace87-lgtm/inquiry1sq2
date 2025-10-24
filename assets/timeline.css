@@ -26,6 +26,19 @@ textarea.auto.effect{
 }
 .helper-arrow .chev{font-weight:900;filter:drop-shadow(0 0 8px rgba(34,211,238,.25))}
 
+/* Spine chips A–E */
+#seq2-spine{position:fixed;left:.5rem;top:6rem;z-index:40;display:none}
+@media (min-width: 768px){ #seq2-spine{display:flex} }
+#seq2-spine .bar{width:4px;height:520px;background:rgba(51,65,85,.6);border-radius:9999px;position:relative}
+#seq2-spine ul{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:.5rem 0}
+.step-chip{
+  width:34px;height:34px;border-radius:9999px;display:flex;align-items:center;justify-content:center;
+  font-weight:800;background:#0f172a;color:#94a3b8;border:2px solid #334155;
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+  transition:transform .2s, background .2s, color .2s, border-color .2s;
+}
+.step-chip.is-done{background:#22d3ee;color:#0b1220;border-color:#06b6d4;transform:scale(1.05)}
+
 /* Glow pulse for jump focus */
 .glow-pulse{animation:glow 1.8s ease-out 1}
 @keyframes glow{
