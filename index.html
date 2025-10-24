@@ -1,343 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
-<meta charset="utf-8">
-<title>SEQ Set 1 — Peer Review (Print)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  /* ====== Print-first, black & white, 2025-minimal ====== */
-  :root{
-    --ink:#000;
-    --grey:#111;
-    --thin:1px;
-    --med:2px;
-    --thick:3px;
-    --gap:10px;
-    --radius:8px;
-    --line-gap:28px;      /* vertical space between writing lines */
-    --line-thick:1px;     /* thickness of writing lines */
-    --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-  }
-  @page{ size: Letter; margin: 0.5in; }
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; color:var(--ink); background:#fff; font-family:var(--font); }
-  h1{ font-size:20pt; letter-spacing:.3px; margin:0 0 6px; font-weight:700; }
-  h2{ font-size:12pt; margin:0 0 8px; font-weight:700; }
-  h3{ font-size:11pt; margin:0 0 6px; font-weight:700; }
-  p, li, label, span{ font-size:10pt; line-height:1.25; }
-  .page{ display:block; }
-  .row{ display:flex; gap:14px; align-items:flex-end; }
-  .col{ flex:1; }
-  .small{ font-size:9pt; color:var(--grey); }
-  .card{
-    border:var(--med) solid var(--ink);
-    border-radius:var(--radius);
-    padding:14px;
-    margin:10px 0 14px;
-  }
-  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-  .stack-6 > * + *{ margin-top:6px; }
-  .stack-8 > * + *{ margin-top:8px; }
-  .stack-10 > * + *{ margin-top:10px; }
-
-  /* Inputs for handwriting */
-  .line{
-    display:block; width:100%; border:none; border-bottom:var(--thin) solid var(--ink);
-    height:18pt; /* single-line name/date rows */
-  }
-  .box{
-    display:inline-block; width:18px; height:18px; border:var(--med) solid var(--ink); border-radius:4px; margin-right:6px; vertical-align:middle;
-  }
-
-  /* Lined writing area: looks like notebook lines */
-  .lines{
-    width:100%;
-    height:180px; /* adjust per section */
-    border:var(--med) solid var(--ink);
-    border-radius:var(--radius);
-    background:
-      repeating-linear-gradient(
-        to bottom,
-        transparent 0,
-        transparent calc(var(--line-gap) - var(--line-thick)),
-        rgba(0,0,0,0.6) calc(var(--line-gap) - var(--line-thick)),
-        rgba(0,0,0,0.6) var(--line-gap)
-      );
-    padding:10px 12px;
-  }
-  .lines.tall{ height:240px; }
-  .lines.short{ height:120px; }
-
-  /* Checklist rows */
-  .checkrow{
-    display:flex; align-items:flex-start; gap:8px; padding:6px 0;
-    border-top:var(--thin) dashed var(--ink);
-  }
-  .checkrow:first-child{ border-top:none; }
-  .checkrow .prompt{ flex:1; }
-  .pill{
-    border:var(--med) solid var(--ink); border-radius:999px; padding:3px 8px; font-size:9pt; font-weight:700;
-  }
-
-  /* Rubric table */
-  table.rubric{ width:100%; border-collapse:collapse; margin-top:6px; }
-  .rubric th, .rubric td{ border:var(--med) solid var(--ink); padding:8px; vertical-align:top; }
-  .center{ text-align:center; }
-  .circle{
-    display:inline-block; width:22px; height:22px; border:var(--thick) solid var(--ink); border-radius:50%; vertical-align:middle;
-  }
-
-  /* Section tags */
-  .tag{
-    display:inline-block; border:var(--thick) solid var(--ink); border-radius:6px; padding:2px 8px; font-weight:800; letter-spacing:.3px;
-  }
-
-  /* Make it breathe on paper */
-  .spacer-6{ height:6px; }
-  .spacer-10{ height:10px; }
-
-  /* Page break helpers if you want to split pages later */
-  .break{ page-break-before:always; }
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEQ 2 Cause & Effect Timeline</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .timeline-dot {
+      content: ''; position: absolute; top: 2.5rem; width: 20px; height: 20px; border-radius: 50%;
+      background-color: #22d3ee; border: 4px solid #1e293b; z-index: 10;
+    }
+    .source-title { cursor: pointer; transition: all .3s ease; }
+    .source-title:hover { color: #67e8f9; }
+    .vocab-word {
+      color:#fde047; font-weight:600; cursor:pointer; text-decoration-line:underline;
+      text-decoration-style:dotted; text-decoration-color: rgba(253,224,71,.5); transition:all .3s ease;
+    }
+    .vocab-word:hover { color:#fef08a; text-decoration-color:#fef08a; }
+    .full-bleed {
+      width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;
+    }
+    textarea.auto { overflow: hidden; resize: none; min-height: 3rem; }
+    /* Attention ring for Student Info bar */
+    .pulse-ring {
+      box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6); }
+      70% { box-shadow: 0 0 0 16px rgba(34, 211, 238, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+    }
+  </style>
 </head>
-<body>
-  <div class="page">
+<body class="bg-slate-900 text-slate-200 h-full overflow-y-auto">
+
+  <!-- VERY NOTICEABLE STUDENT INFO BAR -->
+  <div class="full-bleed bg-gradient-to-r from-cyan-500/20 via-fuchsia-500/20 to-amber-500/20 border-b border-slate-700">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="bg-slate-800/70 border border-slate-700 rounded-2xl p-4 md:p-6 pulse-ring">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500 text-slate-900 font-extrabold text-xl">i</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">
+            Enter your name and class period before you start
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+          <!-- First Name -->
+          <div>
+            <label for="first-name" class="block text-sm font-semibold text-slate-300">First Name</label>
+            <input
+              id="first-name" name="first_name" type="text" inputmode="text" autocomplete="given-name" required
+              data-persist
+              placeholder="e.g., Alex"
+              class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+          </div>
+          <!-- Last Name -->
+          <div>
+            <label for="last-name" class="block text-sm font-semibold text-slate-300">Last Name</label>
+            <input
+              id="last-name" name="last_name" type="text" inputmode="text" autocomplete="family-name" required
+              data-persist
+              placeholder="e.g., Johnson"
+              class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+          </div>
+          <!-- Class Period -->
+          <div>
+            <label for="class-period" class="block text-sm font-semibold text-slate-300">Class Period</label>
+            <select
+              id="class-period" name="class_period" required data-persist
+              class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+              <option value="" disabled selected>Select a period</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+            </select>
+          </div>
+        </div>
+        <p class="mt-3 text-sm text-slate-400">
+          Pro tip: Use the “Save Progress” button at the bottom, or just type and I’ll auto-save for you.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
     <!-- Header -->
-    <header class="card">
-      <h1>SEQ Set 1 — Peer Review (Andrew Jackson)</h1>
-      <div class="row">
-        <div class="col">
-          <label>Student author</label>
-          <div class="line"></div>
-        </div>
-        <div class="col">
-          <label>Peer reviewer</label>
-          <div class="line"></div>
-        </div>
-        <div style="width:110px">
-          <label>Period</label>
-          <div class="line"></div>
-        </div>
-        <div style="width:150px">
-          <label>Date</label>
-          <div class="line"></div>
-        </div>
-      </div>
-      <div class="spacer-6"></div>
-      <div class="grid-3">
-        <div><span class="pill">Keep it B/W</span></div>
-        <div class="center small"><strong>Write neatly in the lined boxes.</strong></div>
-        <div class="center small">Use ☐ to check; circle scores ◯.</div>
-      </div>
+    <header class="text-center mb-12 md:mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-400 via-red-500 to-amber-400 bg-clip-text text-transparent mb-4">
+        SQ2: How did the "Doctrine of Discovery" lead to Manifest Destiny in the United States?
+      </h2>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Cause & Effect Timeline</h1>
+      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+        A timeline of land acquisition in the United States up to 1956. For each source, identify the
+        <span class="text-pink-400 font-medium">Cause</span> and the
+        <span class="text-cyan-400 font-medium">Effect</span>.
+      </p>
     </header>
 
-    <!-- Step 1: Quick Format Check -->
-    <section class="card">
-      <div class="tag">STEP 1 · FORMAT</div>
-      <div class="spacer-6"></div>
-      <div class="grid-2">
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>Two body paragraphs only.</strong></div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Paragraph 1 is <strong>Historical Context</strong>.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Paragraph 2 is <strong>Relationship</strong> using <strong>RACE</strong>.</div>
-          </div>
+    <!-- Featured Source A -->
+    <div class="mb-12 md:mb-16">
+      <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-4">SQ2: Featured Source A - Excerpt from "Inter Caetera"</h2>
+        <div class="text-slate-300 space-y-4 leading-relaxed">
+          <p>We have indeed learned that you... discovered certain very remote islands and even mainlands that
+            <span class="vocab-word" data-vocab="hitherto">hitherto</span> had not been discovered by others; wherein dwell very many peoples living in peace... [...] these very peoples ... seem sufficiently
+            <span class="vocab-word" data-vocab="disposed">disposed</span> to embrace the Catholic faith and be trained in good morals.</p>
+          <p>And, in order that you may enter upon so great an undertaking... endowed with the benefit of our
+            <span class="vocab-word" data-vocab="apostolic favor">apostolic favor</span>, we ... give, grant, and assign to you and your heirs and successors ... all their [Native peoples¹]
+            <span class="vocab-word" data-vocab="dominions">dominions</span>, cities, camps, places, and villages, and all rights,
+            <span class="vocab-word" data-vocab="jurisdictions">jurisdictions</span>, and
+            <span class="vocab-word" data-vocab="appurtenances">appurtenances</span>², all islands and mainlands found and to be found, discovered and to be discovered.</p>
+          <hr class="border-slate-700">
+          <p class="text-sm text-slate-400"><strong>Source:</strong> The Inter Caetera is a Papal Bull sent from Pope Alexander VI on May 4, 1493</p>
         </div>
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Docs are named or tagged <strong>[Doc 1]</strong> and <strong>[Doc 2]</strong>.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>Paraphrase</strong> over long quotes; if used, quotes are short and explained.</div>
+      </div>
+    </div>
+
+    <!-- Featured Source B (with Jackson portrait) -->
+    <div class="mb-12 md:mb-16">
+      <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-4">SQ2: Featured Source B - Excerpt from President Andrew Jackson's Message to Congress (1830)</h2>
+        <div class="text-slate-300 leading-relaxed">
+          <!-- Subtle portrait, original shape, not too small -->
+          <img
+            src="https://e7.pngegg.com/pngimages/972/220/png-clipart-andrew-jackson-1924-democratic-national-convention-united-states-1832-democratic-national-convention-united-states-head-political-party-thumbnail.png"
+            alt="President Andrew Jackson"
+            class="w-28 md:w-40 h-auto md:float-right md:ml-4 mb-3 opacity-90 hover:opacity-100 transition"
+            loading="lazy" decoding="async" referrerpolicy="no-referrer"
+          />
+
+          <div class="space-y-4">
+            <p>
+              It gives me pleasure to announce to Congress that the
+              <span class="vocab-word" data-vocab="benevolent">benevolent</span>
+              policy of the Government...in relation to the removal of the Indians beyond the white settlements is approaching a happy
+              <span class="vocab-word" data-vocab="consummation">consummation</span>. ...it is believed that their example will
+              <span class="vocab-word" data-vocab="induce">induce</span> the remaining tribes also to seek the same obvious advantages.
+            </p>
+            <p>
+              The consequences of a speedy removal will be important to the United States, to individual States, and to the Indians themselves. The
+              <span class="vocab-word" data-vocab="pecuniary">pecuniary</span>
+              advantages which it promises to the Government are the least of its recommendations. It puts an end to all possible danger of collision... It will place a dense and civilized population in large
+              <span class="vocab-word" data-vocab="tracts">tracts</span>
+              of country now occupied by a few savage hunters.
+            </p>
+            <p>
+              The tribes which occupied the countries now constituting the Eastern States were
+              <span class="vocab-word" data-vocab="annihilated">annihilated</span>
+              or have melted away to make room for the whites. ...we now propose to acquire the countries occupied by the red men of the South and West by a fair exchange, and, at the expense of the United States, to send them to land where their existence may be prolonged and perhaps made
+              <span class="vocab-word" data-vocab="perpetual">perpetual</span>.
+            </p>
+            <hr class="border-slate-700">
+            <p class="text-sm text-slate-400"><strong>Source:</strong> Our Documents, 1830</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Step 2: Historical Context -->
-    <section class="card">
-      <div class="tag">STEP 2 · PARAGRAPH 1 — HISTORICAL CONTEXT</div>
-      <div class="spacer-6"></div>
-      <p class="small"><strong>Goal:</strong> Background that leads into both docs — who, when, where; what was going on; why it mattered. No retelling.</p>
-
-      <div class="grid-2">
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Names <strong>who, when, where</strong> for this time period.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Explains <strong>what was happening</strong> and <strong>why it mattered</strong>.</div>
-          </div>
-        </div>
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Ties the context to <strong>both documents</strong>, not a summary of them.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">No major factual errors.</div>
-          </div>
+    <!-- Featured Source C -->
+    <div class="mb-12 md:mb-16">
+      <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-4">SQ2: Featured Source C - Excerpt from John O'Sullivan, "Annexation" (1845)</h2>
+        <div class="text-slate-300 space-y-4 leading-relaxed">
+          <p>Texas is now ours. Already... her star and her stripe may already be said to have taken their place in the glorious <span class="vocab-word" data-vocab="blazon">blazon</span> of our common nationality; and the sweep of our eagle's wing already includes within its circuit the wide extent of her fair and <span class="vocab-word" data-vocab="fertile">fertile</span> land.</p>
+          <p>She is no longer to us a mere <span class="vocab-word" data-vocab="geographical">geographical</span> space... She is no longer to us a mere country on the map. She comes within the dear and sacred <span class="vocab-word" data-vocab="designation">designation</span> of Our Country....</p>
+          <p>California will, probably, next fall away from the loose <span class="vocab-word" data-vocab="adhesion">adhesion</span> which, in such a country as Mexico, holds a remote province in a slight <span class="vocab-word" data-vocab="equivocal">equivocal</span> kind of dependence on the metropolis. <span class="vocab-word" data-vocab="Imbecile">Imbecile</span> and distracted, Mexico never can <span class="vocab-word" data-vocab="exert">exert</span> any real governmental authority over such a country....</p>
+          <p>A population will soon be in actual occupation of California, over which it will be idle for Mexico to dream of <span class="vocab-word" data-vocab="dominion">dominion</span>. ...this without <span class="vocab-word" data-vocab="agency">agency</span> of our government...in the natural flow of events, the <span class="vocab-word" data-vocab="spontaneous">spontaneous</span> working of principles...they will have a right to independence...a better and truer right than the artificial <span class="vocab-word" data-vocab="sovereignty">sovereignty</span> in Mexico... their right to independence will be the natural right of self-government... there can be no doubt that the population now fast <span class="vocab-word" data-vocab="streaming">streaming</span> down upon California will both assert and maintain that independence. Whether they will then attach themselves to our Union or not is not to be predicted with any certainty.</p>
+          <hr class="border-slate-700">
+          <p class="text-sm text-slate-400"><strong>Source:</strong> Bill of Rights Institute</p>
         </div>
       </div>
+    </div>
 
-      <div class="spacer-6"></div>
-      <h3>One sentence that would make the context stronger</h3>
-      <div class="lines short"></div>
-      <div class="spacer-6"></div>
-      <h3>Notes</h3>
-      <div class="lines"></div>
-    </section>
-
-    <!-- Step 3: Relationship using RACE -->
-    <section class="card">
-      <div class="tag">STEP 3 · PARAGRAPH 2 — RELATIONSHIP (RACE)</div>
-      <div class="spacer-6"></div>
-      <div class="grid-3">
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>R</strong> · Clearly <strong>names the relationship</strong> type: cause & effect, similarity, difference, or turning point.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>A</strong> · States a clear <strong>claim</strong> for how the two docs connect.</div>
-          </div>
-        </div>
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>C</strong> · Uses <strong>two pieces of evidence total</strong> — one from <strong>Doc 1</strong> and one from <strong>Doc 2</strong>.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt"><strong>E</strong> · <strong>Explains</strong> how each piece of evidence proves the claim.</div>
-          </div>
-        </div>
-        <div class="stack-6">
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Uses accurate facts; outside info only when it truly fits.</div>
-          </div>
-          <div class="checkrow">
-            <div class="box"></div>
-            <div class="prompt">Evidence specifically labeled or described from each doc.</div>
-          </div>
+    <!-- Featured Source D (Map with clickable full image) -->
+    <div class="mb-12 md:mb-16">
+      <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
+        <h2 class="text-2xl font-bold text-white mb-4">SQ2: Featured Source D – United States Map (1842–1845)</h2>
+        <div class="text-slate-300 leading-relaxed space-y-4">
+          <p class="text-slate-400 text-sm">Click the map to open the full-size image in a new tab.</p>
+          <a
+            href="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png?20071118003821"
+            target="_blank" rel="noopener noreferrer" class="group block">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png?20071118003821"
+              alt="United States territorial map, 1842–1845"
+              class="w-full h-auto rounded-xl border border-slate-700/70 shadow-lg group-hover:shadow-cyan-500/10 transition"
+              loading="lazy" decoding="async"
+            />
+          </a>
+          <hr class="border-slate-700">
+          <p class="text-sm text-slate-400"><strong>Source:</strong> Wikimedia Commons</p>
         </div>
       </div>
+    </div>
 
-      <div class="spacer-6"></div>
-      <h3>Outside info they used well or could add (only if it fits)</h3>
-      <div class="lines short"></div>
+    <!-- FORM full-bleed sections -->
+    <form id="timeline-form" class="space-y-10">
+      <!-- Source A -->
+      <section class="relative">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
+          <h2 class="text-xl font-bold text-white mb-1 source-title" role="button" tabindex="0" data-source="A">
+            Source A: Pope Alexander VI, "Inter Caetera Bull of May 4, 1493 (Doctrine of Discovery)"
+          </h2>
 
-      <div class="spacer-6"></div>
-      <h3>Comment on the relationship and evidence</h3>
-      <div class="lines tall"></div>
-    </section>
+          <label for="date-a" class="block text-sm font-medium text-slate-400">Event</label>
+          <textarea id="date-a" name="date-a" rows="1" data-persist
+            placeholder="e.g., Papal bull grants land to Spain"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
 
-    <!-- Step 4: Writing Quality -->
-    <section class="card">
-      <div class="tag">STEP 4 · WRITING QUALITY</div>
-      <div class="spacer-6"></div>
-      <div class="grid-2">
-        <div class="checkrow">
-          <div class="box"></div>
-          <div class="prompt"><strong>Topic sentence</strong> starts each paragraph; ideas stay on task.</div>
+          <label for="cause-a" class="block text-sm font-medium text-pink-400">Cause</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What motivated this doctrine? Think about exploration and religion.</p>
+          <textarea id="cause-a" name="cause-a" rows="3" data-persist
+            placeholder="What led to this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+
+          <label for="effect-a" class="block text-sm font-medium text-cyan-400">Effect</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What power did this give European nations? How did it view native land?</p>
+          <textarea id="effect-a" name="effect-a" rows="3" data-persist
+            placeholder="What happened because of this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
         </div>
-        <div class="checkrow">
-          <div class="box"></div>
-          <div class="prompt"><strong>Paraphrase</strong> over long quotes; any quote is short and explained.</div>
+      </section>
+
+      <!-- Source B -->
+      <section class="relative">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
+          <h2 class="text-xl font-bold text-white mb-1 source-title" role="button" tabindex="0" data-source="B">
+            Source B: President Andrew Jackson's Message to Congress on Indian Removal, 6 Dec 1830
+          </h2>
+
+          <label for="date-b" class="block text-sm font-medium text-slate-400">Event</label>
+          <textarea id="date-b" name="date-b" rows="1" data-persist
+            placeholder="e.g., Jackson's policy proposal"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
+
+          <label for="cause-b" class="block text-sm font-medium text-pink-400">Cause</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
+          <textarea id="cause-b" name="cause-b" rows="3" data-persist
+            placeholder="What led to this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+
+          <label for="effect-b" class="block text-sm font-medium text-cyan-400">Effect</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
+          <textarea id="effect-b" name="effect-b" rows="3" data-persist
+            placeholder="What happened because of this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
+        </div>
+      </section>
+
+      <!-- Source C -->
+      <section class="relative">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
+          <h2 class="text-xl font-bold text-white mb-1 source-title" role="button" tabindex="0" data-source="C">
+            Source C: John O'Sullivan, "Annexation," 1845
+          </h2>
+
+          <label for="date-c" class="block text-sm font-medium text-slate-400">Event</label>
+          <textarea id="date-c" name="date-c" rows="1" data-persist
+            placeholder="e.g., O'Sullivan's argument for annexation"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
+
+          <label for="cause-c" class="block text-sm font-medium text-pink-400">Cause</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
+          <textarea id="cause-c" name="cause-c" rows="3" data-persist
+            placeholder="What led to this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+
+          <label for="effect-c" class="block text-sm font-medium text-cyan-400">Effect</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
+          <textarea id="effect-c" name="effect-c" rows="3" data-persist
+            placeholder="What happened because of this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
+        </div>
+      </section>
+
+      <!-- Source D -->
+      <section class="relative">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
+          <h2 class="text-xl font-bold text-white mb-1 source-title" role="button" tabindex="0" data-source="D">
+            Source D: United States, 1842-1856 Map
+          </h2>
+
+          <label for="date-d" class="block text-sm font-medium text-slate-400">Event</label>
+          <textarea id="date-d" name="date-d" rows="1" data-persist
+            placeholder="e.g., U.S. territorial expansion shown on map"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
+
+          <label for="cause-d" class="block text-sm font-medium text-pink-400">Cause</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
+          <textarea id="cause-d" name="cause-d" rows="3" data-persist
+            placeholder="What led to this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+
+          <label for="effect-d" class="block text-sm font-medium text-cyan-400">Effect</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
+          <textarea id="effect-d" name="effect-d" rows="3" data-persist
+            placeholder="What happened because of this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
+        </div>
+      </section>
+
+      <!-- Source E -->
+      <section class="relative">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
+          <h2 class="text-xl font-bold text-white mb-1 source-title" role="button" tabindex="0" data-source="E">
+            Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
+          </h2>
+
+          <label for="date-e" class="block text-sm font-medium text-slate-400">Event</label>
+          <textarea id="date-e" name="date-e" rows="1" data-persist
+            placeholder="e.g., Miller's analysis of Manifest Destiny"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
+
+          <label for="cause-e" class="block text-sm font-medium text-pink-400">Cause</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
+          <textarea id="cause-e" name="cause-e" rows="3" data-persist
+            placeholder="What led to this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+
+          <label for="effect-e" class="block text-sm font-medium text-cyan-400">Effect</label>
+          <p class="text-xs text-slate-400 italic mt-1 mb-2">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
+          <textarea id="effect-e" name="effect-e" rows="3" data-persist
+            placeholder="What happened because of this event?"
+            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
+        </div>
+      </section>
+
+      <!-- Sticky bottom action bar -->
+      <div class="sticky bottom-0 full-bleed bg-slate-900/90 backdrop-blur border-t border-slate-700 py-4">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-3 md:gap-4">
+          <button id="save-btn" type="button"
+            class="w-full md:w-auto bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-full shadow transition">
+            Save Progress
+          </button>
+          <button id="submit-btn" type="submit"
+            class="w-full md:w-auto bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition">
+            Submit Timeline
+          </button>
+          <span id="save-status" class="ml-0 md:ml-2 text-sm text-slate-400">Not saved</span>
         </div>
       </div>
-
-      <div class="spacer-6"></div>
-      <h3>One unclear sentence (rewrite it clearly)</h3>
-      <div class="lines"></div>
-    </section>
-
-    <!-- Step 5: Glow & Grow + Holistic 0–5 -->
-    <section class="card">
-      <div class="tag">STEP 5 · FEEDBACK & SCORE</div>
-      <div class="spacer-6"></div>
-
-      <div class="grid-2">
-        <div>
-          <h3>One GLOW (strength)</h3>
-          <div class="lines short"></div>
-        </div>
-        <div>
-          <h3>One GROW (next step)</h3>
-          <div class="lines short"></div>
-        </div>
-      </div>
-
-      <div class="spacer-10"></div>
-      <h2>Holistic SEQ Set 1 Score (circle one)</h2>
-      <table class="rubric">
-        <tr>
-          <th class="center" style="width:50px;">Score</th>
-          <th>Descriptor (use this to judge the 2 paragraphs)</th>
-          <th class="center" style="width:60px;">Circle</th>
-        </tr>
-        <tr>
-          <td class="center"><strong>5</strong></td>
-          <td><strong>Thorough.</strong> Both parts developed; uses both docs correctly; clear RACE; explanation is strong; outside info if relevant; precise facts.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-        <tr>
-          <td class="center"><strong>4</strong></td>
-          <td><strong>Strong.</strong> Both parts present and solid with minor thin spots; both docs used; reasoning mostly clear.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-        <tr>
-          <td class="center"><strong>3</strong></td>
-          <td><strong>Adequate.</strong> Both parts addressed but brief or descriptive; uses both docs; explanation or outside info is light.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-        <tr>
-          <td class="center"><strong>2</strong></td>
-          <td><strong>Limited.</strong> One part thin or missing; evidence not balanced across both docs; reasoning weak or partly inaccurate.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-        <tr>
-          <td class="center"><strong>1</strong></td>
-          <td><strong>Minimal.</strong> Barely addresses task; vague or off task; evidence unclear or incorrect.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-        <tr>
-          <td class="center"><strong>0</strong></td>
-          <td><strong>No credit.</strong> Not addressed, copied, or blank.</td>
-          <td class="center"><span class="circle"></span></td>
-        </tr>
-      </table>
-    </section>
-
-    <!-- Signature -->
-    <section class="card">
-      <div class="grid-2">
-        <div>
-          <label>Peer reviewer signature</label>
-          <div class="line"></div>
-        </div>
-        <div>
-          <label>Teacher initials (optional)</label>
-          <div class="line"></div>
-        </div>
-      </div>
-    </section>
+    </form>
   </div>
+
+  <!-- Success Modal -->
+  <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-slate-700">
+      <h3 class="text-2xl font-bold text-white mb-4">Submitted!</h3>
+      <p class="text-slate-300 mb-6">Your timeline has been recorded.</p>
+      <button id="close-modal" class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-6 rounded-full transition">Close</button>
+    </div>
+  </div>
+
+  <!-- Context Modal -->
+  <div id="context-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-lg w-full text-left border border-slate-700">
+      <h3 id="context-title" class="text-2xl font-bold text-white mb-4">Context</h3>
+      <div id="context-body" class="text-slate-300 mb-6 space-y-4"><p>Loading context...</p></div>
+      <button id="close-context-modal" class="bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-full transition">Close</button>
+    </div>
+  </div>
+
+  <!-- Vocab Modal -->
+  <div id="vocab-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-md w-full text-left border border-slate-700">
+      <h3 id="vocab-title" class="text-2xl font-bold text-yellow-300 mb-4 capitalize">Vocabulary Word</h3>
+      <div id="vocab-body" class="text-slate-300 mb-6 space-y-4"><p>Loading definition...</p></div>
+      <button id="close-vocab-modal" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-full transition">Close</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const FORM_STORAGE_KEY = 'cause_effect_timeline_v1';
+      const form = document.getElementById('timeline-form');
+      const successModal = document.getElementById('success-modal');
+      const closeModalBtn = document.getElementById('close-modal');
+      const saveBtn = document.getElementById('save-btn');
+      const saveStatus = document.getElementById('save-status');
+
+      // Auto-resize for textareas
+      const autoResize = (el) => { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; };
+      document.querySelectorAll('textarea.auto').forEach(a => {
+        autoResize(a);
+        a.addEventListener('input', () => { autoResize(a); queueAutosave(); });
+      });
+
+      // Persist any element with data-persist (inputs, textareas, selects)
+      const persistEls = Array.from(document.querySelectorAll('[data-persist]'));
+
+      const setSavedStatus = (text) => { if (saveStatus) saveStatus.textContent = text; };
+      const collectValues = () => {
+        const data = {};
+        persistEls.forEach(el => {
+          if (!el.id) return;
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') data[el.id] = el.value || '';
+          else if (el.tagName === 'SELECT') data[el.id] = el.value || '';
+        });
+        return data;
+      };
+
+      const saveProgress = () => {
+        try {
+          const data = collectValues();
+          localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify({ data, ts: Date.now() }));
+          const t = new Date();
+          const hh = t.getHours() % 12 || 12;
+          const mm = String(t.getMinutes()).padStart(2, '0');
+          const ampm = t.getHours() >= 12 ? 'PM' : 'AM';
+          setSavedStatus(`Saved at ${hh}:${mm} ${ampm}`);
+        } catch (e) {
+          setSavedStatus('Save failed');
+        }
+      };
+
+      const loadProgress = () => {
+        const raw = localStorage.getItem(FORM_STORAGE_KEY);
+        if (!raw) { setSavedStatus('No saved progress'); return; }
+        try {
+          const { data } = JSON.parse(raw);
+          if (data) {
+            persistEls.forEach(el => {
+              if (!el.id) return;
+              const val = data[el.id];
+              if (typeof val !== 'undefined') {
+                el.value = val;
+                if (el.tagName === 'TEXTAREA') autoResize(el);
+              }
+            });
+            setSavedStatus('Progress restored');
+          }
+        } catch {
+          setSavedStatus('Could not load saved progress');
+        }
+      };
+
+      // Debounced autosave
+      let saveTimer = null;
+      const queueAutosave = () => {
+        if (saveTimer) clearTimeout(saveTimer);
+        saveTimer = setTimeout(saveProgress, 700);
+      };
+
+      // Wire inputs for autosave
+      persistEls.forEach(el => {
+        el.addEventListener('input', queueAutosave);
+        if (el.tagName === 'SELECT') el.addEventListener('change', queueAutosave);
+      });
+
+      // Manual save button
+      saveBtn?.addEventListener('click', saveProgress);
+
+      // Restore on load
+      loadProgress();
+
+      // Save before unload as safety
+      window.addEventListener('beforeunload', saveProgress);
+
+      // Submit flow with simple validation for top fields
+      form?.addEventListener('submit', (e) => {
+        const fn = document.getElementById('first-name');
+        const ln = document.getElementById('last-name');
+        const cp = document.getElementById('class-period');
+        if (!fn.value.trim() || !ln.value.trim() || !cp.value) {
+          e.preventDefault();
+          setSavedStatus('Please enter name and class period');
+          fn.focus();
+          return;
+        }
+        e.preventDefault();
+        saveProgress();
+        successModal?.classList.remove('hidden');
+      });
+
+      const closeSuccessModal = () => successModal?.classList.add('hidden');
+      closeModalBtn?.addEventListener('click', closeSuccessModal);
+      successModal?.addEventListener('click', (e) => { if (e.target === successModal) closeSuccessModal(); });
+
+      // Context + vocab modals (trimmed content for brevity)
+      const contextModal = document.getElementById('context-modal');
+      const contextTitle = document.getElementById('context-title');
+      const contextBody = document.getElementById('context-body');
+      const closeContextModalBtn = document.getElementById('close-context-modal');
+
+      const sourceContext = {
+        'A': { title: 'Source A: "Inter Caetera"', body: `<p>Papal bull from 1493 that frames European claims in the Americas.</p>` },
+        'B': { title: 'Source B: Andrew Jackson', body: `<p>Message supporting removal policy, leading to the Indian Removal Act.</p>` },
+        'C': { title: "Source C: John O'Sullivan", body: `<p>Manifest Destiny argument during the Texas annexation debate.</p>` },
+        'D': { title: 'Source D: U.S. Map 1842–1856', body: `<p>Shows territorial results of the ideas and policies.</p>` },
+        'E': { title: 'Source E: Robert J. Miller', body: `<p>Modern legal analysis linking the doctrine to U.S. law.</p>` }
+      };
+
+      document.querySelectorAll('.source-title').forEach(title => {
+        const openContext = () => {
+          const k = title.getAttribute('data-source');
+          const c = sourceContext[k];
+          if (!c) return;
+          contextTitle.innerText = c.title;
+          contextBody.innerHTML = c.body;
+          contextModal.classList.remove('hidden');
+        };
+        title.addEventListener('click', openContext);
+        title.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.keyCode === 13) openContext(); });
+      });
+
+      const closeContextModal = () => contextModal.classList.add('hidden');
+      closeContextModalBtn?.addEventListener('click', closeContextModal);
+
+      const vocabModal = document.getElementById('vocab-modal');
+      const vocabTitle = document.getElementById('vocab-title');
+      const vocabBody = document.getElementById('vocab-body');
+      const closeVocabBtn = document.getElementById('close-vocab-modal');
+
+      const vocabDefinitions = {
+        hitherto:'Until now', disposed:'Willing or inclined', 'apostolic favor':'Blessing by the Pope',
+        dominions:'Territories controlled by a ruler', jurisdictions:'Legal authority', appurtenances:'Extra rights with property',
+        benevolent:'Well meaning or kind', consummation:'Completion', induce:'Persuade', pecuniary:'Money related',
+        tracts:'Large areas of land', annihilated:'Destroyed completely', perpetual:'Lasting forever',
+        blazon:'Public display or symbol', geographical:'Related to location', adhesion:'Sticking to something',
+        sovereignty:'Complete governing power', streaming:'Moving in large numbers'
+      };
+
+      document.querySelectorAll('.vocab-word').forEach(word => {
+        const openVocab = () => {
+          const key = word.getAttribute('data-vocab');
+          const def = vocabDefinitions[key];
+          if (!def) return;
+          vocabTitle.innerText = key;
+          vocabBody.innerHTML = `<p>${def}</p>`;
+          vocabModal.classList.remove('hidden');
+        };
+        word.addEventListener('click', openVocab);
+        word.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.keyCode === 13) openVocab(); });
+      });
+
+      const closeVocab = () => vocabModal.classList.add('hidden');
+      closeVocabBtn?.addEventListener('click', closeVocab);
+      [contextModal, vocabModal].forEach(modal => {
+        modal?.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+      });
+    });
+  </script>
 </body>
 </html>
