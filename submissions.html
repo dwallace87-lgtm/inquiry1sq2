@@ -40,25 +40,10 @@
     .count{background:#0b1833; border:1px solid var(--border); border-radius:12px; padding:8px 10px; font-weight:700}
     .right{margin-left:auto}
     .sr{position:absolute; left:-9999px}
-    .auth-form{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:16px}
-    .auth-form input{flex:1 1 220px}
   </style>
 </head>
 <body>
-  <div class="wrap" id="auth-card">
-    <div class="card">
-      <h1>Teacher password</h1>
-      <p class="muted">Enter the teacher password to open the submissions log.</p>
-      <form id="auth-form" class="auth-form">
-        <label class="sr" for="teacher-pass">Teacher password</label>
-        <input id="teacher-pass" type="password" autocomplete="current-password" required />
-        <button type="submit" class="btn">Unlock</button>
-        <p class="muted" id="auth-error" aria-live="polite" hidden>Incorrect password. Try again.</p>
-      </form>
-    </div>
-  </div>
-
-  <div class="wrap" id="protected" hidden>
+  <div class="wrap">
     <div class="card">
       <h1>SEQ 2 Submissions Log</h1>
       <p class="muted">Live feed of student rows. Search by name, text, or filter by period. Export to CSV when ready.</p>
@@ -113,9 +98,9 @@
         </table>
       </div>
 
-      </div>
     </div>
-  
+  </div>
+
   <script>
     // ======= config =======
     const API_BASE = 'https://submissionssq2.dwallace87.workers.dev';
@@ -139,15 +124,6 @@
     const csvBtn = document.getElementById('csv');
     const printBtn = document.getElementById('print');
     const counts = document.getElementById('counts');
-
-    const authCard = document.getElementById('auth-card');
-    const protectedWrap = document.getElementById('protected');
-    const authForm = document.getElementById('auth-form');
-    const passwordInput = document.getElementById('teacher-pass');
-    const authError = document.getElementById('auth-error');
-
-    const PASSWORD = 'MRseoul10!!';
-    const STORAGE_KEY = 'seq2_teacher_unlocked';
 
     let all = [];
     let view = [];
@@ -311,44 +287,16 @@
       setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 0);
     }
 
-    function unlock(restored = false){
-      authCard.style.display = 'none';
-      protectedWrap.hidden = false;
-      if (!restored) sessionStorage.setItem(STORAGE_KEY, '1');
-      if (!protectedWrap.dataset.loaded){
-        load();
-        protectedWrap.dataset.loaded = '1';
-      }
-    }
+    // wire up
+    q.addEventListener('input', applyFilters);
+    periodSel.addEventListener('change', applyFilters);
+    sortSel.addEventListener('change', applyFilters);
+    refreshBtn.addEventListener('click', load);
+    csvBtn.addEventListener('click', ()=> download('seq2_submissions.csv', toCsv(view)));
+    printBtn.addEventListener('click', ()=> window.print());
 
-    if (sessionStorage.getItem(STORAGE_KEY) === '1'){
-      unlock(true);
-    } else if (passwordInput){
-      passwordInput.focus();
-    }
-
-    if (authForm){
-      authForm.addEventListener('submit', (event)=>{
-        event.preventDefault();
-        if (passwordInput.value === PASSWORD){
-          authError.hidden = true;
-          unlock();
-          passwordInput.value = '';
-        } else {
-          authError.hidden = false;
-          passwordInput.value = '';
-          passwordInput.focus();
-        }
-      });
-    }
-
-    // wire up (after unlock)
-    q?.addEventListener('input', applyFilters);
-    periodSel?.addEventListener('change', applyFilters);
-    sortSel?.addEventListener('change', applyFilters);
-    refreshBtn?.addEventListener('click', load);
-    csvBtn?.addEventListener('click', ()=> download('seq2_submissions.csv', toCsv(view)));
-    printBtn?.addEventListener('click', ()=> window.print());
+    // go
+    load();
   </script>
 </body>
 </html>
