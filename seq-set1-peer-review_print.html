@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SEQ Set 1 — Peer Review (Print)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* ====== Print-first, black & white, 2025-minimal ====== */
+  :root{
+    --ink:#000;
+    --grey:#111;
+    --thin:1px;
+    --med:2px;
+    --thick:3px;
+    --gap:10px;
+    --radius:8px;
+    --line-gap:28px;      /* vertical space between writing lines */
+    --line-thick:1px;     /* thickness of writing lines */
+    --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  }
+  @page{ size: Letter; margin: 0.5in; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; color:var(--ink); background:#fff; font-family:var(--font); }
+  h1{ font-size:20pt; letter-spacing:.3px; margin:0 0 6px; font-weight:700; }
+  h2{ font-size:12pt; margin:0 0 8px; font-weight:700; }
+  h3{ font-size:11pt; margin:0 0 6px; font-weight:700; }
+  p, li, label, span{ font-size:10pt; line-height:1.25; }
+  .page{ display:block; }
+  .row{ display:flex; gap:14px; align-items:flex-end; }
+  .col{ flex:1; }
+  .small{ font-size:9pt; color:var(--grey); }
+  .card{
+    border:var(--med) solid var(--ink);
+    border-radius:var(--radius);
+    padding:14px;
+    margin:10px 0 14px;
+  }
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .stack-6 > * + *{ margin-top:6px; }
+  .stack-8 > * + *{ margin-top:8px; }
+  .stack-10 > * + *{ margin-top:10px; }
+
+  /* Inputs for handwriting */
+  .line{
+    display:block; width:100%; border:none; border-bottom:var(--thin) solid var(--ink);
+    height:18pt; /* single-line name/date rows */
+  }
+  .box{
+    display:inline-block; width:18px; height:18px; border:var(--med) solid var(--ink); border-radius:4px; margin-right:6px; vertical-align:middle;
+  }
+
+  /* Lined writing area: looks like notebook lines */
+  .lines{
+    width:100%;
+    height:180px; /* adjust per section */
+    border:var(--med) solid var(--ink);
+    border-radius:var(--radius);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(var(--line-gap) - var(--line-thick)),
+        rgba(0,0,0,0.6) calc(var(--line-gap) - var(--line-thick)),
+        rgba(0,0,0,0.6) var(--line-gap)
+      );
+    padding:10px 12px;
+  }
+  .lines.tall{ height:240px; }
+  .lines.short{ height:120px; }
+
+  /* Checklist rows */
+  .checkrow{
+    display:flex; align-items:flex-start; gap:8px; padding:6px 0;
+    border-top:var(--thin) dashed var(--ink);
+  }
+  .checkrow:first-child{ border-top:none; }
+  .checkrow .prompt{ flex:1; }
+  .pill{
+    border:var(--med) solid var(--ink); border-radius:999px; padding:3px 8px; font-size:9pt; font-weight:700;
+  }
+
+  /* Rubric table */
+  table.rubric{ width:100%; border-collapse:collapse; margin-top:6px; }
+  .rubric th, .rubric td{ border:var(--med) solid var(--ink); padding:8px; vertical-align:top; }
+  .center{ text-align:center; }
+  .circle{
+    display:inline-block; width:22px; height:22px; border:var(--thick) solid var(--ink); border-radius:50%; vertical-align:middle;
+  }
+
+  /* Section tags */
+  .tag{
+    display:inline-block; border:var(--thick) solid var(--ink); border-radius:6px; padding:2px 8px; font-weight:800; letter-spacing:.3px;
+  }
+
+  /* Make it breathe on paper */
+  .spacer-6{ height:6px; }
+  .spacer-10{ height:10px; }
+
+  /* Page break helpers if you want to split pages later */
+  .break{ page-break-before:always; }
+
+</style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header -->
+    <header class="card">
+      <h1>SEQ Set 1 — Peer Review (Andrew Jackson)</h1>
+      <div class="row">
+        <div class="col">
+          <label>Student author</label>
+          <div class="line"></div>
+        </div>
+        <div class="col">
+          <label>Peer reviewer</label>
+          <div class="line"></div>
+        </div>
+        <div style="width:110px">
+          <label>Period</label>
+          <div class="line"></div>
+        </div>
+        <div style="width:150px">
+          <label>Date</label>
+          <div class="line"></div>
+        </div>
+      </div>
+      <div class="spacer-6"></div>
+      <div class="grid-3">
+        <div><span class="pill">Keep it B/W</span></div>
+        <div class="center small"><strong>Write neatly in the lined boxes.</strong></div>
+        <div class="center small">Use ☐ to check; circle scores ◯.</div>
+      </div>
+    </header>
+
+    <!-- Step 1: Quick Format Check -->
+    <section class="card">
+      <div class="tag">STEP 1 · FORMAT</div>
+      <div class="spacer-6"></div>
+      <div class="grid-2">
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>Two body paragraphs only.</strong></div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Paragraph 1 is <strong>Historical Context</strong>.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Paragraph 2 is <strong>Relationship</strong> using <strong>RACE</strong>.</div>
+          </div>
+        </div>
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Docs are named or tagged <strong>[Doc 1]</strong> and <strong>[Doc 2]</strong>.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>Paraphrase</strong> over long quotes; if used, quotes are short and explained.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Historical Context -->
+    <section class="card">
+      <div class="tag">STEP 2 · PARAGRAPH 1 — HISTORICAL CONTEXT</div>
+      <div class="spacer-6"></div>
+      <p class="small"><strong>Goal:</strong> Background that leads into both docs — who, when, where; what was going on; why it mattered. No retelling.</p>
+
+      <div class="grid-2">
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Names <strong>who, when, where</strong> for this time period.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Explains <strong>what was happening</strong> and <strong>why it mattered</strong>.</div>
+          </div>
+        </div>
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Ties the context to <strong>both documents</strong>, not a summary of them.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">No major factual errors.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-6"></div>
+      <h3>One sentence that would make the context stronger</h3>
+      <div class="lines short"></div>
+      <div class="spacer-6"></div>
+      <h3>Notes</h3>
+      <div class="lines"></div>
+    </section>
+
+    <!-- Step 3: Relationship using RACE -->
+    <section class="card">
+      <div class="tag">STEP 3 · PARAGRAPH 2 — RELATIONSHIP (RACE)</div>
+      <div class="spacer-6"></div>
+      <div class="grid-3">
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>R</strong> · Clearly <strong>names the relationship</strong> type: cause & effect, similarity, difference, or turning point.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>A</strong> · States a clear <strong>claim</strong> for how the two docs connect.</div>
+          </div>
+        </div>
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>C</strong> · Uses <strong>two pieces of evidence total</strong> — one from <strong>Doc 1</strong> and one from <strong>Doc 2</strong>.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt"><strong>E</strong> · <strong>Explains</strong> how each piece of evidence proves the claim.</div>
+          </div>
+        </div>
+        <div class="stack-6">
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Uses accurate facts; outside info only when it truly fits.</div>
+          </div>
+          <div class="checkrow">
+            <div class="box"></div>
+            <div class="prompt">Evidence specifically labeled or described from each doc.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-6"></div>
+      <h3>Outside info they used well or could add (only if it fits)</h3>
+      <div class="lines short"></div>
+
+      <div class="spacer-6"></div>
+      <h3>Comment on the relationship and evidence</h3>
+      <div class="lines tall"></div>
+    </section>
+
+    <!-- Step 4: Writing Quality -->
+    <section class="card">
+      <div class="tag">STEP 4 · WRITING QUALITY</div>
+      <div class="spacer-6"></div>
+      <div class="grid-2">
+        <div class="checkrow">
+          <div class="box"></div>
+          <div class="prompt"><strong>Topic sentence</strong> starts each paragraph; ideas stay on task.</div>
+        </div>
+        <div class="checkrow">
+          <div class="box"></div>
+          <div class="prompt"><strong>Paraphrase</strong> over long quotes; any quote is short and explained.</div>
+        </div>
+      </div>
+
+      <div class="spacer-6"></div>
+      <h3>One unclear sentence (rewrite it clearly)</h3>
+      <div class="lines"></div>
+    </section>
+
+    <!-- Step 5: Glow & Grow + Holistic 0–5 -->
+    <section class="card">
+      <div class="tag">STEP 5 · FEEDBACK & SCORE</div>
+      <div class="spacer-6"></div>
+
+      <div class="grid-2">
+        <div>
+          <h3>One GLOW (strength)</h3>
+          <div class="lines short"></div>
+        </div>
+        <div>
+          <h3>One GROW (next step)</h3>
+          <div class="lines short"></div>
+        </div>
+      </div>
+
+      <div class="spacer-10"></div>
+      <h2>Holistic SEQ Set 1 Score (circle one)</h2>
+      <table class="rubric">
+        <tr>
+          <th class="center" style="width:50px;">Score</th>
+          <th>Descriptor (use this to judge the 2 paragraphs)</th>
+          <th class="center" style="width:60px;">Circle</th>
+        </tr>
+        <tr>
+          <td class="center"><strong>5</strong></td>
+          <td><strong>Thorough.</strong> Both parts developed; uses both docs correctly; clear RACE; explanation is strong; outside info if relevant; precise facts.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+        <tr>
+          <td class="center"><strong>4</strong></td>
+          <td><strong>Strong.</strong> Both parts present and solid with minor thin spots; both docs used; reasoning mostly clear.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+        <tr>
+          <td class="center"><strong>3</strong></td>
+          <td><strong>Adequate.</strong> Both parts addressed but brief or descriptive; uses both docs; explanation or outside info is light.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+        <tr>
+          <td class="center"><strong>2</strong></td>
+          <td><strong>Limited.</strong> One part thin or missing; evidence not balanced across both docs; reasoning weak or partly inaccurate.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+        <tr>
+          <td class="center"><strong>1</strong></td>
+          <td><strong>Minimal.</strong> Barely addresses task; vague or off task; evidence unclear or incorrect.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+        <tr>
+          <td class="center"><strong>0</strong></td>
+          <td><strong>No credit.</strong> Not addressed, copied, or blank.</td>
+          <td class="center"><span class="circle"></span></td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Signature -->
+    <section class="card">
+      <div class="grid-2">
+        <div>
+          <label>Peer reviewer signature</label>
+          <div class="line"></div>
+        </div>
+        <div>
+          <label>Teacher initials (optional)</label>
+          <div class="line"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
