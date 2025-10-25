@@ -7,26 +7,10 @@
     ['effect-d','cause-e'],
   ];
 
-  // Step mapping for progress chips
+  // Step mapping for cause/effect sections
   const stepMap = { A:['cause-a','effect-a'], B:['cause-b','effect-b'], C:['cause-c','effect-c'], D:['cause-d','effect-d'], E:['cause-e','effect-e'] };
 
   function byId(id){ return document.getElementById(id); }
-
-  function injectSpine(){
-    if(document.getElementById('seq2-spine')) return;
-    const nav = document.createElement('nav');
-    nav.id = 'seq2-spine';
-    nav.innerHTML = `
-      <div class="bar"></div>
-      <ul aria-label="Sequence progress">
-        <li><div class="step-chip" data-step="A">A</div></li>
-        <li><div class="step-chip" data-step="B">B</div></li>
-        <li><div class="step-chip" data-step="C">C</div></div></li>
-        <li><div class="step-chip" data-step="D">D</div></li>
-        <li><div class="step-chip" data-step="E">E</div></li>
-      </ul>`;
-    document.body.appendChild(nav);
-  }
 
   function injectOverlay(){
     if(document.getElementById('causal-overlay')) return;
@@ -122,24 +106,13 @@
     });
   }
 
-  function updateSpine(){
-    const chips = document.querySelectorAll('.step-chip');
-    chips.forEach(chip=>{
-      const ids = stepMap[chip.dataset.step] || [];
-      const done = ids.every(id => (byId(id)?.value || '').trim().length > 0);
-      chip.classList.toggle('is-done', done);
-    });
-  }
-
   function wire(){
-    injectSpine();
     injectOverlay();
     decorateFields();
     drawConnectors();
-    updateSpine();
 
     // Redraw on viewport changes and input
-    const redraw = ()=>{ drawConnectors(); updateSpine(); };
+    const redraw = ()=>{ drawConnectors(); };
     ['resize','scroll'].forEach(evt => window.addEventListener(evt, redraw, { passive:true }));
 
     // Track textarea growth and edits
