@@ -65,6 +65,91 @@
       70% { box-shadow: 0 0 0 16px rgba(34, 211, 238, 0); }
       100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
     }
+
+    textarea {
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 2px solid #475569;
+      color: white;
+      background-color: #334155;
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      resize: none;
+      overflow: hidden;
+      min-height: 5rem;
+      font-size: 1.125rem;
+    }
+    textarea::placeholder { color: #64748B; }
+    textarea:hover {
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    .textarea-event:focus,
+    .textarea-cause:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.5), 0 0 15px rgba(236, 72, 153, 0.4), 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      border-color: #ec4899;
+    }
+    .textarea-effect:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.5), 0 0 15px rgba(6, 182, 212, 0.4), 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+      border-color: #06b6d4;
+    }
+    .gradient-arrow-horizontal {
+      background: linear-gradient(to right, #ec4899, #06b6d4);
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12l-6-6v4H2v4h14v4l6-6z"/></svg>') no-repeat center;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12l-6-6v4H2v4h14v4l6-6z"/></svg>') no-repeat center;
+      background-size: contain;
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+    }
+    .gradient-arrow-vertical {
+      background: linear-gradient(to bottom, #ec4899, #06b6d4);
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22l6-6h-4V2h-4v14H6l6 6z"/></svg>') no-repeat center;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22l6-6h-4V2h-4v14H6l6 6z"/></svg>') no-repeat center;
+      background-size: contain;
+      width: 48px;
+      height: 48px;
+    }
+    @media (max-width: 639px) {
+      .cause-effect-grid { grid-template-columns: 1fr; }
+      .gradient-arrow-horizontal {
+        background: linear-gradient(to bottom, #ec4899, #06b6d4);
+        -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22l6-6h-4V2h-4v14H6l6 6z"/></svg>') no-repeat center;
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22l6-6h-4V2h-4v14H6l6 6z"/></svg>') no-repeat center;
+      }
+      .arrow-container-horizontal {
+        padding-top: 0rem;
+        padding-bottom: 1.5rem;
+      }
+    }
+    .source-title { transition: all .3s ease; }
+    .source-title:hover { color: #67e8f9; }
+    .stem-sentence-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 9999px;
+      background-color: #475569;
+      color: #cbd5e1;
+      transition: all 0.2s ease-in-out;
+      border: 1px solid #64748B;
+    }
+    .stem-sentence-btn:hover {
+      background-color: #06b6d4;
+      color: white;
+      border-color: #06b6d4;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+    }
+    .stem-sentence-btn svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-full overflow-y-auto">
@@ -310,172 +395,311 @@
     </div>
 
     <!-- FORM full-bleed sections -->
-    <form id="timeline-form" class="space-y-10">
-      <!-- Source A -->
-      <section id="entry-source-a" class="relative">
-        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
-          <div class="mb-3">
-            <h2 class="text-xl font-bold text-white source-title">
+    <form id="timeline-form" class="space-y-12 md:space-y-16">
+      <section id="entry-source-a">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
+          <div class="mb-8">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
               Source A: Pope Alexander VI, "Inter Caetera Bull of May 4, 1493 (Doctrine of Discovery)"
             </h2>
           </div>
-          <label for="date-a" class="block text-sm font-medium text-slate-400">Event</label>
-          <textarea id="date-a" name="date-a" rows="1" data-persist
-            placeholder="e.g., Papal bull grants land to Spain"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
 
-          <label for="cause-a" class="block text-sm font-medium text-pink-400">Cause</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What motivated this doctrine? Think about exploration and religion.</p>
-          <textarea id="cause-a" name="cause-a" rows="3" data-persist
-            placeholder="What led to this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+          <div class="flex items-center gap-4 mb-3">
+            <label for="date-a" class="block text-3xl font-bold text-slate-400">Event</label>
+            <button type="button" class="stem-sentence-btn" data-target="date-a" data-stem="The Pope issued a 'Papal Bull' that... ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+              <span class="sr-only">Add stem sentence</span>
+            </button>
+          </div>
+          <textarea id="date-a" name="date-a" rows="1" data-persist placeholder="e.g., Papal bull grants land to Spain" class="auto-expand w-full textarea-event mb-8"></textarea>
 
-          <label for="effect-a" class="block text-sm font-medium text-cyan-400">Effect</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What power did this give European nations? How did it view native land?</p>
-          <textarea id="effect-a" name="effect-a" rows="3" data-persist
-            placeholder="What happened because of this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
-          <div class="mt-6 flex justify-end">
-            <a href="#source-a-doc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
+          <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="cause-a" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <button type="button" class="stem-sentence-btn" data-target="cause-a" data-stem="The primary motivation for this doctrine was... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What motivated this doctrine? Think about exploration and religion.</p>
+              <textarea id="cause-a" name="cause-a" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+            </div>
+
+            <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
+              <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
+              <span class="sr-only">Leads to</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="effect-a" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <button type="button" class="stem-sentence-btn" data-target="effect-a" data-stem="As a result, European nations were given the power to... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What power did this give European nations? How did it view native land?</p>
+              <textarea id="effect-a" name="effect-a" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <a href="#source-a-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
               <span>Back to Source A Reading</span>
             </a>
+            <a href="#entry-source-b" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
+              <span>Continue to next Cause</span>
+              <span aria-hidden="true">↘</span>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Source B -->
-      <section id="entry-source-b" class="relative">
-        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
-          <div class="mb-3">
-            <h2 class="text-xl font-bold text-white source-title">
+      <section id="entry-source-b">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
+          <div class="mb-8">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
               Source B: President Andrew Jackson's Message to Congress on Indian Removal, 6 Dec 1830
             </h2>
           </div>
-          <label for="date-b" class="block text-sm font-medium text-slate-400">Event</label>
-          <textarea id="date-b" name="date-b" rows="1" data-persist
-            placeholder="e.g., Jackson's policy proposal"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
 
-          <label for="cause-b" class="block text-sm font-medium text-pink-400">Cause</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
-          <textarea id="cause-b" name="cause-b" rows="3" data-persist
-            placeholder="What led to this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+          <div class="flex items-center gap-4 mb-3">
+            <label for="date-b" class="block text-3xl font-bold text-slate-400">Event</label>
+            <button type="button" class="stem-sentence-btn" data-target="date-b" data-stem="President Jackson proposed a policy to... ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+              <span class="sr-only">Add stem sentence</span>
+            </button>
+          </div>
+          <textarea id="date-b" name="date-b" rows="1" data-persist placeholder="e.g., Jackson's policy proposal" class="auto-expand w-full textarea-event mb-8"></textarea>
 
-          <label for="effect-b" class="block text-sm font-medium text-cyan-400">Effect</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
-          <textarea id="effect-b" name="effect-b" rows="3" data-persist
-            placeholder="What happened because of this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
-          <div class="mt-6 flex justify-end">
-            <a href="#source-b-doc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
+          <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="cause-b" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <button type="button" class="stem-sentence-btn" data-target="cause-b" data-stem="This policy was caused by... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
+              <textarea id="cause-b" name="cause-b" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+            </div>
+
+            <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
+              <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
+              <span class="sr-only">Leads to</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="effect-b" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <button type="button" class="stem-sentence-btn" data-target="effect-b" data-stem="The immediate effect of this policy was... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
+              <textarea id="effect-b" name="effect-b" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <a href="#source-b-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
               <span>Back to Source B Reading</span>
             </a>
+            <a href="#entry-source-c" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
+              <span>Continue to next Cause</span>
+              <span aria-hidden="true">↘</span>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Source C -->
-      <section id="entry-source-c" class="relative">
-        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
-          <div class="mb-3">
-            <h2 class="text-xl font-bold text-white source-title">
+      <section id="entry-source-c">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
+          <div class="mb-8">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
               Source C: John O'Sullivan, "Annexation," 1845
             </h2>
           </div>
-          <label for="date-c" class="block text-sm font-medium text-slate-400">Event</label>
-          <textarea id="date-c" name="date-c" rows="1" data-persist
-            placeholder="e.g., O'Sullivan's argument for annexation"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
 
-          <label for="cause-c" class="block text-sm font-medium text-pink-400">Cause</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
-          <textarea id="cause-c" name="cause-c" rows="3" data-persist
-            placeholder="What led to this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+          <div class="flex items-center gap-4 mb-3">
+            <label for="date-c" class="block text-3xl font-bold text-slate-400">Event</label>
+            <button type="button" class="stem-sentence-btn" data-target="date-c" data-stem="John O'Sullivan argued that America should... ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+              <span class="sr-only">Add stem sentence</span>
+            </button>
+          </div>
+          <textarea id="date-c" name="date-c" rows="1" data-persist placeholder="e.g., O'Sullivan's argument for annexation" class="auto-expand w-full textarea-event mb-8"></textarea>
 
-          <label for="effect-c" class="block text-sm font-medium text-cyan-400">Effect</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
-          <textarea id="effect-c" name="effect-c" rows="3" data-persist
-            placeholder="What happened because of this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
-          <div class="mt-6 flex justify-end">
-            <a href="#source-c-doc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
+          <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="cause-c" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <button type="button" class="stem-sentence-btn" data-target="cause-c" data-stem="This idea was based on a belief that... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
+              <textarea id="cause-c" name="cause-c" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+            </div>
+
+            <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
+              <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
+              <span class="sr-only">Leads to</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="effect-c" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <button type="button" class="stem-sentence-btn" data-target="effect-c" data-stem="The idea of Manifest Destiny led to... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
+              <textarea id="effect-c" name="effect-c" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <a href="#source-c-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
               <span>Back to Source C Reading</span>
             </a>
+            <a href="#entry-source-d" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
+              <span>Continue to next Cause</span>
+              <span aria-hidden="true">↘</span>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Source D -->
-      <section id="entry-source-d" class="relative">
-        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
-          <div class="mb-3">
-            <h2 class="text-xl font-bold text-white source-title">
+      <section id="entry-source-d">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
+          <div class="mb-8">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
               Source D: United States, 1842-1856 Map
             </h2>
           </div>
-          <label for="date-d" class="block text-sm font-medium text-slate-400">Event</label>
-          <textarea id="date-d" name="date-d" rows="1" data-persist
-            placeholder="e.g., U.S. territorial expansion shown on map"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
 
-          <label for="cause-d" class="block text-sm font-medium text-pink-400">Cause</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
-          <textarea id="cause-d" name="cause-d" rows="3" data-persist
-            placeholder="What led to this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
+          <div class="flex items-center gap-4 mb-3">
+            <label for="date-d" class="block text-3xl font-bold text-slate-400">Event</label>
+            <button type="button" class="stem-sentence-btn" data-target="date-d" data-stem="The map illustrates... ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+              <span class="sr-only">Add stem sentence</span>
+            </button>
+          </div>
+          <textarea id="date-d" name="date-d" rows="1" data-persist placeholder="e.g., U.S. territorial expansion shown on map" class="auto-expand w-full textarea-event mb-8"></textarea>
 
-          <label for="effect-d" class="block text-sm font-medium text-cyan-400">Effect</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
-          <textarea id="effect-d" name="effect-d" rows="3" data-persist
-            placeholder="What happened because of this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
-          <div class="mt-6 flex justify-end">
-            <a href="#source-d-doc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
+          <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="cause-d" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <button type="button" class="stem-sentence-btn" data-target="cause-d" data-stem="These new borders were the result of... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
+              <textarea id="cause-d" name="cause-d" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+            </div>
+
+            <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
+              <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
+              <span class="sr-only">Leads to</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="effect-d" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <button type="button" class="stem-sentence-btn" data-target="effect-d" data-stem="This map shows the physical result, which was... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
+              <textarea id="effect-d" name="effect-d" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <a href="#source-d-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
               <span>Back to Source D Reading</span>
             </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Source E -->
-      <section id="entry-source-e" class="relative">
-        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 border-t border-b border-slate-700">
-          <div class="mb-3">
-            <h2 class="text-xl font-bold text-white source-title">
-              Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
-            </h2>
-          </div>
-          <label for="date-e" class="block text-sm font-medium text-slate-400">Event</label>
-          <textarea id="date-e" name="date-e" rows="1" data-persist
-            placeholder="e.g., Miller's analysis of Manifest Destiny"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mt-1 mb-4"></textarea>
-
-          <label for="cause-e" class="block text-sm font-medium text-pink-400">Cause</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
-          <textarea id="cause-e" name="cause-e" rows="3" data-persist
-            placeholder="What led to this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300 mb-4"></textarea>
-
-          <label for="effect-e" class="block text-sm font-medium text-cyan-400">Effect</label>
-          <p class="text-xs text-slate-400 italic mt-1 mb-2">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
-          <textarea id="effect-e" name="effect-e" rows="3" data-persist
-            placeholder="What happened because of this event?"
-            class="auto w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none transition-all duration-300"></textarea>
-          <div class="mt-6 flex justify-end">
-            <a href="#source-e-doc" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-              <span aria-hidden="true">⤴</span>
-              <span>Back to Source E Reading</span>
+            <a href="#entry-source-e" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
+              <span>Continue to next Cause</span>
+              <span aria-hidden="true">↘</span>
             </a>
           </div>
         </div>
       </section>
 
+      <section id="entry-source-e">
+        <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
+          <div class="mb-8">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
+              Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
+            </h2>
+          </div>
+
+          <div class="flex items-center gap-4 mb-3">
+            <label for="date-e" class="block text-3xl font-bold text-slate-400">Event</label>
+            <button type="button" class="stem-sentence-btn" data-target="date-e" data-stem="The historian Robert J. Miller explains how... ">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+              <span class="sr-only">Add stem sentence</span>
+            </button>
+          </div>
+          <textarea id="date-e" name="date-e" rows="1" data-persist placeholder="e.g., Miller's analysis of Manifest Destiny" class="auto-expand w-full textarea-event mb-8"></textarea>
+
+          <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="cause-e" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <button type="button" class="stem-sentence-btn" data-target="cause-e" data-stem="According to Miller, the legal foundation for this was... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
+              <textarea id="cause-e" name="cause-e" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+            </div>
+
+            <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
+              <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
+              <span class="sr-only">Leads to</span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-4 mb-3">
+                <label for="effect-e" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <button type="button" class="stem-sentence-btn" data-target="effect-e" data-stem="Miller's analysis connects these sources by showing that... ">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
+                  <span class="sr-only">Add stem sentence</span>
+                </button>
+              </div>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
+              <textarea id="effect-e" name="effect-e" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
+            <a href="#source-e-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
+              <span aria-hidden="true">⤴</span>
+              <span>Back to Source E Reading</span>
+            </a>
+            <div class="flex items-center gap-3 text-xl text-slate-500">
+              <span>End of timeline entries</span>
+            </div>
+            <span></span>
+          </div>
+        </div>
+      </section>
       <!-- Sticky bottom action bar -->
       <div class="sticky bottom-0 full-bleed bg-slate-900/90 backdrop-blur border-t border-slate-700 py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-3 md:gap-4">
@@ -563,9 +787,10 @@
 
       // Auto-resize for textareas
       const autoResize = (el) => { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; };
-      document.querySelectorAll('textarea.auto').forEach(a => {
-        autoResize(a);
-        a.addEventListener('input', () => { autoResize(a); queueAutosave(); });
+      const expandableTextareas = document.querySelectorAll('textarea.auto, textarea.auto-expand');
+      expandableTextareas.forEach(area => {
+        autoResize(area);
+        area.addEventListener('input', () => { autoResize(area); queueAutosave(); });
       });
 
       // Persist any element with data-persist (inputs, textareas, selects)
@@ -635,6 +860,31 @@
 
       // Restore on load
       loadProgress();
+
+      // Smooth scroll between sections
+      document.querySelectorAll('a[href^="#entry-source"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(anchor.getAttribute('href'));
+          target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Stem sentence buttons
+      document.querySelectorAll('.stem-sentence-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const targetId = button.getAttribute('data-target');
+          const stem = button.getAttribute('data-stem');
+          const textarea = document.getElementById(targetId);
+          if (!textarea || !stem) return;
+          if (textarea.value.trim() === '') {
+            textarea.value = stem;
+            autoResize(textarea);
+            textarea.focus();
+            queueAutosave();
+          }
+        });
+      });
 
       // Save before unload as safety
       window.addEventListener('beforeunload', saveProgress);
