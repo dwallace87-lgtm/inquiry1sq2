@@ -768,12 +768,31 @@
   <script>
 
     // (optional) light engagement tracker
-    const engagement = { tabSwitches: 0, hiddenSeconds: 0, startedAt: Date.now(), lastHiddenAt: null };
+    const engagement = {
+      tabSwitches: 0,
+      hiddenSeconds: 0,
+      startedAt: Date.now(),
+      lastHiddenAt: null,
+      pendingTabWarning: false
+    };
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { engagement.tabSwitches++; engagement.lastHiddenAt = Date.now(); }
-      else if (engagement.lastHiddenAt) {
-        engagement.hiddenSeconds += Math.round((Date.now() - engagement.lastHiddenAt) / 1000);
-        engagement.lastHiddenAt = null;
+      if (document.hidden) {
+        engagement.tabSwitches++;
+        engagement.lastHiddenAt = Date.now();
+        engagement.pendingTabWarning = true;
+      } else {
+        if (engagement.lastHiddenAt) {
+          engagement.hiddenSeconds += Math.round((Date.now() - engagement.lastHiddenAt) / 1000);
+          engagement.lastHiddenAt = null;
+        }
+
+        if (engagement.pendingTabWarning) {
+          const notify = typeof window.__showIntegrityWarning === 'function'
+            ? window.__showIntegrityWarning
+            : null;
+          notify?.('Thanks for hopping back! We noticed the tab switch—your progress is being monitored to keep things fair.');
+          engagement.pendingTabWarning = false;
+        }
       }
     });
 
@@ -795,6 +814,86 @@
 
       // Persist any element with data-persist (inputs, textareas, selects)
       const persistEls = Array.from(document.querySelectorAll('[data-persist]'));
+
+      // Friendly warning helper used for academic integrity prompts
+      const ensureWarningHost = () => {
+        let host = document.getElementById('integrity-warning-host');
+        if (!host) {
+          host = document.createElement('div');
+          host.id = 'integrity-warning-host';
+          host.className = 'fixed bottom-6 right-6 z-50 flex flex-col gap-3 w-full max-w-xs sm:max-w-sm pointer-events-none';
+          document.body.appendChild(host);
+        }
+        return host;
+      };
+
+      const warningState = { lastMessage: '', lastShownAt: 0, dismissTimer: null };
+
+      const showFriendlyWarning = (message) => {
+        const now = Date.now();
+        if (warningState.lastMessage === message && now - warningState.lastShownAt < 1500) return;
+        warningState.lastMessage = message;
+        warningState.lastShownAt = now;
+
+        const host = ensureWarningHost();
+        host.innerHTML = '';
+
+        const toast = document.createElement('div');
+        toast.className = 'pointer-events-auto bg-slate-800/95 border border-cyan-400/60 text-slate-100 px-4 py-3 rounded-2xl shadow-xl flex gap-3 items-start transition-all duration-300 ease-out translate-y-2 opacity-0';
+        toast.innerHTML = `
+          <span class="shrink-0 text-cyan-300 text-xl">⚠️</span>
+          <span class="text-sm leading-relaxed">${message}</span>
+        `;
+        host.appendChild(toast);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-2', 'opacity-0');
+          });
+        });
+
+        if (warningState.dismissTimer) clearTimeout(warningState.dismissTimer);
+        warningState.dismissTimer = setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => { toast.remove(); }, 250);
+        }, 4200);
+      };
+
+      // Expose warning helper so visibility tracking can reuse it
+      window.__showIntegrityWarning = showFriendlyWarning;
+
+      const integrityMessage = 'Friendly reminder: copy/paste, dragging, and right click are disabled so we can see your own thinking.';
+      const guardedInputs = persistEls.filter(el => (
+        (el.tagName === 'TEXTAREA') ||
+        (el.tagName === 'INPUT' && el.type !== 'hidden' && el.type !== 'submit' && el.type !== 'button')
+      ));
+
+      const guardEvents = ['copy', 'cut', 'paste', 'contextmenu', 'dragstart', 'drop'];
+      guardedInputs.forEach(el => {
+        guardEvents.forEach(evt => {
+          el.addEventListener(evt, (event) => {
+            event.preventDefault();
+            showFriendlyWarning(integrityMessage);
+          });
+        });
+
+        el.addEventListener('dragover', (event) => {
+          event.preventDefault();
+          event.dataTransfer && (event.dataTransfer.dropEffect = 'none');
+        });
+
+        el.addEventListener('keydown', (event) => {
+          const key = event.key?.toLowerCase();
+          const isCopyShortcut = (event.ctrlKey || event.metaKey) && ['c', 'x', 'v'].includes(key);
+          const isShiftInsert = event.shiftKey && key === 'insert';
+          const isCtrlInsert = event.ctrlKey && key === 'insert';
+
+          if (isCopyShortcut || isShiftInsert || isCtrlInsert) {
+            event.preventDefault();
+            showFriendlyWarning(integrityMessage);
+          }
+        });
+      });
 
       const setSavedStatus = (text) => { if (saveStatus) saveStatus.textContent = text; };
       const collectValues = () => {
