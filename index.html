@@ -204,41 +204,59 @@
       padding: 1rem;
       margin-bottom: -1rem;
     }
-    .language-toggle-group {
+    .language-select-wrapper {
+      position: relative;
       display: inline-flex;
+      align-items: center;
       border-radius: 9999px;
       border: 1px solid rgba(148, 163, 184, 0.35);
-      overflow: hidden;
       backdrop-filter: blur(6px);
       background: rgba(15, 23, 42, 0.65);
     }
-    .language-toggle-button {
+    .language-select-wrapper::after {
+      content: '\25BE';
+      position: absolute;
+      right: 1rem;
+      color: #38bdf8;
+      pointer-events: none;
+      font-size: 0.85rem;
+    }
+    .language-select {
       appearance: none;
       border: none;
       background: transparent;
       color: #e2e8f0;
-      padding: 0.5rem 1.25rem;
+      padding: 0.5rem 2.5rem 0.5rem 1.25rem;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .language-toggle-button[aria-pressed="true"] {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.45), rgba(6, 182, 212, 0.55));
-      color: #0f172a;
-    }
-    .language-toggle-button:focus-visible {
+    .language-select:focus-visible {
       outline: none;
       box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+      border-radius: 9999px;
+    }
+    body[data-language="ar"] .language-select {
+      direction: rtl;
+      text-align: right;
+      padding: 0.5rem 1.25rem 0.5rem 2.5rem;
+    }
+    body[data-language="ar"] .language-select-wrapper::after {
+      right: auto;
+      left: 1rem;
     }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-full overflow-y-auto">
 
   <nav class="language-toggle" aria-label="Language toggle" data-i18n-attr-aria-label="aria.languageToggle">
-    <div class="language-toggle-group">
-      <button type="button" class="language-toggle-button" data-language="en" aria-pressed="true" data-i18n="toggle.english">English</button>
-      <button type="button" class="language-toggle-button" data-language="ar" aria-pressed="false" data-i18n="toggle.arabic">Arabic</button>
+    <div class="language-select-wrapper">
+      <label for="language-select" class="sr-only" data-i18n="toggle.selectLanguage">Select language</label>
+      <select id="language-select" class="language-select" data-i18n-attr-aria-label="aria.languageToggle">
+        <option value="en" data-i18n="toggle.english">English</option>
+        <option value="ar" data-i18n="toggle.arabic">Arabic</option>
+      </select>
     </div>
   </nav>
 
@@ -867,6 +885,7 @@
       en: {
         'toggle.english': 'English',
         'toggle.arabic': 'Arabic',
+        'toggle.selectLanguage': 'Select language',
         'actions.save': 'Save Progress',
         'actions.submit': 'Submit Timeline',
         'actions.close': 'Close',
@@ -904,6 +923,7 @@
       ar: {
         'toggle.english': 'الإنجليزية',
         'toggle.arabic': 'العربية',
+        'toggle.selectLanguage': 'اختر اللغة',
         'timeline.leadsTo': 'يؤدي إلى',
         'aria.languageToggle': 'تبديل اللغة',
         'hero.timelineAlt': 'مخطط السبب والنتيجة',
@@ -1191,6 +1211,15 @@
           translationStrings.en[translationKey] = el.getAttribute(attrName) || '';
         });
       });
+      const languageSelect = document.getElementById('language-select');
+      if (languageSelect) {
+        Array.from(languageSelect.options).forEach(option => {
+          const labelKey = option.dataset.i18n;
+          if (!labelKey) return;
+          if (translationStrings.en[labelKey]) return;
+          translationStrings.en[labelKey] = option.textContent.trim();
+        });
+      }
       languageState.cached = true;
     }
 
@@ -1242,13 +1271,16 @@
           el.setAttribute(attrName, t(translationKey));
         });
       });
-      document.querySelectorAll('.language-toggle-button').forEach(btn => {
-        const btnLang = btn.dataset.language;
-        const active = btnLang === languageState.current;
-        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-        const labelKey = btn.dataset.i18n;
-        if (labelKey) btn.textContent = t(labelKey);
-      });
+      const languageSelect = document.getElementById('language-select');
+      if (languageSelect) {
+        const selectLabel = document.querySelector('label[for="language-select"][data-i18n]');
+        if (selectLabel) selectLabel.textContent = t(selectLabel.dataset.i18n);
+        Array.from(languageSelect.options).forEach(option => {
+          const labelKey = option.dataset.i18n;
+          if (labelKey) option.textContent = t(labelKey);
+        });
+        languageSelect.value = languageState.current;
+      }
       localStorage.setItem('timeline-language', languageState.current);
     }
 
@@ -1267,12 +1299,13 @@
       cacheEnglishStrings();
       const stored = localStorage.getItem('timeline-language') || 'en';
       applyLanguage(stored);
-      document.querySelectorAll('.language-toggle-button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const targetLang = btn.dataset.language;
+      const languageSelect = document.getElementById('language-select');
+      if (languageSelect) {
+        languageSelect.addEventListener('change', (event) => {
+          const targetLang = event.target.value;
           applyLanguage(targetLang);
         });
-      });
+      }
     });
   </script>
 
