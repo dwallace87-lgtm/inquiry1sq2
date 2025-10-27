@@ -195,9 +195,52 @@
     .stem-sentence-btn .stem-sentence-label {
       line-height: 1;
     }
+    .language-toggle {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem;
+      margin-bottom: -1rem;
+    }
+    .language-toggle-group {
+      display: inline-flex;
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+      background: rgba(15, 23, 42, 0.65);
+    }
+    .language-toggle-button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: #e2e8f0;
+      padding: 0.5rem 1.25rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .language-toggle-button[aria-pressed="true"] {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.45), rgba(6, 182, 212, 0.55));
+      color: #0f172a;
+    }
+    .language-toggle-button:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-200 h-full overflow-y-auto">
+
+  <nav class="language-toggle" aria-label="Language toggle" data-i18n-attr-aria-label="aria.languageToggle">
+    <div class="language-toggle-group">
+      <button type="button" class="language-toggle-button" data-language="en" aria-pressed="true" data-i18n="toggle.english">English</button>
+      <button type="button" class="language-toggle-button" data-language="ar" aria-pressed="false" data-i18n="toggle.arabic">Arabic</button>
+    </div>
+  </nav>
 
   <!-- VERY NOTICEABLE STUDENT INFO BAR -->
   <div class="full-bleed bg-gradient-to-r from-cyan-500/20 via-fuchsia-500/20 to-amber-500/20 border-b border-slate-700">
@@ -205,36 +248,38 @@
       <div class="bg-slate-800/70 border border-slate-700 rounded-2xl p-4 md:p-6 pulse-ring">
         <div class="flex items-center gap-3 mb-4">
           <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500 text-slate-900 font-extrabold text-xl">i</span>
-          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">
+          <h2 id="student-info-heading" class="text-2xl md:text-3xl font-extrabold tracking-tight" data-i18n="studentInfo.heading">
             Enter your name and class period before you start
           </h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           <!-- First Name -->
           <div>
-            <label for="first-name" class="block text-sm font-semibold text-slate-300">First Name</label>
+            <label for="first-name" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.firstNameLabel">First Name</label>
             <input
               id="first-name" name="first_name" type="text" inputmode="text" autocomplete="given-name" required
               data-persist
               placeholder="e.g., Alex"
+              data-i18n-placeholder="studentInfo.firstNamePlaceholder"
               class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
           </div>
           <!-- Last Name -->
           <div>
-            <label for="last-name" class="block text-sm font-semibold text-slate-300">Last Name</label>
+            <label for="last-name" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.lastNameLabel">Last Name</label>
             <input
               id="last-name" name="last_name" type="text" inputmode="text" autocomplete="family-name" required
               data-persist
               placeholder="e.g., Johnson"
+              data-i18n-placeholder="studentInfo.lastNamePlaceholder"
               class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 focus:outline-none">
           </div>
           <!-- Class Period -->
           <div>
-            <label for="class-period" class="block text-sm font-semibold text-slate-300">Class Period</label>
+            <label for="class-period" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.periodLabel">Class Period</label>
             <select
               id="class-period" name="class_period" required data-persist
               class="mt-1 w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-cyan-500 focus:outline-none">
-              <option value="" disabled selected>Select a period</option>
+              <option value="" disabled selected data-i18n="studentInfo.selectPeriod">Select a period</option>
               <option value="3">3</option>
               <option value="5">5</option>
               <option value="6">6</option>
@@ -242,8 +287,8 @@
             </select>
           </div>
         </div>
-        <p class="mt-3 text-sm text-slate-400">
-          Pro tip: Use the “Save Progress” button at the bottom, or just type and I’ll auto-save for you.
+        <p class="mt-3 text-sm text-slate-400" data-i18n="studentInfo.tip">
+          Pro tip: Use the “<span data-i18n="actions.save">Save Progress</span>” button at the bottom, or just type and I’ll auto-save for you.
         </p>
       </div>
     </div>
@@ -252,16 +297,17 @@
   <div class="container mx-auto px-4 py-8 md:py-12 max-w-7xl">
     <!-- Header -->
     <header class="text-center mb-12 md:mb-16">
-      <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-400 via-red-500 to-amber-400 bg-clip-text text-transparent mb-4">
+      <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-teal-400 via-red-500 to-amber-400 bg-clip-text text-transparent mb-4" data-i18n="hero.question">
         SQ2: How did the "Doctrine of Discovery" lead to Manifest Destiny in the United States?
       </h2>
       <img
         src="https://lh3.googleusercontent.com/d/1Biy7nJ1hP5r0J47ukR7CNgzui08jJA3w"
         alt="Cause and Effect Timeline"
+        data-i18n-attr-alt="hero.timelineAlt"
         class="timeline-title mx-auto mb-6"
         loading="lazy"
       >
-      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto">
+      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto" data-i18n="hero.subtitle" data-i18n-type="html">
         A timeline of land acquisition in the United States up to 1956. For each source, identify the
         <span class="text-pink-400 font-medium">Cause</span> and the
         <span class="text-cyan-400 font-medium">Effect</span>.
@@ -270,7 +316,7 @@
 
     <!-- Featured Source A -->
     <div class="max-w-5xl mx-auto mb-6 flex justify-end">
-      <a href="US-Expansion-Idea-to-Country_fixed.html" target="_blank" rel="noopener noreferrer" class="slideshow-btn">
+      <a href="US-Expansion-Idea-to-Country_fixed.html" target="_blank" rel="noopener noreferrer" class="slideshow-btn" data-i18n="hero.slideshow">
         Lesson Slideshow
       </a>
     </div>
@@ -278,12 +324,12 @@
     <div id="source-a-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <h2 class="text-2xl font-bold text-white">SQ2: Featured Source A - Excerpt from "Inter Caetera"</h2>
-          <button type="button" class="context-button" data-source="A" aria-expanded="false">
+          <h2 class="text-2xl font-bold text-white" data-i18n="sourceA.title">SQ2: Featured Source A - Excerpt from "Inter Caetera"</h2>
+          <button type="button" class="context-button" data-source="A" aria-expanded="false" data-i18n="buttons.historicalContext">
             Historical Context
           </button>
         </div>
-        <div class="text-slate-300 space-y-4 leading-relaxed">
+        <div class="text-slate-300 space-y-4 leading-relaxed" data-i18n="sourceA.body" data-i18n-type="html">
           <p>We have indeed learned that you... discovered certain very remote islands and even mainlands that
             <span class="vocab-word" data-vocab="hitherto">hitherto</span> had not been discovered by others; wherein dwell very many peoples living in peace... [...] these very peoples ... seem sufficiently
             <span class="vocab-word" data-vocab="disposed">disposed</span> to embrace the Catholic faith and be trained in good morals.</p>
@@ -293,10 +339,10 @@
             <span class="vocab-word" data-vocab="jurisdictions">jurisdictions</span>, and
             <span class="vocab-word" data-vocab="appurtenances">appurtenances</span>², all islands and mainlands found and to be found, discovered and to be discovered.</p>
           <hr class="border-slate-700">
-          <p class="text-sm text-slate-400"><strong>Source:</strong> The Inter Caetera is a Papal Bull sent from Pope Alexander VI on May 4, 1493</p>
+          <p class="text-sm text-slate-400" data-i18n="sourceA.source" data-i18n-type="html"><strong>Source:</strong> The Inter Caetera is a Papal Bull sent from Pope Alexander VI on May 4, 1493</p>
           <div class="mt-6 flex justify-end">
             <a href="#entry-source-a" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-              <span>Go to Source A Entry</span>
+              <span data-i18n="sourceA.cta">Go to Source A Entry</span>
               <span aria-hidden="true">⤵</span>
             </a>
           </div>
@@ -308,12 +354,12 @@
     <div id="source-b-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <h2 class="text-2xl font-bold text-white">SQ2: Featured Source B - Excerpt from President Andrew Jackson's Message to Congress (1830)</h2>
-          <button type="button" class="context-button" data-source="B" aria-expanded="false">
+          <h2 class="text-2xl font-bold text-white" data-i18n="sourceB.title">SQ2: Featured Source B - Excerpt from President Andrew Jackson's Message to Congress (1830)</h2>
+          <button type="button" class="context-button" data-source="B" aria-expanded="false" data-i18n="buttons.historicalContext">
             Historical Context
           </button>
         </div>
-        <div class="text-slate-300 leading-relaxed">
+        <div class="text-slate-300 leading-relaxed" data-i18n="sourceB.body" data-i18n-type="html">
           <!-- Subtle portrait, original shape, not too small -->
           <img
             src="https://e7.pngegg.com/pngimages/972/220/png-clipart-andrew-jackson-1924-democratic-national-convention-united-states-1832-democratic-national-convention-united-states-head-political-party-thumbnail.png"
@@ -344,11 +390,11 @@
               <span class="vocab-word" data-vocab="perpetual">perpetual</span>.
             </p>
             <hr class="border-slate-700">
-            <p class="text-sm text-slate-400"><strong>Source:</strong> Our Documents, 1830</p>
+          <p class="text-sm text-slate-400" data-i18n="sourceB.source" data-i18n-type="html"><strong>Source:</strong> Our Documents, 1830</p>
           </div>
           <div class="mt-6 flex justify-end">
             <a href="#entry-source-b" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-              <span>Go to Source B Entry</span>
+              <span data-i18n="sourceB.cta">Go to Source B Entry</span>
               <span aria-hidden="true">⤵</span>
             </a>
           </div>
@@ -360,22 +406,22 @@
     <div id="source-c-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <h2 class="text-2xl font-bold text-white">SQ2: Featured Source C - Excerpt from John O'Sullivan, "Annexation" (1845)</h2>
-          <button type="button" class="context-button" data-source="C" aria-expanded="false">
+          <h2 class="text-2xl font-bold text-white" data-i18n="sourceC.title">SQ2: Featured Source C - Excerpt from John O'Sullivan, "Annexation" (1845)</h2>
+          <button type="button" class="context-button" data-source="C" aria-expanded="false" data-i18n="buttons.historicalContext">
             Historical Context
           </button>
         </div>
-        <div class="text-slate-300 space-y-4 leading-relaxed">
+        <div class="text-slate-300 space-y-4 leading-relaxed" data-i18n="sourceC.body" data-i18n-type="html">
           <p>Texas is now ours. Already... her star and her stripe may already be said to have taken their place in the glorious <span class="vocab-word" data-vocab="blazon">blazon</span> of our common nationality; and the sweep of our eagle's wing already includes within its circuit the wide extent of her fair and <span class="vocab-word" data-vocab="fertile">fertile</span> land.</p>
           <p>She is no longer to us a mere <span class="vocab-word" data-vocab="geographical">geographical</span> space... She is no longer to us a mere country on the map. She comes within the dear and sacred <span class="vocab-word" data-vocab="designation">designation</span> of Our Country....</p>
           <p>California will, probably, next fall away from the loose <span class="vocab-word" data-vocab="adhesion">adhesion</span> which, in such a country as Mexico, holds a remote province in a slight <span class="vocab-word" data-vocab="equivocal">equivocal</span> kind of dependence on the metropolis. <span class="vocab-word" data-vocab="Imbecile">Imbecile</span> and distracted, Mexico never can <span class="vocab-word" data-vocab="exert">exert</span> any real governmental authority over such a country....</p>
           <p>A population will soon be in actual occupation of California, over which it will be idle for Mexico to dream of <span class="vocab-word" data-vocab="dominion">dominion</span>. ...this without <span class="vocab-word" data-vocab="agency">agency</span> of our government...in the natural flow of events, the <span class="vocab-word" data-vocab="spontaneous">spontaneous</span> working of principles...they will have a right to independence...a better and truer right than the artificial <span class="vocab-word" data-vocab="sovereignty">sovereignty</span> in Mexico... their right to independence will be the natural right of self-government... there can be no doubt that the population now fast <span class="vocab-word" data-vocab="streaming">streaming</span> down upon California will both assert and maintain that independence. Whether they will then attach themselves to our Union or not is not to be predicted with any certainty.</p>
           <hr class="border-slate-700">
-          <p class="text-sm text-slate-400"><strong>Source:</strong> Bill of Rights Institute</p>
+          <p class="text-sm text-slate-400" data-i18n="sourceC.source" data-i18n-type="html"><strong>Source:</strong> Bill of Rights Institute</p>
         </div>
         <div class="mt-6 flex justify-end">
           <a href="#entry-source-c" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-            <span>Go to Source C Entry</span>
+            <span data-i18n="sourceC.cta">Go to Source C Entry</span>
             <span aria-hidden="true">⤵</span>
           </a>
         </div>
@@ -386,12 +432,12 @@
     <div id="source-d-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <h2 class="text-2xl font-bold text-white">SQ2: Featured Source D – United States Map (1842–1845)</h2>
-          <button type="button" class="context-button" data-source="D" aria-expanded="false">
+          <h2 class="text-2xl font-bold text-white" data-i18n="sourceD.title">SQ2: Featured Source D – United States Map (1842–1845)</h2>
+          <button type="button" class="context-button" data-source="D" aria-expanded="false" data-i18n="buttons.historicalContext">
             Historical Context
           </button>
         </div>
-        <div class="text-slate-300 leading-relaxed space-y-4">
+        <div class="text-slate-300 leading-relaxed space-y-4" data-i18n="sourceD.body" data-i18n-type="html">
           <p class="text-slate-400 text-sm">Click the map to open the full-size image in a new tab.</p>
           <a
             href="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png?20071118003821"
@@ -404,11 +450,11 @@
             />
           </a>
           <hr class="border-slate-700">
-          <p class="text-sm text-slate-400"><strong>Source:</strong> Wikimedia Commons</p>
+          <p class="text-sm text-slate-400" data-i18n="sourceD.source" data-i18n-type="html"><strong>Source:</strong> Wikimedia Commons</p>
         </div>
         <div class="mt-6 flex justify-end">
           <a href="#entry-source-d" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-            <span>Go to Source D Entry</span>
+            <span data-i18n="sourceD.cta">Go to Source D Entry</span>
             <span aria-hidden="true">⤵</span>
           </a>
         </div>
@@ -419,12 +465,12 @@
     <div id="source-e-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <h2 class="text-2xl font-bold text-white">SQ2: Featured Source E - Robert J. Miller, <em>Native America, Discovered and Conquered</em> (2008)</h2>
-          <button type="button" class="context-button" data-source="E" aria-expanded="false">
+          <h2 class="text-2xl font-bold text-white" data-i18n="sourceE.title">SQ2: Featured Source E - Robert J. Miller, <em>Native America, Discovered and Conquered</em> (2008)</h2>
+          <button type="button" class="context-button" data-source="E" aria-expanded="false" data-i18n="buttons.historicalContext">
             Historical Context
           </button>
         </div>
-        <div class="text-slate-300 space-y-4 leading-relaxed">
+        <div class="text-slate-300 space-y-4 leading-relaxed" data-i18n="sourceE.body" data-i18n-type="html">
           <p>
             Legal scholar Robert J. Miller traces how the Doctrine of Discovery migrated from fifteenth-century papal bulls into United States policy.
             He explains that leaders such as Thomas Jefferson applied the doctrine to justify exploration, surveying, and the claiming of Indigenous homelands across the continent.
@@ -434,11 +480,11 @@
             By embedding the doctrine in federal law and Supreme Court rulings, the United States asserted a superior title over Native nations and laid the groundwork for Manifest Destiny.
           </p>
           <hr class="border-slate-700">
-          <p class="text-sm text-slate-400"><strong>Source:</strong> Robert J. Miller, <em>Native America, Discovered and Conquered</em>, 2008</p>
+          <p class="text-sm text-slate-400" data-i18n="sourceE.source" data-i18n-type="html"><strong>Source:</strong> Robert J. Miller, <em>Native America, Discovered and Conquered</em>, 2008</p>
         </div>
         <div class="mt-6 flex justify-end">
           <a href="#entry-source-e" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-cyan-100 bg-cyan-500/20 border border-cyan-400/40 rounded-lg shadow-sm hover:bg-cyan-500/30 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-900 transition">
-            <span>Go to Source E Entry</span>
+            <span data-i18n="sourceE.cta">Go to Source E Entry</span>
             <span aria-hidden="true">⤵</span>
           </a>
         </div>
@@ -450,58 +496,58 @@
       <section id="entry-source-a">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryA.title">
               Source A: Pope Alexander VI, "Inter Caetera Bull of May 4, 1493 (Doctrine of Discovery)"
             </h2>
           </div>
 
           <div class="flex items-center gap-4 mb-3">
-            <label for="date-a" class="block text-3xl font-bold text-slate-400">Event</label>
+            <label for="date-a" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-a" data-stem="The Pope issued a 'Papal Bull' that... ">
               <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-              <span class="stem-sentence-label">Writing Context</span>
+              <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
             </button>
           </div>
-          <textarea id="date-a" name="date-a" rows="1" data-persist placeholder="e.g., Papal bull grants land to Spain" class="auto-expand w-full textarea-event mb-8"></textarea>
+          <textarea id="date-a" name="date-a" rows="1" data-persist placeholder="e.g., Papal bull grants land to Spain" data-i18n-placeholder="entryA.eventPlaceholder" class="auto-expand w-full textarea-event mb-8"></textarea>
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="cause-a" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <label for="cause-a" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-a" data-stem="The primary motivation for this doctrine was... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What motivated this doctrine? Think about exploration and religion.</p>
-              <textarea id="cause-a" name="cause-a" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryA.causePrompt">What motivated this doctrine? Think about exploration and religion.</p>
+              <textarea id="cause-a" name="cause-a" rows="3" data-persist placeholder="What led to this event?" data-i18n-placeholder="entries.causePlaceholder" class="auto-expand w-full textarea-cause"></textarea>
             </div>
 
             <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
               <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
-              <span class="sr-only">Leads to</span>
+              <span class="sr-only" data-i18n="timeline.leadsTo">Leads to</span>
             </div>
 
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="effect-a" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <label for="effect-a" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-a" data-stem="As a result, European nations were given the power to... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What power did this give European nations? How did it view native land?</p>
-              <textarea id="effect-a" name="effect-a" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryA.effectPrompt">What power did this give European nations? How did it view native land?</p>
+              <textarea id="effect-a" name="effect-a" rows="3" data-persist placeholder="What happened because of this event?" data-i18n-placeholder="entries.effectPlaceholder" class="auto-expand w-full textarea-effect"></textarea>
             </div>
           </div>
 
           <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <a href="#source-a-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
-              <span>Back to Source A Reading</span>
+              <span data-i18n="entryA.backToReading">Back to Source A Reading</span>
             </a>
             <a href="#entry-source-b" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
-              <span>Continue to next Cause</span>
+              <span data-i18n="entries.nextCause">Continue to next Cause</span>
               <span aria-hidden="true">↘</span>
             </a>
           </div>
@@ -511,58 +557,58 @@
       <section id="entry-source-b">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryB.title">
               Source B: President Andrew Jackson's Message to Congress on Indian Removal, 6 Dec 1830
             </h2>
           </div>
 
           <div class="flex items-center gap-4 mb-3">
-            <label for="date-b" class="block text-3xl font-bold text-slate-400">Event</label>
+            <label for="date-b" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-b" data-stem="President Jackson proposed a policy to... ">
               <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-              <span class="stem-sentence-label">Writing Context</span>
+              <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
             </button>
           </div>
-          <textarea id="date-b" name="date-b" rows="1" data-persist placeholder="e.g., Jackson's policy proposal" class="auto-expand w-full textarea-event mb-8"></textarea>
+          <textarea id="date-b" name="date-b" rows="1" data-persist placeholder="e.g., Jackson's policy proposal" data-i18n-placeholder="entryB.eventPlaceholder" class="auto-expand w-full textarea-event mb-8"></textarea>
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="cause-b" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <label for="cause-b" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-b" data-stem="This policy was caused by... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
-              <textarea id="cause-b" name="cause-b" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryB.causePrompt">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
+              <textarea id="cause-b" name="cause-b" rows="3" data-persist placeholder="What led to this event?" data-i18n-placeholder="entries.causePlaceholder" class="auto-expand w-full textarea-cause"></textarea>
             </div>
 
             <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
               <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
-              <span class="sr-only">Leads to</span>
+              <span class="sr-only" data-i18n="timeline.leadsTo">Leads to</span>
             </div>
 
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="effect-b" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <label for="effect-b" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-b" data-stem="The immediate effect of this policy was... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
-              <textarea id="effect-b" name="effect-b" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryB.effectPrompt">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
+              <textarea id="effect-b" name="effect-b" rows="3" data-persist placeholder="What happened because of this event?" data-i18n-placeholder="entries.effectPlaceholder" class="auto-expand w-full textarea-effect"></textarea>
             </div>
           </div>
 
           <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <a href="#source-b-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
-              <span>Back to Source B Reading</span>
+              <span data-i18n="entryB.backToReading">Back to Source B Reading</span>
             </a>
             <a href="#entry-source-c" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
-              <span>Continue to next Cause</span>
+              <span data-i18n="entries.nextCause">Continue to next Cause</span>
               <span aria-hidden="true">↘</span>
             </a>
           </div>
@@ -572,58 +618,58 @@
       <section id="entry-source-c">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryC.title">
               Source C: John O'Sullivan, "Annexation," 1845
             </h2>
           </div>
 
           <div class="flex items-center gap-4 mb-3">
-            <label for="date-c" class="block text-3xl font-bold text-slate-400">Event</label>
+            <label for="date-c" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-c" data-stem="John O'Sullivan argued that America should... ">
               <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-              <span class="stem-sentence-label">Writing Context</span>
+              <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
             </button>
           </div>
-          <textarea id="date-c" name="date-c" rows="1" data-persist placeholder="e.g., O'Sullivan's argument for annexation" class="auto-expand w-full textarea-event mb-8"></textarea>
+          <textarea id="date-c" name="date-c" rows="1" data-persist placeholder="e.g., O'Sullivan's argument for annexation" data-i18n-placeholder="entryC.eventPlaceholder" class="auto-expand w-full textarea-event mb-8"></textarea>
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="cause-c" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <label for="cause-c" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-c" data-stem="This idea was based on a belief that... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
-              <textarea id="cause-c" name="cause-c" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryC.causePrompt">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
+              <textarea id="cause-c" name="cause-c" rows="3" data-persist placeholder="What led to this event?" data-i18n-placeholder="entries.causePlaceholder" class="auto-expand w-full textarea-cause"></textarea>
             </div>
 
             <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
               <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
-              <span class="sr-only">Leads to</span>
+              <span class="sr-only" data-i18n="timeline.leadsTo">Leads to</span>
             </div>
 
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="effect-c" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <label for="effect-c" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-c" data-stem="The idea of Manifest Destiny led to... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
-              <textarea id="effect-c" name="effect-c" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryC.effectPrompt">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
+              <textarea id="effect-c" name="effect-c" rows="3" data-persist placeholder="What happened because of this event?" data-i18n-placeholder="entries.effectPlaceholder" class="auto-expand w-full textarea-effect"></textarea>
             </div>
           </div>
 
           <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <a href="#source-c-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
-              <span>Back to Source C Reading</span>
+              <span data-i18n="entryC.backToReading">Back to Source C Reading</span>
             </a>
             <a href="#entry-source-d" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
-              <span>Continue to next Cause</span>
+              <span data-i18n="entries.nextCause">Continue to next Cause</span>
               <span aria-hidden="true">↘</span>
             </a>
           </div>
@@ -633,58 +679,58 @@
       <section id="entry-source-d">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
+            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryD.title">
               Source D: United States, 1842-1856 Map
             </h2>
           </div>
 
           <div class="flex items-center gap-4 mb-3">
-            <label for="date-d" class="block text-3xl font-bold text-slate-400">Event</label>
+            <label for="date-d" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-d" data-stem="The map illustrates... ">
               <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-              <span class="stem-sentence-label">Writing Context</span>
+              <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
             </button>
           </div>
-          <textarea id="date-d" name="date-d" rows="1" data-persist placeholder="e.g., U.S. territorial expansion shown on map" class="auto-expand w-full textarea-event mb-8"></textarea>
+          <textarea id="date-d" name="date-d" rows="1" data-persist placeholder="e.g., U.S. territorial expansion shown on map" data-i18n-placeholder="entryD.eventPlaceholder" class="auto-expand w-full textarea-event mb-8"></textarea>
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="cause-d" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <label for="cause-d" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-d" data-stem="These new borders were the result of... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
-              <textarea id="cause-d" name="cause-d" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryD.causePrompt">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
+              <textarea id="cause-d" name="cause-d" rows="3" data-persist placeholder="What led to this event?" data-i18n-placeholder="entries.causePlaceholder" class="auto-expand w-full textarea-cause"></textarea>
             </div>
 
             <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
               <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
-              <span class="sr-only">Leads to</span>
+              <span class="sr-only" data-i18n="timeline.leadsTo">Leads to</span>
             </div>
 
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="effect-d" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <label for="effect-d" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-d" data-stem="This map shows the physical result, which was... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
-              <textarea id="effect-d" name="effect-d" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryD.effectPrompt">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
+              <textarea id="effect-d" name="effect-d" rows="3" data-persist placeholder="What happened because of this event?" data-i18n-placeholder="entries.effectPlaceholder" class="auto-expand w-full textarea-effect"></textarea>
             </div>
           </div>
 
           <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <a href="#source-d-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
-              <span>Back to Source D Reading</span>
+              <span data-i18n="entryD.backToReading">Back to Source D Reading</span>
             </a>
             <a href="#entry-source-e" class="hidden sm:inline-flex items-center gap-3 text-xl font-semibold text-slate-400 hover:text-slate-200 transition">
-              <span>Continue to next Cause</span>
+              <span data-i18n="entries.nextCause">Continue to next Cause</span>
               <span aria-hidden="true">↘</span>
             </a>
           </div>
@@ -694,58 +740,58 @@
       <section id="entry-source-e">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight">
-              Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
-            </h2>
+          <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryE.title">
+            Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
+          </h2>
           </div>
 
           <div class="flex items-center gap-4 mb-3">
-            <label for="date-e" class="block text-3xl font-bold text-slate-400">Event</label>
+            <label for="date-e" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-e" data-stem="The historian Robert J. Miller explains how... ">
               <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-              <span class="stem-sentence-label">Writing Context</span>
+              <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
             </button>
           </div>
-          <textarea id="date-e" name="date-e" rows="1" data-persist placeholder="e.g., Miller's analysis of Manifest Destiny" class="auto-expand w-full textarea-event mb-8"></textarea>
+          <textarea id="date-e" name="date-e" rows="1" data-persist placeholder="e.g., Miller's analysis of Manifest Destiny" data-i18n-placeholder="entryE.eventPlaceholder" class="auto-expand w-full textarea-event mb-8"></textarea>
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="cause-e" class="block text-3xl font-bold text-pink-400">Cause</label>
+                <label for="cause-e" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-e" data-stem="According to Miller, the legal foundation for this was... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
-              <textarea id="cause-e" name="cause-e" rows="3" data-persist placeholder="What led to this event?" class="auto-expand w-full textarea-cause"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryE.causePrompt">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
+              <textarea id="cause-e" name="cause-e" rows="3" data-persist placeholder="What led to this event?" data-i18n-placeholder="entries.causePlaceholder" class="auto-expand w-full textarea-cause"></textarea>
             </div>
 
             <div class="arrow-container-horizontal sm:pt-16 flex items-center justify-center">
               <div class="gradient-arrow-horizontal" aria-hidden="true"></div>
-              <span class="sr-only">Leads to</span>
+              <span class="sr-only" data-i18n="timeline.leadsTo">Leads to</span>
             </div>
 
             <div>
               <div class="flex items-center gap-4 mb-3">
-                <label for="effect-e" class="block text-3xl font-bold text-cyan-400">Effect</label>
+                <label for="effect-e" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-e" data-stem="Miller's analysis connects these sources by showing that... ">
                   <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
-                  <span class="stem-sentence-label">Writing Context</span>
+                  <span class="stem-sentence-label" data-i18n="buttons.writingHelpLabel">Writing Help</span>
                 </button>
               </div>
-              <p class="text-lg text-slate-400 italic mt-0 mb-4">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
-              <textarea id="effect-e" name="effect-e" rows="3" data-persist placeholder="What happened because of this event?" class="auto-expand w-full textarea-effect"></textarea>
+              <p class="text-lg text-slate-400 italic mt-0 mb-4" data-i18n="entryE.effectPrompt">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
+              <textarea id="effect-e" name="effect-e" rows="3" data-persist placeholder="What happened because of this event?" data-i18n-placeholder="entries.effectPlaceholder" class="auto-expand w-full textarea-effect"></textarea>
             </div>
           </div>
 
           <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <a href="#source-e-doc" class="inline-flex items-center gap-3 text-xl font-semibold text-cyan-300 hover:text-cyan-100 transition">
               <span aria-hidden="true">⤴</span>
-              <span>Back to Source E Reading</span>
+              <span data-i18n="entryE.backToReading">Back to Source E Reading</span>
             </a>
             <div class="flex items-center gap-3 text-xl text-slate-500">
-              <span>End of timeline entries</span>
+              <span data-i18n="entries.endOfTimeline">End of timeline entries</span>
             </div>
             <span></span>
           </div>
@@ -756,13 +802,13 @@
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-3 md:gap-4">
           <button id="save-btn" type="button"
             class="w-full md:w-auto bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 px-6 rounded-full shadow transition">
-            Save Progress
+            <span data-i18n="actions.save">Save Progress</span>
           </button>
           <button id="submit-btn" type="submit"
             class="w-full md:w-auto bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition">
-            Submit Timeline
+            <span data-i18n="actions.submit">Submit Timeline</span>
           </button>
-          <span id="save-status" class="ml-0 md:ml-2 text-sm text-slate-400">Not saved</span>
+          <span id="save-status" class="ml-0 md:ml-2 text-sm text-slate-400" data-i18n="status.notSaved">Not saved</span>
         </div>
       </div>
     </form>
@@ -773,9 +819,9 @@
   <!-- Success Modal -->
   <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center border border-slate-700">
-      <h3 class="text-2xl font-bold text-white mb-4">Submitted!</h3>
-      <p class="text-slate-300 mb-6">Your timeline has been recorded.</p>
-      <button id="close-modal" class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-6 rounded-full transition">Close</button>
+      <h3 class="text-2xl font-bold text-white mb-4" data-i18n="modal.submittedHeading">Submitted!</h3>
+      <p class="text-slate-300 mb-6" data-i18n="modal.submittedBody">Your timeline has been recorded.</p>
+      <button id="close-modal" class="bg-cyan-500 hover:bg-cyan-600 text-white font-medium py-2 px-6 rounded-full transition"><span data-i18n="actions.close">Close</span></button>
     </div>
   </div>
 
@@ -788,16 +834,16 @@
         <div class="p-6 md:p-10 space-y-8">
           <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-cyan-300/80">What's going on at the time?</p>
-              <h3 id="context-title" class="mt-2 text-3xl font-bold text-white leading-tight">Historical Context</h3>
-              <p class="mt-3 text-sm text-slate-400 max-w-md">Use this panel to anchor each source in the larger story before you write your cause and effect.</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-cyan-300/80" data-i18n="contextModal.ribbon">What's going on at the time?</p>
+              <h3 id="context-title" class="mt-2 text-3xl font-bold text-white leading-tight" data-i18n="contextModal.title">Historical Context</h3>
+              <p class="mt-3 text-sm text-slate-400 max-w-md" data-i18n="contextModal.instructions">Use this panel to anchor each source in the larger story before you write your cause and effect.</p>
             </div>
             <button type="button" id="close-context-modal" class="self-start inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-800/60 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-pink-400/70 hover:bg-pink-500/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-pink-400/70 focus:ring-offset-2 focus:ring-offset-slate-900">
               <span aria-hidden="true">✕</span>
-              <span>Close</span>
+              <span data-i18n="actions.close">Close</span>
             </button>
           </div>
-          <div id="context-body" class="space-y-6"><p class="text-slate-300">Loading context...</p></div>
+          <div id="context-body" class="space-y-6" data-i18n="contextModal.loading" data-i18n-type="html"><p class="text-slate-300">Loading context...</p></div>
         </div>
       </div>
     </div>
@@ -806,15 +852,429 @@
   <!-- Vocab Modal -->
   <div id="vocab-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
     <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl max-w-md w-full text-left border border-slate-700">
-      <h3 id="vocab-title" class="text-2xl font-bold text-yellow-300 mb-4 capitalize">Vocabulary Word</h3>
-      <div id="vocab-body" class="text-slate-300 mb-6 space-y-4"><p>Loading definition...</p></div>
-      <button id="close-vocab-modal" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-full transition">Close</button>
+      <h3 id="vocab-title" class="text-2xl font-bold text-yellow-300 mb-4 capitalize" data-i18n="vocabModal.title">Vocabulary Word</h3>
+      <div id="vocab-body" class="text-slate-300 mb-6 space-y-4" data-i18n="vocabModal.loading" data-i18n-type="html"><p>Loading definition...</p></div>
+      <button id="close-vocab-modal" class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-6 rounded-full transition"><span data-i18n="actions.close">Close</span></button>
     </div>
   </div>
 
   <footer class="mt-16">
     <div class="container mx-auto px-4 pb-10 max-w-7xl"></div>
   </footer>
+
+  <script>
+    const translationStrings = {
+      en: {
+        'toggle.english': 'English',
+        'toggle.arabic': 'Arabic',
+        'actions.save': 'Save Progress',
+        'actions.submit': 'Submit Timeline',
+        'actions.close': 'Close',
+        'entries.endOfTimeline': 'End of timeline entries',
+        'integrity.reminder': 'Friendly reminder: copy/paste, dragging, and right click are disabled so we can see your own thinking.',
+        'integrity.returnNotice': 'Thanks for hopping back! We noticed the tab switch—your progress is being monitored to keep things fair.',
+        'timeline.leadsTo': 'Leads to',
+        'aria.languageToggle': 'Language toggle',
+        'hero.timelineAlt': 'Cause and Effect Timeline',
+        'status.saveFailed': 'Save failed',
+        'status.noSavedProgress': 'No saved progress',
+        'status.restored': 'Progress restored',
+        'status.loadFailed': 'Could not load saved progress',
+        'status.savedAt': 'Saved at {time} {period}',
+        'status.notSaved': 'Not saved',
+        'ampm.am': 'AM',
+        'ampm.pm': 'PM',
+        'form.enterName': 'Please enter name and class period',
+        'errors.submitFailed': 'Submission failed. Please try again.',
+        'modal.submittedHeading': 'Submitted!',
+        'modal.submittedBody': 'Your timeline has been recorded.',
+        'contextModal.ribbon': "What's going on at the time?",
+        'contextModal.title': 'Historical Context',
+        'contextModal.instructions': 'Use this panel to anchor each source in the larger story before you write your cause and effect.',
+        'contextModal.loading': '<p class="text-slate-300">Loading context...</p>',
+        'contextModal.spotlightLabel': 'Source Spotlight',
+        'contextModal.sceneLabel': 'Scene',
+        'contextModal.connectionLabel': 'Connection',
+        'contextModal.sceneSetter': 'Scene Setter',
+        'contextModal.keyMove': 'Key Move',
+        'contextModal.thinkAbout': 'Think About',
+        'vocabModal.title': 'Vocabulary Word',
+        'vocabModal.loading': '<p>Loading definition...</p>'
+      },
+      ar: {
+        'toggle.english': 'الإنجليزية',
+        'toggle.arabic': 'العربية',
+        'timeline.leadsTo': 'يؤدي إلى',
+        'aria.languageToggle': 'تبديل اللغة',
+        'hero.timelineAlt': 'مخطط السبب والنتيجة',
+        'studentInfo.heading': 'أدخل اسمك وفترة الصف قبل أن تبدأ',
+        'studentInfo.firstNameLabel': 'الاسم الأول',
+        'studentInfo.lastNameLabel': 'اسم العائلة',
+        'studentInfo.periodLabel': 'فترة الصف',
+        'studentInfo.selectPeriod': 'اختر الفترة',
+        'studentInfo.tip': 'نصيحة: استخدم زر «حفظ التقدم» في الأسفل، أو اكتب فقط وسأحفظ لك تلقائيًا.',
+        'hero.question': 'سؤال الوحدة 2: كيف أدت «عقيدة الاكتشاف» إلى المصير المتجلي في الولايات المتحدة؟',
+        'hero.subtitle': 'جدول زمني لعمليات الاستحواذ على الأراضي في الولايات المتحدة حتى عام 1956. لكل مصدر، حدد <span class="text-pink-400 font-medium">السبب</span> و<span class="text-cyan-400 font-medium">النتيجة</span>.',
+        'hero.slideshow': 'عرض الدرس التقديمي',
+        'buttons.historicalContext': 'السياق التاريخي',
+        'sourceA.title': 'سؤال الوحدة 2: المصدر المميز أ - مقتطف من «إنتر كايترا»',
+        'sourceA.body': '<p>لقد علمنا بالفعل أنك... اكتشفت جزرًا بعيدة جدًا بل وحتى أراضي رئيسية لم يكتشفها الآخرون <span class="vocab-word" data-vocab="hitherto">حتى الآن</span>؛ حيث يعيش العديد من الشعوب في سلام... [...] ويبدو أن هؤلاء الشعوب أنفسهم <span class="vocab-word" data-vocab="disposed">ميّالون</span> بما يكفي لاعتناق الإيمان الكاثوليكي والتدرّب على الأخلاق الحميدة.</p><p>ولكي تتمكن من الشروع في هذا العمل العظيم... وبنعمة <span class="vocab-word" data-vocab="apostolic favor">فضلنا الرسولي</span>، فإننا... نعطيك ونمنحك ونخصص لك ولورثتك وخلفائك... جميع <span class="vocab-word" data-vocab="dominions">أقاليمهم</span> ومدنهم ومخيماتهم وأماكنهم وقراهم، وكل <span class="vocab-word" data-vocab="jurisdictions">الصلاحيات القضائية</span> و<span class="vocab-word" data-vocab="appurtenances">الملحقات</span>²، وجميع الجزر والبراري التي وُجدت أو ستُكتشف.</p>',
+        'sourceA.source': '<strong>المصدر:</strong> «إنتر كايترا» مرسوم بابوي أرسله البابا ألكسندر السادس في 4 مايو 1493',
+        'sourceA.cta': 'انتقل إلى إدخال المصدر أ',
+        'sourceB.title': 'سؤال الوحدة 2: المصدر المميز ب - مقتطف من رسالة الرئيس أندرو جاكسون إلى الكونغرس (1830)',
+        'sourceB.body': '<p>يسعدني أن أعلن للكونغرس أن السياسة <span class="vocab-word" data-vocab="benevolent">الخَيِّرة</span> للحكومة... المتعلقة بنقل الهنود إلى ما وراء المستوطنات البيضاء تقترب من <span class="vocab-word" data-vocab="consummation">تحقق سعيد</span>. ... ويُعتقد أن مثالهم سيُ <span class="vocab-word" data-vocab="induce">حفّز</span> القبائل الباقية أيضًا لطلب المزايا الواضحة نفسها.</p><p>ستكون عواقب النقل السريع مهمة للولايات المتحدة، وللولايات الفردية، وللأمم الهندية نفسها. إن المزايا <span class="vocab-word" data-vocab="pecuniary">المالية</span> التي تعد بها الحكومة هي أقل توصياتها. فهي تنهي كل احتمال للاصطدام... وستضع سكانًا كثيفين ومتحضرين في <span class="vocab-word" data-vocab="tracts">مساحات</span> واسعة من البلاد التي يشغلها الآن عدد قليل من الصيادين المتوحشين.</p><p>لقد <span class="vocab-word" data-vocab="annihilated">أُبيدت</span> القبائل التي كانت تشغل البلدان التي تشكل الآن الولايات الشرقية أو ذابت لإفساح المجال للبيض. ... نحن الآن نقترح اكتساب البلدان التي يشغلها الرجال الحمر في الجنوب والغرب من خلال تبادل عادل، وعلى نفقة الولايات المتحدة، وإرسالهم إلى أرض يمكن أن تمتد فيها حياتهم وربما تصبح <span class="vocab-word" data-vocab="perpetual">دائمة</span>.</p>',
+        'sourceB.source': '<strong>المصدر:</strong> وثائقنا، 1830',
+        'sourceB.cta': 'انتقل إلى إدخال المصدر ب',
+        'sourceC.title': 'سؤال الوحدة 2: المصدر المميز ج - مقتطف من جون أوسوليفان، «الضم» (1845)',
+        'sourceC.body': '<p>أصبحت تكساس لنا الآن. إن نجمتها ورايتها قد اتخذتا مكانهما بالفعل في <span class="vocab-word" data-vocab="blazon">شعار</span> قوميتنا المجيدة؛ وجناح نسرنا يشمل بالفعل امتداد أراضيها الواسعة <span class="vocab-word" data-vocab="fertile">الخصبة</span>.</p><p>لم تعد بالنسبة لنا مجرد مساحة <span class="vocab-word" data-vocab="geographical">جغرافية</span>... لم تعد مجرد بلد على الخريطة. لقد أصبحت ضمن <span class="vocab-word" data-vocab="designation">تسمية</span> وطننا العزيزة والمقدسة....</p><p>من المحتمل أن تنفصل كاليفورنيا قريبًا عن <span class="vocab-word" data-vocab="adhesion">التشبث</span> الضعيف الذي، في بلد مثل المكسيك، يبقي مقاطعة بعيدة في تبعية <span class="vocab-word" data-vocab="equivocal">غامضة</span> على العاصمة. فالمكسيك <span class="vocab-word" data-vocab="Imbecile">العاجزة</span> والمضطربة لا يمكنها أن <span class="vocab-word" data-vocab="exert">تمارس</span> أي سلطة حكومية حقيقية على مثل هذا البلد....</p><p>سيكون هناك قريبًا سكان فعليون في كاليفورنيا، ومن العبث أن تحلم المكسيك <span class="vocab-word" data-vocab="dominion">بسيادة</span> عليهم. ... من دون أي <span class="vocab-word" data-vocab="agency">دور</span> لحكومتنا... وفي التدفق الطبيعي للأحداث، و<span class="vocab-word" data-vocab="spontaneous">العمل التلقائي</span> للمبادئ... سيكون لهم حق في الاستقلال... حق أفضل وأصدق من <span class="vocab-word" data-vocab="sovereignty">السيادة</span> المصطنعة للمكسيك... وسيكون حقهم في الاستقلال هو الحق الطبيعي في حكم أنفسهم... ولا شك أن السكان الذين <span class="vocab-word" data-vocab="streaming">يتدفقون</span> بسرعة على كاليفورنيا سيعلنون ذلك الاستقلال ويحافظون عليه. ولا يمكن التنبؤ بيقين إذا كانوا سيضمون أنفسهم إلى اتحادنا بعد ذلك أم لا.</p>',
+        'sourceC.source': '<strong>المصدر:</strong> معهد وثيقة الحقوق',
+        'sourceC.cta': 'انتقل إلى إدخال المصدر ج',
+        'sourceD.title': 'سؤال الوحدة 2: المصدر المميز د – خريطة الولايات المتحدة (1842–1845)',
+        'sourceD.body': '<p class="text-slate-400 text-sm">انقر على الخريطة لفتح الصورة بالحجم الكامل في علامة تبويب جديدة.</p><a
+            href="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png?20071118003821"
+            target="_blank" rel="noopener noreferrer" class="group block">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png?20071118003821"
+              alt="خريطة أراضي الولايات المتحدة، 1842–1845"
+              class="w-full h-auto rounded-xl border border-slate-700/70 shadow-lg group-hover:shadow-cyan-500/10 transition"
+              loading="lazy" decoding="async"
+            />
+          </a><hr class="border-slate-700">',
+        'sourceD.source': '<strong>المصدر:</strong> ويكيميديا كومنز',
+        'sourceD.cta': 'انتقل إلى إدخال المصدر د',
+        'sourceE.title': 'سؤال الوحدة 2: المصدر المميز هـ - روبرت ج. ميلر، <em>أمريكا الأصلية، مكتشفة ومقهورة</em> (2008)',
+        'sourceE.body': '<p>يتتبع عالم القانون روبرت ج. ميلر كيف انتقلت عقيدة الاكتشاف من المراسيم البابوية في القرن الخامس عشر إلى السياسة الأمريكية. وهو يوضح أن قادة مثل توماس جيفرسون طبقوا العقيدة لتبرير الاستكشاف والمسح وادعاء أوطان الشعوب الأصلية في جميع أنحاء القارة.</p><p>ويجادل ميلر بأن المبادئ نفسها واصلت التأثير في التوسع الأمريكي خلال القرن التاسع عشر وما بعده. ومن خلال ترسيخ العقيدة في القانون الفيدرالي وأحكام المحكمة العليا، ادعت الولايات المتحدة حقًا أعلى على الأمم الأصلية ومهّدت الطريق للمصير المتجلي.</p>',
+        'sourceE.source': '<strong>المصدر:</strong> روبرت ج. ميلر، <em>أمريكا الأصلية، مكتشفة ومقهورة</em>، 2008',
+        'sourceE.cta': 'انتقل إلى إدخال المصدر هـ',
+        'entries.eventLabel': 'الحدث',
+        'entries.causeLabel': 'السبب',
+        'entries.effectLabel': 'النتيجة',
+        'entries.nextCause': 'تابع إلى السبب التالي',
+        'entryA.title': 'المصدر أ: البابا ألكسندر السادس، «مرسوم إنتر كايترا» في 4 مايو 1493 (عقيدة الاكتشاف)',
+        'entryA.causePrompt': 'ما الذي دفع إلى هذه العقيدة؟ فكّر في دوافع الاستكشاف والدين.',
+        'entryA.effectPrompt': 'ما السلطة التي منحها ذلك للأوروبيين؟ وكيف نظر إلى أراضي الشعوب الأصلية؟',
+        'entryA.backToReading': 'العودة إلى قراءة المصدر أ',
+        'entryB.title': 'المصدر ب: رسالة الرئيس أندرو جاكسون إلى الكونغرس حول الإزالة الهندية، 6 ديسمبر 1830',
+        'entryB.causePrompt': 'ما الأفكار من المصدر أ قد تبرر ذلك؟ وما الضغط المباشر (مثل الأرض للمستوطنين)؟',
+        'entryB.effectPrompt': 'ما النتيجة الفورية على القبائل؟ وما الأثر طويل المدى على التوسع الأمريكي؟',
+        'entryB.backToReading': 'العودة إلى قراءة المصدر ب',
+        'entryC.title': 'المصدر ج: جون أوسوليفان، «الضم»، 1845',
+        'entryC.causePrompt': 'كيف يرتبط هذا الفكرة بمفهوم «الاكتشاف» (المصدر أ) والإزالة (المصدر ب)؟',
+        'entryC.effectPrompt': 'كيف شكّلت فكرة «المصير المتجلي» السياسات والرأي العام في الولايات المتحدة؟',
+        'entryC.backToReading': 'العودة إلى قراءة المصدر ج',
+        'entryD.title': 'المصدر د: الولايات المتحدة، خريطة 1842-1856',
+        'entryD.causePrompt': 'ما الأحداث المحددة (حروب، معاهدات، مشتريات) التي أدت إلى الحدود الجديدة المعروضة؟',
+        'entryD.effectPrompt': 'ماذا تُظهر هذه الخريطة بوصفه النتيجة المادية للأفكار في المصادر أ، ب، ج؟',
+        'entryD.backToReading': 'العودة إلى قراءة المصدر د',
+        'entryE.title': 'المصدر هـ: روبرت ج. ميلر، «أمريكا الأصلية، مكتشفة ومقهورة: توماس جيفرسون، لويس وكلارك، والمصير المتجلي»',
+        'entryE.causePrompt': 'وفقًا لميلر، ما الأساس الفكري أو القانوني للمصير المتجلي؟',
+        'entryE.effectPrompt': 'كيف يربط تحليل ميلر بين جميع المصادر (أ، ب، ج، د)؟',
+        'entryE.backToReading': 'العودة إلى قراءة المصدر هـ',
+        'entries.endOfTimeline': 'نهاية إدخالات المخطط الزمني',
+        'integrity.reminder': 'تذكير ودي: تم تعطيل النسخ واللصق والسحب والنقر بزر الفأرة الأيمن حتى نتمكن من رؤية أفكارك أنت.',
+        'integrity.returnNotice': 'مرحبًا بعودتك! لاحظنا تبديل التبويب — تتم متابعة تقدمك للحفاظ على العدالة.',
+        'actions.save': 'حفظ التقدم',
+        'actions.submit': 'إرسال المخطط الزمني',
+        'actions.close': 'إغلاق',
+        'status.saveFailed': 'فشل الحفظ',
+        'status.noSavedProgress': 'لا يوجد تقدم محفوظ',
+        'status.restored': 'تم استعادة التقدم',
+        'status.loadFailed': 'تعذّر تحميل التقدم المحفوظ',
+        'status.savedAt': 'تم الحفظ في {time} {period}',
+        'status.notSaved': 'لم يتم الحفظ',
+        'ampm.am': 'ص',
+        'ampm.pm': 'م',
+        'form.enterName': 'يرجى إدخال الاسم وفترة الصف',
+        'errors.submitFailed': 'فشل الإرسال. حاول مرة أخرى.',
+        'modal.submittedHeading': 'تم الإرسال!',
+        'modal.submittedBody': 'تم تسجيل مخططك الزمني.',
+        'contextModal.ribbon': 'ما الذي يحدث في ذلك الوقت؟',
+        'contextModal.title': 'السياق التاريخي',
+        'contextModal.instructions': 'استخدم هذه اللوحة لربط كل مصدر بالقصة الأكبر قبل أن تكتب السبب والنتيجة.',
+        'contextModal.loading': '<p class="text-slate-300">جاري تحميل السياق...</p>',
+        'contextModal.spotlightLabel': 'إضاءة المصدر',
+        'contextModal.sceneLabel': 'المشهد',
+        'contextModal.connectionLabel': 'الرابط',
+        'contextModal.sceneSetter': 'تمهيد للمشهد',
+        'contextModal.keyMove': 'الخطوة الأساسية',
+        'contextModal.thinkAbout': 'فكر في',
+        'vocabModal.title': 'مصطلح مفردات',
+        'vocabModal.loading': '<p>جاري تحميل التعريف...</p>',
+        'buttons.writingHelpLabel': 'مساعدة الكتابة'
+      }
+    };
+
+    const placeholderStrings = {
+      en: {
+        'studentInfo.firstNamePlaceholder': 'e.g., Alex',
+        'studentInfo.lastNamePlaceholder': 'e.g., Johnson',
+        'entryA.eventPlaceholder': 'e.g., Papal bull grants land to Spain',
+        "entryB.eventPlaceholder": "e.g., Jackson's policy proposal",
+        "entryC.eventPlaceholder": "e.g., O'Sullivan's argument for annexation",
+        'entryD.eventPlaceholder': 'e.g., U.S. territorial expansion shown on map',
+        "entryE.eventPlaceholder": "e.g., Miller's analysis of Manifest Destiny",
+        'entries.causePlaceholder': 'What led to this event?',
+        'entries.effectPlaceholder': 'What happened because of this event?'
+      },
+      ar: {
+        'studentInfo.firstNamePlaceholder': 'مثال: ألكس',
+        'studentInfo.lastNamePlaceholder': 'مثال: جونسون',
+        'entryA.eventPlaceholder': 'مثال: المرسوم البابوي يمنح الأرض لإسبانيا',
+        'entryB.eventPlaceholder': 'مثال: اقتراح سياسة جاكسون',
+        'entryC.eventPlaceholder': 'مثال: حجة أوسوليفان للضم',
+        'entryD.eventPlaceholder': 'مثال: التوسع الإقليمي للولايات المتحدة كما يظهر على الخريطة',
+        'entryE.eventPlaceholder': 'مثال: تحليل ميلر للمصير المتجلي',
+        'entries.causePlaceholder': 'ما الذي أدى إلى هذا الحدث؟',
+        'entries.effectPlaceholder': 'ماذا حدث نتيجة لهذا الحدث؟'
+      }
+    };
+
+    const contextData = {
+      A: {
+        en: {
+          source: 'Source A: Pope Alexander VI, "Inter Caetera Bull" (1493)',
+          scene: `This is the Pope back in 1493, right after Columbus sailed. He's telling Spain that any "new" land they find is theirs to keep, and they have a mission to convert the people living there. It's the "religious" justification that let European kings claim whole continents they'd never even seen.`,
+          spotlight: 'The Papal bull hands Spain authority over lands it "discovers," creating the Doctrine of Discovery that European empires lean on for centuries.',
+          connection: 'Keep this claim of Christian duty and superiority in mind when you look at how later U.S. leaders defend removing Native nations and seizing territory.'
+        },
+        ar: {
+          source: 'المصدر أ: البابا ألكسندر السادس، «مرسوم إنتر كايترا» (1493)',
+          scene: 'هذا هو البابا عام 1493، بعد رحلة كولومبوس مباشرة. يخبر إسبانيا أن أي أرض «جديدة» يعثرون عليها ستكون لهم، وأن لديهم مهمة لنشر الإيمان بين السكان الأصليين. إنه التبرير الديني الذي سمح للملوك الأوروبيين بالمطالبة بقارات كاملة لم يروها من قبل.',
+          spotlight: 'يمنح المرسوم البابوي إسبانيا سلطة على الأراضي التي «تكتشفها»، ما يخلق عقيدة الاكتشاف التي اعتمدت عليها الإمبراطوريات الأوروبية لقرون.',
+          connection: 'تذكّر هذا الادعاء بالواجب المسيحي والتفوّق عندما تنظر إلى كيفية دفاع قادة الولايات المتحدة لاحقًا عن إزالة الأمم الأصلية والاستيلاء على الأراضي.'
+        }
+      },
+      B: {
+        en: {
+          source: "Source B: President Andrew Jackson's Message (1830)",
+          scene: `Fast-forward to 1830, and President Andrew Jackson is pushing the Indian Removal Act. He tries to spin it as a "benevolent" (kind) deal, arguing that moving Native Americans west is for their own good. In reality, this was the policy that led to the Trail of Tears and cleared the South for white settlement.`,
+          spotlight: 'Jackson sells removal as a favor to Native nations while opening millions of acres in the Southeast for white planters and expansion.',
+          connection: 'Compare his rhetoric to the religious authority in Source A and notice how it paves the way for the Manifest Destiny thinking you will read in Source C.'
+        },
+        ar: {
+          source: 'المصدر ب: رسالة الرئيس أندرو جاكسون (1830)',
+          scene: 'ننتقل سريعًا إلى عام 1830، حيث يدفع الرئيس أندرو جاكسون بقانون إزالة الهنود. يحاول تصويره كاتفاق «خَيِّر»، زاعمًا أن نقل الأمريكيين الأصليين غربًا يصب في مصلحتهم. في الواقع، كانت هذه السياسة هي التي قادت إلى «درب الدموع» وفتحت الجنوب أمام الاستيطان الأبيض.',
+          spotlight: 'يقدم جاكسون الإزالة على أنها خدمة للأمم الأصلية بينما يفتح ملايين الأفدنة في الجنوب الشرقي للمزارعين البيض والتوسع.',
+          connection: 'قارن لغته بالسلطة الدينية في المصدر أ ولاحظ كيف يمهد الطريق لتفكير المصير المتجلي الذي ستقرأ عنه في المصدر ج.'
+        }
+      },
+      C: {
+        en: {
+          source: 'Source C: John O\'Sullivan, "Annexation" (1845)',
+          scene: `This 1845 article is where the phrase "Manifest Destiny" was born. The writer is hyping up the U.S. taking Texas and says it's America's God-given destiny to expand all the way to the Pacific Ocean. He's already eyeing California, saying it's just "natural" that it will become part of the U.S.`,
+          spotlight: 'O\'Sullivan coins "Manifest Destiny" to frame expansion as inevitable and blessed, preparing Americans to accept more territory stretching to the Pacific.',
+          connection: 'As you write, connect this confident language to the government actions in Source B and the map evidence in Source D.'
+        },
+        ar: {
+          source: 'المصدر ج: جون أوسوليفان، «الضم» (1845)',
+          scene: 'هذه المقالة من عام 1845 هي المكان الذي ظهرت فيه عبارة «المصير المتجلي». يروّج الكاتب لضم الولايات المتحدة لتكساس ويقول إن من قدر أمريكا الإلهي أن تتوسع حتى المحيط الهادئ. وهو يراقب كاليفورنيا بالفعل، معتبرًا أنه من «الطبيعي» أن تصبح جزءًا من الولايات المتحدة.',
+          spotlight: 'يصكّ أوسوليفان مصطلح «المصير المتجلي» ليجعل التوسع حتميًا ومباركًا، مهيئًا الأمريكيين لقبول المزيد من الأراضي حتى المحيط الهادئ.',
+          connection: 'أثناء الكتابة، اربط هذه اللغة الواثقة بإجراءات الحكومة في المصدر ب والدليل الخريطي في المصدر د.'
+        }
+      },
+      D: {
+        en: {
+          source: 'Source D: United States Map (1842–1845)',
+          scene: 'This map shows how U.S. borders changed in the 1840s, highlighting the results of treaties, wars, and annexations.',
+          spotlight: 'Visual evidence of how ideas from sources A–C turned into land claims and new boundaries.',
+          connection: 'Use the map to connect policy and ideology to the physical shape of the country.'
+        },
+        ar: {
+          source: 'المصدر د: خريطة الولايات المتحدة (1842–1845)',
+          scene: 'تُظهر هذه الخريطة كيف تغيرت حدود الولايات المتحدة في أربعينيات القرن التاسع عشر، مما يبرز نتائج المعاهدات والحروب وحالات الضم.',
+          spotlight: 'دليل بصري على كيفية تحوّل أفكار المصادر أ–ج إلى مطالبات بالأرض وحدود جديدة.',
+          connection: 'استخدم الخريطة لربط السياسات والأيديولوجيا بالشكل المادي للبلاد.'
+        }
+      },
+      E: {
+        en: {
+          source: 'Source E: Robert J. Miller, Native America, Discovered and Conquered (2008)',
+          scene: 'A modern historian explains how the legal logic of the Doctrine of Discovery carried into U.S. law through Jefferson, Lewis and Clark, and later Supreme Court decisions.',
+          spotlight: 'Shows how the same mindset justified Manifest Destiny by law as well as belief.',
+          connection: 'Use Miller to tie together the religious, political, and geographic evidence from the earlier sources.'
+        },
+        ar: {
+          source: 'المصدر هـ: روبرت ج. ميلر، «أمريكا الأصلية، مكتشفة ومقهورة» (2008)',
+          scene: 'يشرح مؤرخ معاصر كيف انتقل المنطق القانوني لعقيدة الاكتشاف إلى القانون الأمريكي عبر جيفرسون، ولويس وكلارك، وقرارات المحكمة العليا اللاحقة.',
+          spotlight: 'يبين كيف بررت العقلية نفسها المصير المتجلي بالقانون كما بالإيمان.',
+          connection: 'استخدم ميلر لربط الأدلة الدينية والسياسية والجغرافية من المصادر السابقة.'
+        }
+      }
+    };
+
+    const vocabTerms = {
+      hitherto: { en: 'hitherto', ar: 'حتى الآن' },
+      disposed: { en: 'disposed', ar: 'ميّال' },
+      'apostolic favor': { en: 'apostolic favor', ar: 'الفضل الرسولي' },
+      dominions: { en: 'dominions', ar: 'الأقاليم' },
+      jurisdictions: { en: 'jurisdictions', ar: 'الصلاحيات القضائية' },
+      appurtenances: { en: 'appurtenances', ar: 'الملحقات' },
+      benevolent: { en: 'benevolent', ar: 'خَيِّر' },
+      consummation: { en: 'consummation', ar: 'تحقق' },
+      induce: { en: 'induce', ar: 'يحفّز' },
+      pecuniary: { en: 'pecuniary', ar: 'مالي' },
+      tracts: { en: 'tracts', ar: 'مساحات' },
+      annihilated: { en: 'annihilated', ar: 'أُبيد' },
+      perpetual: { en: 'perpetual', ar: 'دائم' },
+      blazon: { en: 'blazon', ar: 'شعار' },
+      fertile: { en: 'fertile', ar: 'خصبة' },
+      geographical: { en: 'geographical', ar: 'جغرافي' },
+      designation: { en: 'designation', ar: 'تسمية' },
+      adhesion: { en: 'adhesion', ar: 'تعلق' },
+      equivocal: { en: 'equivocal', ar: 'غامض' },
+      Imbecile: { en: 'Imbecile', ar: 'عاجز' },
+      exert: { en: 'exert', ar: 'يمارس' },
+      dominion: { en: 'dominion', ar: 'سيادة' },
+      agency: { en: 'agency', ar: 'دور' },
+      spontaneous: { en: 'spontaneous', ar: 'تلقائي' },
+      sovereignty: { en: 'sovereignty', ar: 'سيادة' },
+      streaming: { en: 'streaming', ar: 'يتدفق' }
+    };
+
+    const vocabDefinitions = {
+      hitherto: { en: 'Until now', ar: 'حتى الآن' },
+      disposed: { en: 'Willing or inclined', ar: 'مستعد أو ميّال' },
+      'apostolic favor': { en: 'Blessing by the Pope', ar: 'بركة يمنحها البابا' },
+      dominions: { en: 'Territories controlled by a ruler', ar: 'أراضٍ يسيطر عليها حاكم' },
+      jurisdictions: { en: 'Legal authority', ar: 'سلطة قانونية' },
+      appurtenances: { en: 'Extra rights with property', ar: 'حقوق إضافية مرتبطة بالممتلكات' },
+      benevolent: { en: 'Well meaning or kind', ar: 'لطيف أو حسن النية' },
+      consummation: { en: 'Completion', ar: 'إنجاز أو إتمام' },
+      induce: { en: 'Persuade', ar: 'يحث أو يقنع' },
+      pecuniary: { en: 'Money related', ar: 'متعلق بالمال' },
+      tracts: { en: 'Large areas of land', ar: 'مساحات كبيرة من الأرض' },
+      annihilated: { en: 'Destroyed completely', ar: 'دُمّر بالكامل' },
+      perpetual: { en: 'Lasting forever', ar: 'دائم أو أبدي' },
+      blazon: { en: 'Public display or symbol', ar: 'عرض أو رمز علني' },
+      geographical: { en: 'Related to location', ar: 'مرتبط بالموقع الجغرافي' },
+      adhesion: { en: 'Sticking to something', ar: 'التشبث بشيء ما' },
+      designation: { en: 'Official name or label', ar: 'تسمية أو لقب رسمي' },
+      equivocal: { en: 'Unclear or having two meanings', ar: 'غامض أو ذو معنيين' },
+      Imbecile: { en: 'Weak and ineffective', ar: 'ضعيف وغير فعّال' },
+      exert: { en: 'Use or apply (power)', ar: 'يمارس أو يطبق (سلطة)' },
+      dominion: { en: 'Control over a place', ar: 'سيطرة على مكان' },
+      agency: { en: 'Ability to act', ar: 'القدرة على الفعل' },
+      spontaneous: { en: 'Natural, without planning', ar: 'تلقائي ومن دون تخطيط' },
+      sovereignty: { en: 'Complete governing power', ar: 'سلطة الحكم الكاملة' },
+      streaming: { en: 'Moving in large numbers', ar: 'يتحرك بأعداد كبيرة' }
+    };
+
+    const languageState = { current: 'en', cached: false };
+
+    function cacheEnglishStrings() {
+      if (languageState.cached) return;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (!key) return;
+        const type = el.dataset.i18nType || 'text';
+        if (!translationStrings.en[key]) {
+          translationStrings.en[key] = (type === 'html' ? el.innerHTML : el.textContent).trim();
+        }
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (!key) return;
+        if (!placeholderStrings.en[key]) {
+          placeholderStrings.en[key] = el.getAttribute('placeholder') || '';
+        }
+      });
+      document.querySelectorAll('*').forEach(el => {
+        Object.entries(el.dataset).forEach(([dataKey, translationKey]) => {
+          if (!dataKey.startsWith('i18nAttr')) return;
+          if (!translationKey) return;
+          if (translationStrings.en[translationKey]) return;
+          const attrName = dataKey
+            .slice('i18nAttr'.length)
+            .replace(/^[A-Z]/, letter => letter.toLowerCase())
+            .replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+          if (!attrName) return;
+          translationStrings.en[translationKey] = el.getAttribute(attrName) || '';
+        });
+      });
+      languageState.cached = true;
+    }
+
+    function formatTemplate(str, replacements = {}) {
+      return str.replace(/\{(.*?)\}/g, (_, token) => {
+        const value = replacements[token.trim()];
+        return typeof value === 'undefined' ? `{${token}}` : value;
+      });
+    }
+
+    function t(key, replacements) {
+      const lang = languageState.current;
+      const base = translationStrings[lang]?.[key] ?? translationStrings.en[key] ?? '';
+      return replacements ? formatTemplate(base, replacements) : base;
+    }
+
+    function applyLanguage(lang) {
+      languageState.current = translationStrings[lang] ? lang : 'en';
+      document.documentElement.lang = languageState.current === 'ar' ? 'ar' : 'en';
+      document.documentElement.dir = languageState.current === 'ar' ? 'rtl' : 'ltr';
+      document.body.dataset.language = languageState.current;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (!key) return;
+        const type = el.dataset.i18nType || 'text';
+        let replacements = null;
+        if (el.dataset.i18nReplacements) {
+          try { replacements = JSON.parse(el.dataset.i18nReplacements); } catch { replacements = null; }
+        }
+        const value = t(key, replacements || undefined);
+        if (type === 'html') el.innerHTML = value;
+        else el.textContent = value;
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (!key) return;
+        const value = placeholderStrings[languageState.current]?.[key] ?? placeholderStrings.en[key] ?? '';
+        el.setAttribute('placeholder', value);
+      });
+      document.querySelectorAll('*').forEach(el => {
+        Object.entries(el.dataset).forEach(([dataKey, translationKey]) => {
+          if (!dataKey.startsWith('i18nAttr')) return;
+          if (!translationKey) return;
+          const attrName = dataKey
+            .slice('i18nAttr'.length)
+            .replace(/^[A-Z]/, letter => letter.toLowerCase())
+            .replace(/[A-Z]/g, letter => '-' + letter.toLowerCase());
+          if (!attrName) return;
+          el.setAttribute(attrName, t(translationKey));
+        });
+      });
+      document.querySelectorAll('.language-toggle-button').forEach(btn => {
+        const btnLang = btn.dataset.language;
+        const active = btnLang === languageState.current;
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        const labelKey = btn.dataset.i18n;
+        if (labelKey) btn.textContent = t(labelKey);
+      });
+      localStorage.setItem('timeline-language', languageState.current);
+    }
+
+    window.__lang = {
+      t,
+      applyLanguage,
+      getLanguage: () => languageState.current,
+      getContext: (id) => contextData[id]?.[languageState.current] ?? contextData[id]?.en,
+      getVocab: (key) => ({
+        term: vocabTerms[key]?.[languageState.current] ?? vocabTerms[key]?.en ?? key,
+        definition: vocabDefinitions[key]?.[languageState.current] ?? vocabDefinitions[key]?.en ?? ''
+      })
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      cacheEnglishStrings();
+      const stored = localStorage.getItem('timeline-language') || 'en';
+      applyLanguage(stored);
+      document.querySelectorAll('.language-toggle-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetLang = btn.dataset.language;
+          applyLanguage(targetLang);
+        });
+      });
+    });
+  </script>
 
   <script>
 
@@ -841,7 +1301,7 @@
           const notify = typeof window.__showIntegrityWarning === 'function'
             ? window.__showIntegrityWarning
             : null;
-          notify?.('Thanks for hopping back! We noticed the tab switch—your progress is being monitored to keep things fair.');
+          notify?.(window.__lang?.t('integrity.returnNotice') || 'Thanks for hopping back! We noticed the tab switch—your progress is being monitored to keep things fair.');
           engagement.pendingTabWarning = false;
         }
       }
@@ -913,7 +1373,7 @@
       // Expose warning helper so visibility tracking can reuse it
       window.__showIntegrityWarning = showFriendlyWarning;
 
-      const integrityMessage = 'Friendly reminder: copy/paste, dragging, and right click are disabled so we can see your own thinking.';
+      const integrityMessage = window.__lang?.t('integrity.reminder') || 'Friendly reminder: copy/paste, dragging, and right click are disabled so we can see your own thinking.';
       const guardedInputs = persistEls.filter(el => (
         (el.tagName === 'TEXTAREA') ||
         (el.tagName === 'INPUT' && el.type !== 'hidden' && el.type !== 'submit' && el.type !== 'button')
@@ -946,7 +1406,19 @@
         });
       });
 
-      const setSavedStatus = (text) => { if (saveStatus) saveStatus.textContent = text; };
+
+const updateSavedStatus = (key, replacements = {}) => {
+  if (!saveStatus || !key) return;
+  saveStatus.setAttribute('data-i18n', key);
+  if (Object.keys(replacements).length) {
+    saveStatus.dataset.i18nReplacements = JSON.stringify(replacements);
+  } else {
+    delete saveStatus.dataset.i18nReplacements;
+  }
+  saveStatus.textContent = (window.__lang?.t(key, replacements)) || '';
+};
+
+      window.__updateSavedStatus = updateSavedStatus;
       const collectValues = () => {
         const data = {};
         persistEls.forEach(el => {
@@ -965,15 +1437,16 @@
           const hh = t.getHours() % 12 || 12;
           const mm = String(t.getMinutes()).padStart(2, '0');
           const ampm = t.getHours() >= 12 ? 'PM' : 'AM';
-          setSavedStatus(`Saved at ${hh}:${mm} ${ampm}`);
+          const periodLabel = window.__lang?.t(ampm === 'PM' ? 'ampm.pm' : 'ampm.am') || ampm;
+          updateSavedStatus('status.savedAt', { time: `${hh}:${mm}`, period: periodLabel });
         } catch (e) {
-          setSavedStatus('Save failed');
+          updateSavedStatus('status.saveFailed');
         }
       };
 
       const loadProgress = () => {
         const raw = localStorage.getItem(FORM_STORAGE_KEY);
-        if (!raw) { setSavedStatus('No saved progress'); return; }
+        if (!raw) { updateSavedStatus('status.noSavedProgress'); return; }
         try {
           const { data } = JSON.parse(raw);
           if (data) {
@@ -985,10 +1458,10 @@
                 if (el.tagName === 'TEXTAREA') autoResize(el);
               }
             });
-            setSavedStatus('Progress restored');
+            updateSavedStatus('status.restored');
           }
         } catch {
-          setSavedStatus('Could not load saved progress');
+          updateSavedStatus('status.loadFailed');
         }
       };
 
@@ -1049,63 +1522,29 @@
       const contextBody = document.getElementById('context-body');
       const closeContextModalBtn = document.getElementById('close-context-modal');
       const contextButtons = document.querySelectorAll('.context-button');
-
-      const sourceContext = {
-        'A': {
-          source: 'Source A: Pope Alexander VI, "Inter Caetera Bull" (1493)',
-          scene: `This is the Pope back in 1493, right after Columbus sailed. He's telling Spain that any "new" land they find is theirs to keep, and they have a mission to convert the people living there. It's the "religious" justification that let European kings claim whole continents they'd never even seen.`,
-          spotlight: 'The Papal bull hands Spain authority over lands it "discovers," creating the Doctrine of Discovery that European empires lean on for centuries.',
-          connection: 'Keep this claim of Christian duty and superiority in mind when you look at how later U.S. leaders defend removing Native nations and seizing territory.'
-        },
-        'B': {
-          source: "Source B: President Andrew Jackson's Message (1830)",
-          scene: `Fast-forward to 1830, and President Andrew Jackson is pushing the Indian Removal Act. He tries to spin it as a "benevolent" (kind) deal, arguing that moving Native Americans west is for their own good. In reality, this was the policy that led to the Trail of Tears and cleared the South for white settlement.`,
-          spotlight: 'Jackson sells removal as a favor to Native nations while opening millions of acres in the Southeast for white planters and expansion.',
-          connection: 'Compare his rhetoric to the religious authority in Source A and notice how it paves the way for the Manifest Destiny thinking you will read in Source C.'
-        },
-        'C': {
-          source: 'Source C: John O\'Sullivan, "Annexation" (1845)',
-          scene: `This 1845 article is where the phrase "Manifest Destiny" was born. The writer is hyping up the U.S. taking Texas and says it's America's God-given destiny to expand all the way to the Pacific Ocean. He's already eyeing California, saying it's just "natural" that it will become part of the U.S.`,
-          spotlight: 'O\'Sullivan coins "Manifest Destiny" to frame expansion as inevitable and blessed, preparing Americans to accept more territory stretching to the Pacific.',
-          connection: 'As you write, connect this confident language to the government actions in Source B and the map evidence in Source D.'
-        },
-        'D': {
-          source: 'Source D: United States Map (1842–1845)',
-          scene: `This map shows the U.S. after it put those "Manifest Destiny" ideas into action. In just a few years, the U.S. added Texas, the Oregon Territory, and the massive area from Mexico after a war. This is what the country looked like after it expanded from "sea to shining sea."`,
-          spotlight: 'The new borders reveal how quickly the United States converted ideology into land—annexing Texas, negotiating Oregon, and conquering Mexico.',
-          connection: 'Use the visual proof here to show the effects of the ideas and policies described in Sources A, B, and C.'
-        },
-        'E': {
-          source: 'Source E: Robert J. Miller, "Native America, Discovered and Conquered" (2008)',
-          scene: `This is a modern historian explaining how all these sources are connected. He argues that the Pope's 1493 "Doctrine of Discovery" (Source A) became the legal and mental excuse for all of U.S. expansion. It's the "original idea" that allowed the U.S. to justify Indian Removal (Source B) and the land-grab of "Manifest Destiny" (Source C).`,
-          spotlight: 'Miller shows that the Doctrine of Discovery never disappeared—it kept shaping U.S. law and policy long after the founding era.',
-          connection: 'Bring his interpretation into your writing to stitch the cause-and-effect chain from Source A through the nineteenth-century expansion you tracked.'
-        }
-      };
-
       let activeContextButton = null;
 
       const openContextModal = (btn) => {
         const key = btn.getAttribute('data-source');
-        const contextInfo = sourceContext[key];
+        const contextInfo = window.__lang?.getContext(key);
         if (!contextInfo) return;
-        contextTitle.innerText = 'Historical Context';
+        contextTitle.innerText = window.__lang?.t('contextModal.title') || 'Historical Context';
         contextBody.innerHTML = `
           <div class="rounded-2xl border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 via-sky-500/10 to-emerald-500/20 p-5 shadow-lg shadow-cyan-500/10">
-            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.55em] text-cyan-200/80">Source Spotlight</p>
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.55em] text-cyan-200/80">${window.__lang?.t('contextModal.spotlightLabel') || 'Source Spotlight'}</p>
             <p class="mt-3 text-lg font-semibold text-white">${contextInfo.source}</p>
           </div>
           <div class="grid gap-4 md:grid-cols-2">
             <div class="md:col-span-2 rounded-2xl border border-white/5 bg-slate-900/70 p-5 shadow-lg shadow-cyan-500/5">
-              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-pink-300/80 mb-3">Scene Setter</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-pink-300/80 mb-3">${window.__lang?.t('contextModal.sceneSetter') || 'Scene Setter'}</p>
               <p class="text-base leading-relaxed text-slate-100">${contextInfo.scene}</p>
             </div>
             <div class="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-lg shadow-emerald-400/10">
-              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-emerald-300/80 mb-3">Key Move</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-emerald-300/80 mb-3">${window.__lang?.t('contextModal.keyMove') || 'Key Move'}</p>
               <p class="text-base leading-relaxed text-slate-100">${contextInfo.spotlight}</p>
             </div>
             <div class="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-lg shadow-amber-400/10">
-              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-amber-300/80 mb-3">Think About</p>
+              <p class="text-xs font-semibold uppercase tracking-[0.45em] text-amber-300/80 mb-3">${window.__lang?.t('contextModal.thinkAbout') || 'Think About'}</p>
               <p class="text-base leading-relaxed text-slate-100">${contextInfo.connection}</p>
             </div>
           </div>
@@ -1133,22 +1572,13 @@
       const vocabBody = document.getElementById('vocab-body');
       const closeVocabBtn = document.getElementById('close-vocab-modal');
 
-      const vocabDefinitions = {
-        hitherto:'Until now', disposed:'Willing or inclined', 'apostolic favor':'Blessing by the Pope',
-        dominions:'Territories controlled by a ruler', jurisdictions:'Legal authority', appurtenances:'Extra rights with property',
-        benevolent:'Well meaning or kind', consummation:'Completion', induce:'Persuade', pecuniary:'Money related',
-        tracts:'Large areas of land', annihilated:'Destroyed completely', perpetual:'Lasting forever',
-        blazon:'Public display or symbol', geographical:'Related to location', adhesion:'Sticking to something',
-        sovereignty:'Complete governing power', streaming:'Moving in large numbers'
-      };
-
       document.querySelectorAll('.vocab-word').forEach(word => {
         const openVocab = () => {
           const key = word.getAttribute('data-vocab');
-          const def = vocabDefinitions[key];
-          if (!def) return;
-          vocabTitle.innerText = key;
-          vocabBody.innerHTML = `<p>${def}</p>`;
+          const info = window.__lang?.getVocab(key);
+          if (!info) return;
+          vocabTitle.textContent = info.term || key;
+          vocabBody.innerHTML = `<p>${info.definition || ''}</p>`;
           vocabModal.classList.remove('hidden');
         };
         word.addEventListener('click', openVocab);
@@ -1184,7 +1614,7 @@
         // quick top-of-form validation you already do
         const fn = v('first-name'), ln = v('last-name'), cp = v('class-period');
         if (!fn || !ln || !cp) {
-          document.getElementById('save-status').textContent = 'Please enter name and class period';
+          window.__updateSavedStatus?.('form.enterName');
           return;
         }
 
@@ -1253,7 +1683,7 @@
           */
         } catch (err) {
           console.error(err);
-          alert('Submission failed. Please try again.');
+          alert(window.__lang?.t('errors.submitFailed') || 'Submission failed. Please try again.');
         } finally {
           submitBtn.disabled = false;
           submitBtn.classList.remove('opacity-60','cursor-not-allowed');
