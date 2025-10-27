@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U.S. Expansion: Idea to Country</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles for the slide deck */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* light gray background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: #1f2937; /* dark gray text */
+        }
+        
+        /* Slide container */
+        .slide-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem; /* rounded corners */
+            background-color: #ffffff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* Individual slide styling */
+        .slide {
+            padding: 2.5rem 3rem; /* 40px 48px */
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Hide all slides by default */
+        .slide.hidden {
+            display: none;
+        }
+        
+        /* Navigation buttons */
+        .nav-button {
+            background-color: #3b82f6; /* blue-500 */
+            color: white;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+        }
+        .nav-button:hover {
+            background-color: #2563eb; /* blue-600 */
+        }
+        .nav-button:disabled {
+            background-color: #9ca3af; /* gray-400 */
+            cursor: not-allowed;
+        }
+        
+        /* Highlight for key terms */
+        .highlight {
+            background-color: #fef08a; /* yellow-200 */
+            padding: 0.1em 0.25em;
+            border-radius: 0.25rem;
+        }
+        
+        /* Special warning box for harmful language */
+        .edi-warning {
+            border: 2px solid #ef4444; /* red-500 */
+            background-color: #fee2e2; /* red-100 */
+            color: #b91c1c; /* red-800 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        /* Sentence starters box */
+        .sentence-starter {
+            background-color: #ecfdf5; /* green-50 */
+            border: 1px solid #a7f3d0; /* green-200 */
+            border-left: 5px solid #10b981; /* green-600 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide Deck Container --><div class="slide-container">
+
+        <!-- Slide 1: Title --><div id="slide-1" class="slide text-center">
+            <h1 class="text-6xl font-black mb-4">How We Got This Land</h1>
+            <p class="text-4xl font-bold text-blue-600">From an Idea to a Country</p>
+            <p class="text-2xl mt-6">U.S. History</p>
+        </div>
+
+        <!-- Slide 2: Before We Start --><div id="slide-2" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Before We Start...</h2>
+            <p class="text-2xl mb-6">Please open your digital worksheet.</p>
+            <p class="text-2xl mb-4">Find the top of the page and type in:</p>
+            <ol class="list-decimal list-inside text-2xl space-y-3">
+                <li><strong>First Name</strong></li>
+                <li><strong>Last Name</strong></li>
+                <li><strong>Class Period</strong></li>
+            </ol>
+            <p class="text-xl mt-8 bg-gray-100 p-4 rounded-lg">(Your work will save as you type!)</p>
+        </div>
+
+        <!-- Slide 3: Warm-Up --><div id="slide-3" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-8">Warm-Up: <span class="text-blue-600">What do you think?</span></h2>
+            <p class="text-xl mb-4">Let's talk about the word <strong class="text-2xl">"discover."</strong></p>
+            
+            <div class="bg-gray-100 p-6 rounded-lg mb-6 shadow">
+                <p class="text-2xl leading-relaxed">If you "discover" a park bench that someone is <u class="font-bold">already sitting on</u>, can you claim it as yours?</p>
+            </div>
+
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <p class="text-2xl leading-relaxed">What is the difference between "discovering" an <strong class="text-blue-600">empty place</strong> and "discovering" a place where <strong class="text-red-600">people already live</strong>?</p>
+            </div>
+            <p class="text-center text-xl mt-8 font-semibold">(We will talk about this as a class.)</p>
+        </div>
+
+        <!-- Slide 4: Goal for Today --><div id="slide-4" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-8">Our Goal for Today</h2>
+            
+            <div class="mb-8">
+                <h3 class="text-xl font-bold uppercase tracking-wide text-blue-600 mb-2">Learning Target:</h3>
+                <p class="text-3xl font-semibold">I can explain how <span class="highlight">one old idea</span> (the "Doctrine of Discovery") led to <span class="highlight">another big idea</span> ("Manifest Destiny").</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold uppercase tracking-wide text-blue-600 mb-2">Our Task:</h3>
+                <p class="text-3xl font-semibold mb-4">We will look at 5 historical sources. For each source, we will find the <strong class="text-red-600">CAUSE</strong> (the reason why) and the <strong class="text-red-600">EFFECT</strong> (the result).</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Cause and Effect Poster -->
+        <div id="slide-5" class="slide hidden flex items-center justify-center">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEYAlhyphenhyphenXRY5Fc04yW7Zn0q8YGrDKQ-iZN6a0jW-cUddPm7HlC1GADdZDGFPg1l0smGoNUaqN3MWMace05SWOFIoLxSJppv2mbAkaYFXH4fZO-7krG0Myx0iYTJBenqd9A3PniZe9e59UI/s1600/cause+and+effect+poster.jpg" alt="Cause and Effect Diagram showing a 'cause' block with an arrow pointing to an 'effect' block" class="w-full max-w-full h-auto rounded-lg shadow-md">
+        </div>
+
+
+        <!-- Slide 6: Big Question --><div id="slide-6" class="slide hidden">
+            <h2 class="text-3xl font-bold mb-6">Our Big Question (SQ2)</h2>
+            <p class="text-4xl font-semibold bg-gray-100 p-6 rounded-lg shadow mb-8">"How did the <strong class="text-blue-600">"Doctrine of Discovery"</strong> lead to <strong class="text-red-600">"Manifest Destiny"</strong> in the United States?"</p>
+            
+            <h3 class="text-2xl font-bold mb-4">Let's break that down:</h3>
+            
+            <div class="mb-6 p-4 border-l-4 border-blue-600 bg-blue-50">
+                <p class="text-2xl"><strong class="text-blue-600">Doctrine of Discovery:</strong></p>
+                <p class="text-xl">An old idea from the 1400s that said <span class="font-bold">Christian explorers from Europe could <u>claim</u> non-Christian lands.</span></p>
+            </div>
+
+            <div class="p-4 border-l-4 border-red-600 bg-red-50">
+                <p class="text-2xl"><strong class="text-red-600">Manifest Destiny:</strong></p>
+                <p class="text-xl">The 19th-century (1800s) belief that the U.S. was <span class="font-bold"><u>meant to</u> expand</span> and spread all the way to the Pacific Ocean.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Key Words --><div id="slide-7" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-8">Key Words to Know</h2>
+            <p class="text-xl mb-6">These words will help us understand the sources.</p>
+            <ul class="space-y-4 text-2xl">
+                <li><strong class="text-blue-600 w-32 inline-block">Doctrine:</strong> A belief or set of beliefs (like a rule or a big idea).</li>
+                <li><strong class="text-blue-600 w-32 inline-block">Justify:</strong> To give a reason for doing something; to make it seem right.</li>
+                <li><strong class="text-blue-600 w-32 inline-block">Removal:</strong> Forcing people to move from their homes.</li>
+                <li><strong class="text-blue-600 w-32 inline-block">Annexation:</strong> To add new land to a country (like Texas).</li>
+                <li><strong class="text-blue-600 w-32 inline-block">Scholar:</strong> An expert or professor who studies a topic.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Source A (Pope) --><div id="slide-8" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-4">Source A: <span class="text-blue-600">The Pope's "Doctrine" (1493)</span></h2>
+            <p class="text-xl mb-4">This is a "Papal Bull," or an order from the Pope (the head of the Catholic Church).</p>
+            <p class="text-lg mb-4"><strong>Key Words:</strong> `dominions` (lands), `jurisdictions` (areas of power)</p>
+            
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
+                <p class="text-xl leading-relaxed">"The Pope told the King and Queen of Spain that they had 'discovered' new lands. He said that since the people there were <strong class="text-red-600">not Christian</strong>, Spain could...</p>
+                <ol class="list-decimal list-inside text-xl mt-3 space-y-2">
+                    <li>...<strong class="underline">take their lands.</strong></li>
+                    <li>...try to convert them to Christianity."</li>
+                </ol>
+                <p class="text-xl font-bold mt-4">This is the start of the <span class="highlight text-2xl">"Doctrine of Discovery."</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Source A (Worksheet) --><div id="slide-9" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source A: <span class="text-blue-600">Your Worksheet</span></h2>
+            <p class="text-2xl mb-6">Go to the "Source A" box on your worksheet.</p>
+            
+            <ul class="text-xl space-y-4 mb-6">
+                <li><strong class="text-red-600">CAUSE:</strong> What *motivated* (was the reason for) this doctrine?
+                    <br><em class="text-gray-600">(Hint: Think about religion and power.)</em></li>
+                <li><strong class="text-red-600">EFFECT:</strong> What *power* did this give European nations? How did it make them see Native land?</li>
+            </ul>
+            
+            <div class="sentence-starter">
+                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
+                <p class="mb-2">* Cause: "The Pope was motivated by..."</p>
+                <p>* Effect: "This gave European nations the power to..."</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Source B (Jackson) --><div id="slide-10" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-4">Source B: <span class="text-blue-600">President Jackson (1830)</span></h2>
+            <p class="text-xl mb-4">This is from a speech by President Andrew Jackson about the <strong>Indian Removal Act</strong>.</p>
+            
+            <!-- EDI Warning Box --><div class="edi-warning">
+                <h4 class="text-xl font-black">A Note on Harmful Language:</h4>
+                <p class="text-lg font-medium">In this source, Jackson uses the word <strong class="text-3xl font-black">`savage`</strong>. This is an <strong class="underline">offensive and racist word</strong> used by settlers to describe Native people. It is important to know they used this word to <span class="highlight">justify their actions</span>.</p>
+            </div>
+            
+            <div class="bg-gray-100 p-6 rounded-lg shadow mt-6">
+                <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
+                <p class="text-xl leading-relaxed">"President Jackson says removing Native Americans from their homes is a 'good' and 'kind' policy. He says it will make room for 'civilized' white settlers. He uses this policy to force tribes (like the Cherokee) to move west."</p>
+                <p class="text-xl font-bold mt-4">This leads to events like the <span class="highlight text-2xl">Trail of Tears.</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Source B (Worksheet) --><div id="slide-11" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source B: <span class="text-blue-600">Your Worksheet</span></h2>
+            <p class="text-2xl mb-6">Go to the "Source B" box.</p>
+            
+            <ul class="text-xl space-y-4 mb-6">
+                <li><strong class="text-red-600">CAUSE:</strong> What ideas from Source A (the Pope's idea) might *justify* this? What did settlers want?</li>
+                <li><strong class="text-red-600">EFFECT:</strong> What was the immediate *result* for Native tribes? What did this mean for U.S. expansion?</li>
+            </ul>
+            
+            <div class="sentence-starter">
+                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
+                <p class="mb-2">* Cause: "Jackson justified this policy by saying... Settlers wanted..."</p>
+                <p>* Effect: "The result for tribes was... This allowed the U.S. to..."</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Source C (Manifest Destiny) --><div id="slide-12" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-4">Source C: <span class="text-red-600">"Manifest Destiny" (1845)</span></h2>
+            <p class="text-xl mb-4">This is from a newspaper article by John O'Sullivan. He is the first person to use the words "Manifest Destiny."</p>
+            
+            <!-- Placeholder for American Progress painting --><img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/American_Progress_%28John_Gast_painting%29.jpg" alt="American Progress painting by John Gast, 1872" class="w-full rounded-lg shadow-md mb-4 border border-gray-200">
+
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
+                <p class="text-xl leading-relaxed">"O'Sullivan says it is America's 'Manifest Destiny' (obvious future) to expand. He says it's a 'natural flow' for settlers to move into lands like Texas and California (which belonged to Mexico). He argues these new settlers have a right to govern themselves and join the U.S."</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Source C (Worksheet) --><div id="slide-13" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source C: <span class="text-red-600">Your Worksheet</span></h2>
+            <p class="text-2xl mb-6">Go to the "Source C" box.</p>
+            
+            <ul class="text-xl space-y-4 mb-6">
+                <li><strong class="text-red-600">CAUSE:</strong> How does this idea (Manifest Destiny) *connect* to the "discovery" idea (Source A) and the "removal" idea (Source B)?</li>
+                <li><strong class="text-red-600">EFFECT:</strong> How did this idea make Americans *feel* and *act*? What did it make the government do?</li>
+            </ul>
+            
+            <div class="sentence-starter">
+                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
+                <p class="mb-2">* Cause: "This idea is connected because it says Americans have a 'right' to..."</p>
+                <p>* Effect: "Manifest Destiny made Americans believe... This led the government to..."</p>
+            </div>
+        </div>
+
+        <!-- Slide 14: Source D (Map) --><div id="slide-14" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source D: <span class="text-blue-600">The Map (1842-1845)</span></h2>
+            <p class="text-2xl mb-6">This map shows the United States during the time O'Sullivan was writing.</p>
+            
+            <!-- Placeholder for Map --><img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/United_States_1842-1845-03.png" alt="Map of the United States from 1842-1845" class="w-full rounded-lg shadow-md mb-6 border-2 border-gray-300">
+
+            <h3 class="text-2xl font-bold mb-3">Look at the map:</h3>
+            <ul class="list-disc list-inside text-xl space-y-2">
+                <li>Find the <strong>"Republic of Texas"</strong>. On this map, it's its own country, not a U.S. state yet.</li>
+                <li>Look for the dark red area labeled <strong>"Disputed between Mexico and Texas"</strong>. This is a sign of conflict.</li>
+                <li>Find the <strong>"Oregon Country"</strong>. Notice who the map says it is "Shared with."</li>
+                <li>See all the U.S. <strong>"Territories"</strong> (like <strong>"Iowa Territory"</strong>). This is the U.S. expanding west *before* even adding Texas.</li>
+            </ul>
+            <p class="text-2xl font-bold mt-6 text-center">This map is a <span class="highlight">picture</span> of Manifest Destiny happening.</p>
+        </div>
+
+        <!-- Slide 15: Source D (Worksheet) --><div id="slide-15" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source D: <span class="text-blue-600">Your Worksheet</span></h2>
+            <p class="text-2xl mb-6">Go to the "Source D" box.</p>
+            
+            <ul class="text-xl space-y-4 mb-6">
+                <li><strong class="text-red-600">CAUSE:</strong> What *events* (wars, purchases, treaties) led to the new borders shown on the map?</li>
+                <li><strong class="text-red-600">EFFECT:</strong> What does this map *show* as the physical result of the ideas in Sources A, B, and C?</li>
+            </ul>
+            
+            <div class="sentence-starter">
+                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
+                <p class="mb-2">* Cause: "The map changed because of events like the..."</p>
+                <p>* Effect: "This map shows the physical result of... "</p>
+            </div>
+        </div>
+
+        <!-- Slide 16: Source E (Historian) --><div id="slide-16" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-4">Source E: <span class="text-blue-600">The Historian (2008)</span></h2>
+            <p class="text-xl mb-4">This source is from a modern expert (a <strong class="highlight">scholar</strong>), Robert J. Miller, who studied this history.</p>
+            <p class="text-lg mb-4"><strong>Key Words:</strong> `traces` (follows the path), `embedding` (putting inside)</p>
+            
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
+                <p class="text-xl leading-relaxed">"The historian, Miller, <strong class="text-blue-600">connects all the dots.</strong>
+                <p class="text-xl leading-relaxed mt-2">He says leaders like Thomas Jefferson took the Pope's 'Doctrine of Discovery' (Source A) and <strong class="underline">embedded it (put it) into U.S. law.</strong></p>
+                <p class="text-xl leading-relaxed mt-2">He argues this <span class="highlight">old idea</span> was the <strong class="text-red-600">legal reason</strong> the U.S. used to justify Indian Removal (Source B) and Manifest Destiny (Source C)."</p>
+            </div>
+        </div>
+
+        <!-- Slide 17: Source E (Worksheet) --><div id="slide-17" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">Source E: <span class="text-blue-600">Your Worksheet</span></h2>
+            <p class="text-2xl mb-6">Go to the "Source E" box.</p>
+            
+            <ul class="text-xl space-y-4 mb-6">
+                <li><strong class="text-red-600">CAUSE:</strong> According to Miller, what is the *foundation* (the starting idea) for Manifest Destiny?</li>
+                <li><strong class="text-red-600">EFFECT:</strong> How does Miller's analysis *connect* all the other sources together?</li>
+            </ul>
+            
+            <div class="sentence-starter">
+                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
+                <p class="mb-2">* Cause: "Miller argues the foundation for Manifest Destiny was the..."</p>
+                <p>* Effect: "Miller connects all the sources by showing how..."</p>
+            </div>
+        </div>
+
+        <!-- Slide 18: Connect the Dots --><div id="slide-18" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-8 text-center">Let's Connect the Dots!</h2>
+            
+            <div class="space-y-2 text-xl">
+                <div class="p-3 bg-blue-100 rounded-lg shadow"><strong>Source A: The "Discovery" IDEA</strong><br>(Pope says Christians can claim non-Christian land)</div>
+                <div class="text-center font-black text-blue-600 text-3xl">↓</div>
+                <div class="p-3 bg-red-100 rounded-lg shadow"><strong>Source B: The "Removal" ACTION</strong><br>(Jackson forces Native people off their land for settlers)</div>
+                <div class="text-center font-black text-red-600 text-3xl">↓</div>
+                <div class="p-3 bg-yellow-100 rounded-lg shadow"><strong>Source C: The "Destiny" BELIEF</strong><br>(O'Sullivan says it's America's *obvious right* to expand)</div>
+                <div class="text-center font-black text-yellow-600 text-3xl">↓</div>
+                <div class="p-3 bg-green-100 rounded-lg shadow"><strong>Source D: The "Expansion" RESULT</strong><br>(The U.S. map gets bigger and bigger)</div>
+                <div class="text-center font-black text-green-600 text-3xl">↓</div>
+                <div class="p-3 bg-gray-200 rounded-lg shadow"><strong>Source E: The "Connection" ANALYSIS</strong><br>(A historian confirms the <strong class="text-blue-600">IDEA</strong> from A was used to *justify* B, C, and D)</div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Final Check --><div id="slide-19" class="slide hidden text-center">
+            <h2 class="text-4xl font-bold mb-8">Final Check</h2>
+            <ol class="list-decimal list-inside text-2xl space-y-6 text-left w-fit mx-auto">
+                <li>Look over your worksheet. Do you have a "Cause" and "Effect" for all 5 sources?</li>
+                <li>Click the <span class="font-bold bg-gray-200 px-2 py-1 rounded">"Save Progress"</span> button at the bottom.</li>
+                <li>When you are all finished, click the <span class="font-bold bg-blue-500 text-white px-2 py-1 rounded">"Submit Timeline"</span> button.</li>
+            </ol>
+            <p class="text-3xl font-bold mt-12 text-green-700">Great work today on this difficult topic!</p>
+        </div>
+
+    </div>
+
+    <!-- Navigation --><div class="flex justify-between w-full max-w-sm mx-auto mt-4 mb-8">
+        <button id="prevBtn" class="nav-button" disabled>Previous</button>
+        <span id="slideCounter" class="text-lg font-medium self-center">Slide 1 / 19</span>
+        <button id="nextBtn" class="nav-button">Next</button>
+    </div>
+
+    <script>
+        // JavaScript for slide navigation
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentSlide = 1;
+            const totalSlides = document.querySelectorAll('.slide').length;
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slideCounter = document.getElementById('slideCounter');
+
+            function showSlide(slideNumber) {
+                // Hide all slides
+                document.querySelectorAll('.slide').forEach((slide) => {
+                    slide.classList.add('hidden');
+                });
+
+                // Show the current slide
+                const slide = document.getElementById(`slide-${slideNumber}`);
+                if (slide) {
+                    slide.classList.remove('hidden');
+                }
+
+                // Update counter
+                slideCounter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+
+                // Update button states
+                prevBtn.disabled = (currentSlide === 1);
+                nextBtn.disabled = (currentSlide === totalSlides);
+            }
+
+            // Event listener for "Next" button
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            });
+
+            // Event listener for "Previous" button
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            });
+
+            // Show the first slide initially
+            showSlide(currentSlide);
+        });
+    </script>
+
+</body>
+</html>
