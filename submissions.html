@@ -18,6 +18,10 @@
     h1{margin:0 0 6px 0; font-weight:800; letter-spacing:.2px}
     .muted{color:var(--muted); font-size:14px}
     .controls{display:flex; flex-wrap:wrap; gap:10px; margin:14px 0}
+    .control-item{display:flex; flex-direction:column; gap:4px}
+    .control-item--wide{flex:1 1 260px}
+    .control-item--small{flex:0 1 160px}
+    .control-item p{margin:0; font-size:12px; color:var(--muted); font-weight:600}
     input, select, button{
       font:inherit; color:var(--text); background:#0b1833; border:1px solid var(--border);
       border-radius:10px; padding:10px 12px
@@ -41,6 +45,7 @@
     .right{margin-left:auto}
     .sr{position:absolute; left:-9999px}
     .auth-form{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:16px}
+    .instruction-line{flex:1 1 100%; margin:0; font-size:14px; font-weight:600}
     .auth-form input{flex:1 1 220px}
   </style>
 </head>
@@ -50,6 +55,7 @@
       <h1>Teacher password</h1>
       <p class="muted">Enter the teacher password to open the submissions log.</p>
       <form id="auth-form" class="auth-form">
+        <p class="muted instruction-line">Instruction: Type the teacher password and press Unlock.</p>
         <label class="sr" for="teacher-pass">Teacher password</label>
         <input id="teacher-pass" type="password" autocomplete="current-password" required />
         <button type="submit" class="btn">Unlock</button>
@@ -64,18 +70,27 @@
       <p class="muted">Live feed of student rows. Search by name, text, or filter by period. Export to CSV when ready.</p>
 
       <div class="controls">
-        <input id="q" placeholder="Search name, period, or any answer…" />
-        <select id="period">
-          <option value="">All periods</option>
-          <option>1</option><option>2</option><option>3</option><option>4</option>
-          <option>5</option><option>6</option><option>7</option><option>8</option>
-        </select>
-        <select id="sort">
-          <option value="new">Newest first</option>
-          <option value="old">Oldest first</option>
-          <option value="name">Name A→Z</option>
-          <option value="period">Period, then name</option>
-        </select>
+        <div class="control-item control-item--wide">
+          <p>Instruction: Type a word, name, or period to search.</p>
+          <input id="q" placeholder="Search name, period, or any answer…" />
+        </div>
+        <div class="control-item control-item--small">
+          <p>Instruction: Choose a class period to filter the table.</p>
+          <select id="period">
+            <option value="">All periods</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </div>
+        <div class="control-item control-item--small">
+          <p>Instruction: Pick how you want the rows sorted.</p>
+          <select id="sort">
+            <option value="new">Newest first</option>
+            <option value="old">Oldest first</option>
+            <option value="name">Name A→Z</option>
+            <option value="period">Period, then name</option>
+          </select>
+        </div>
         <div class="right"></div>
         <button id="refresh" title="Reload latest">Refresh</button>
         <button id="csv" class="btn" title="Download CSV">Export CSV</button>
