@@ -73,6 +73,52 @@
             padding: 0.1em 0.25em;
             border-radius: 0.25rem;
         }
+
+        /* Definition popover styles */
+        .definition-term {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            padding: 0;
+            color: inherit;
+            border-bottom: 2px dotted #f59e0b; /* amber-500 */
+        }
+
+        .definition-term:focus {
+            outline: 3px solid #2563eb; /* blue-600 */
+            outline-offset: 2px;
+        }
+
+        .definition-popover {
+            position: absolute;
+            top: calc(100% + 0.75rem);
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(22rem, 85vw);
+            background-color: #111827; /* gray-900 */
+            color: #f9fafb; /* gray-50 */
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            border: 2px solid #f59e0b; /* amber-500 */
+            z-index: 20;
+        }
+
+        .definition-popover h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .definition-popover p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .definition-popover[hidden] {
+            display: none;
+        }
         
         /* Special warning box for harmful language */
         .edi-warning {
@@ -226,7 +272,15 @@
             <div class="bg-gray-100 p-6 rounded-lg shadow mt-6">
                 <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
                 <p class="text-xl leading-relaxed">"President Jackson says removing Native Americans from their homes is a 'good' and 'kind' policy. He says it will make room for 'civilized' white settlers. He uses this policy to force tribes (like the Cherokee) to move west."</p>
-                <p class="text-xl font-bold mt-4">This leads to events like the <span class="highlight text-2xl">Trail of Tears.</span></p>
+                <p class="text-xl font-bold mt-4">This leads to events like the
+                    <span class="relative inline-block">
+                        <button type="button" id="trailOfTearsTerm" class="definition-term highlight text-2xl" aria-haspopup="dialog" aria-expanded="false" aria-controls="trailOfTearsDefinition">Trail of Tears</button><span class="text-2xl">.</span>
+                        <div id="trailOfTearsDefinition" class="definition-popover" role="dialog" aria-modal="false" tabindex="-1" hidden>
+                            <h4>Trail of Tears (1838–1839)</h4>
+                            <p>U.S. soldiers forced more than 16,000 Cherokee people to march over 1,000 miles at gunpoint. At least 4,000 died from hunger, disease, and exposure. Survivors called it the "Trail of Tears" because the journey was a deadly, government-made disaster that ripped families from their land.</p>
+                        </div>
+                    </span>
+                </p>
             </div>
         </div>
 
@@ -378,6 +432,8 @@
             const nextBtn = document.getElementById('nextBtn');
             const slideCounter = document.getElementById('slideCounter');
 
+            let closeTrailOfTearsPopover = () => {};
+
             function showSlide(slideNumber) {
                 // Hide all slides
                 document.querySelectorAll('.slide').forEach((slide) => {
@@ -389,6 +445,9 @@
                 if (slide) {
                     slide.classList.remove('hidden');
                 }
+
+                // Ensure the definition popover is closed when switching slides
+                closeTrailOfTearsPopover();
 
                 // Update counter
                 slideCounter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
@@ -416,6 +475,57 @@
 
             // Show the first slide initially
             showSlide(currentSlide);
+
+            // Definition popover logic
+            const definitionButton = document.getElementById('trailOfTearsTerm');
+            const definitionPopover = document.getElementById('trailOfTearsDefinition');
+
+            if (definitionButton && definitionPopover) {
+                const openPopover = () => {
+                    definitionPopover.removeAttribute('hidden');
+                    definitionPopover.classList.add('active');
+                    definitionButton.setAttribute('aria-expanded', 'true');
+                    definitionPopover.focus();
+                };
+
+                closeTrailOfTearsPopover = () => {
+                    definitionPopover.setAttribute('hidden', '');
+                    definitionPopover.classList.remove('active');
+                    definitionButton.setAttribute('aria-expanded', 'false');
+                };
+
+                definitionButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    if (definitionPopover.classList.contains('active')) {
+                        closeTrailOfTearsPopover();
+                    } else {
+                        openPopover();
+                    }
+                });
+
+                definitionButton.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && definitionPopover.classList.contains('active')) {
+                        closeTrailOfTearsPopover();
+                    }
+                });
+
+                definitionPopover.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        closeTrailOfTearsPopover();
+                        definitionButton.focus();
+                    }
+                });
+
+                definitionPopover.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!definitionPopover.contains(event.target) && event.target !== definitionButton) {
+                        closeTrailOfTearsPopover();
+                    }
+                });
+            }
         });
     </script>
 
