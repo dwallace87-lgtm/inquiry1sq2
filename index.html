@@ -25,6 +25,40 @@
       color: #e0f2fe; transition: all .3s ease; white-space: nowrap;
       box-shadow: 0 12px 32px rgba(6, 182, 212, 0.25), inset 0 0 0 1px rgba(15, 118, 110, 0.25);
     }
+    .slideshow-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.75rem;
+      border-radius: 9999px;
+      background: #22ff88;
+      color: #0f172a;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      box-shadow: 0 0 18px rgba(34, 255, 136, 0.75), 0 0 32px rgba(34, 255, 136, 0.45);
+      border: 1px solid rgba(167, 243, 208, 0.85);
+      animation: neonPulse 1.5s ease-in-out infinite alternate;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .slideshow-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(74, 222, 128, 0.95), 0 0 40px rgba(34, 255, 136, 0.6);
+    }
+    .slideshow-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.45), 0 0 24px rgba(34, 255, 136, 0.9);
+      transform: translateY(-1px);
+    }
+    @keyframes neonPulse {
+      0% {
+        box-shadow: 0 0 12px rgba(34, 255, 136, 0.6), 0 0 24px rgba(34, 255, 136, 0.4);
+      }
+      100% {
+        box-shadow: 0 0 28px rgba(34, 255, 136, 0.9), 0 0 48px rgba(74, 222, 128, 0.65);
+      }
+    }
     .context-button:hover {
       transform: translateY(-1px);
       background: linear-gradient(135deg, rgba(6, 182, 212, 0.32), rgba(59, 130, 246, 0.28));
@@ -132,23 +166,34 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.5rem;
+      gap: 0.45rem;
+      padding: 0.45rem 1rem;
       border-radius: 9999px;
-      background-color: #475569;
-      color: #cbd5e1;
-      transition: all 0.2s ease-in-out;
-      border: 1px solid #64748B;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: 0 10px 24px rgba(14, 165, 233, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
     .stem-sentence-btn:hover {
-      background-color: #06b6d4;
-      color: white;
-      border-color: #06b6d4;
-      transform: scale(1.1);
-      box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+      background: linear-gradient(135deg, #38bdf8, #1d4ed8);
+      border-color: rgba(191, 219, 254, 0.6);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 32px rgba(59, 130, 246, 0.35);
     }
-    .stem-sentence-btn svg {
-      width: 1.25rem;
-      height: 1.25rem;
+    .stem-sentence-btn:focus-visible {
+      outline: none;
+      border-color: rgba(191, 219, 254, 0.75);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35), 0 18px 36px rgba(37, 99, 235, 0.4);
+    }
+    .stem-sentence-btn img {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+    .stem-sentence-btn .stem-sentence-label {
+      line-height: 1;
     }
   </style>
 </head>
@@ -224,6 +269,12 @@
     </header>
 
     <!-- Featured Source A -->
+    <div class="max-w-5xl mx-auto mb-6 flex justify-end">
+      <a href="US-Expansion-Idea-to-Country_fixed.html" target="_blank" rel="noopener noreferrer" class="slideshow-btn">
+        Lesson Slideshow
+      </a>
+    </div>
+
     <div id="source-a-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
@@ -407,8 +458,8 @@
           <div class="flex items-center gap-4 mb-3">
             <label for="date-a" class="block text-3xl font-bold text-slate-400">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-a" data-stem="The Pope issued a 'Papal Bull' that... ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-              <span class="sr-only">Add stem sentence</span>
+              <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+              <span class="stem-sentence-label">Writing Context</span>
             </button>
           </div>
           <textarea id="date-a" name="date-a" rows="1" data-persist placeholder="e.g., Papal bull grants land to Spain" class="auto-expand w-full textarea-event mb-8"></textarea>
@@ -418,8 +469,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-a" class="block text-3xl font-bold text-pink-400">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-a" data-stem="The primary motivation for this doctrine was... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What motivated this doctrine? Think about exploration and religion.</p>
@@ -435,8 +486,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-a" class="block text-3xl font-bold text-cyan-400">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-a" data-stem="As a result, European nations were given the power to... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What power did this give European nations? How did it view native land?</p>
@@ -468,8 +519,8 @@
           <div class="flex items-center gap-4 mb-3">
             <label for="date-b" class="block text-3xl font-bold text-slate-400">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-b" data-stem="President Jackson proposed a policy to... ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-              <span class="sr-only">Add stem sentence</span>
+              <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+              <span class="stem-sentence-label">Writing Context</span>
             </button>
           </div>
           <textarea id="date-b" name="date-b" rows="1" data-persist placeholder="e.g., Jackson's policy proposal" class="auto-expand w-full textarea-event mb-8"></textarea>
@@ -479,8 +530,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-b" class="block text-3xl font-bold text-pink-400">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-b" data-stem="This policy was caused by... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What ideas from Source A might justify this? What was the immediate pressure (e.g., land for settlers)?</p>
@@ -496,8 +547,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-b" class="block text-3xl font-bold text-cyan-400">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-b" data-stem="The immediate effect of this policy was... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What was the immediate result for tribes? What was the long-term impact on U.S. expansion?</p>
@@ -529,8 +580,8 @@
           <div class="flex items-center gap-4 mb-3">
             <label for="date-c" class="block text-3xl font-bold text-slate-400">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-c" data-stem="John O'Sullivan argued that America should... ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-              <span class="sr-only">Add stem sentence</span>
+              <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+              <span class="stem-sentence-label">Writing Context</span>
             </button>
           </div>
           <textarea id="date-c" name="date-c" rows="1" data-persist placeholder="e.g., O'Sullivan's argument for annexation" class="auto-expand w-full textarea-event mb-8"></textarea>
@@ -540,8 +591,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-c" class="block text-3xl font-bold text-pink-400">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-c" data-stem="This idea was based on a belief that... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">How does this idea connect to the 'discovery' concept (Source A) and removal (Source B)?</p>
@@ -557,8 +608,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-c" class="block text-3xl font-bold text-cyan-400">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-c" data-stem="The idea of Manifest Destiny led to... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">How did this idea (Manifest Destiny) shape U.S. policy and public opinion?</p>
@@ -590,8 +641,8 @@
           <div class="flex items-center gap-4 mb-3">
             <label for="date-d" class="block text-3xl font-bold text-slate-400">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-d" data-stem="The map illustrates... ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-              <span class="sr-only">Add stem sentence</span>
+              <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+              <span class="stem-sentence-label">Writing Context</span>
             </button>
           </div>
           <textarea id="date-d" name="date-d" rows="1" data-persist placeholder="e.g., U.S. territorial expansion shown on map" class="auto-expand w-full textarea-event mb-8"></textarea>
@@ -601,8 +652,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-d" class="block text-3xl font-bold text-pink-400">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-d" data-stem="These new borders were the result of... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What specific events (wars, treaties, purchases) led to the new borders shown?</p>
@@ -618,8 +669,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-d" class="block text-3xl font-bold text-cyan-400">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-d" data-stem="This map shows the physical result, which was... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">What does this map show as the physical result of the ideas in Sources A, B, and C?</p>
@@ -651,8 +702,8 @@
           <div class="flex items-center gap-4 mb-3">
             <label for="date-e" class="block text-3xl font-bold text-slate-400">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-e" data-stem="The historian Robert J. Miller explains how... ">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-              <span class="sr-only">Add stem sentence</span>
+              <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+              <span class="stem-sentence-label">Writing Context</span>
             </button>
           </div>
           <textarea id="date-e" name="date-e" rows="1" data-persist placeholder="e.g., Miller's analysis of Manifest Destiny" class="auto-expand w-full textarea-event mb-8"></textarea>
@@ -662,8 +713,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-e" class="block text-3xl font-bold text-pink-400">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-e" data-stem="According to Miller, the legal foundation for this was... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">According to Miller, what is the intellectual or legal foundation for Manifest Destiny?</p>
@@ -679,8 +730,8 @@
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-e" class="block text-3xl font-bold text-cyan-400">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-e" data-stem="Miller's analysis connects these sources by showing that... ">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3.5c-1.31 0-2.52.4-3.56 1.1A8.91 8.91 0 003.09 7.02c-.5.83-.84 1.76-.94 2.72a.75.75 0 001.5.06c.09-.85.38-1.64.8-2.35a7.41 7.41 0 013.2-2.61c.97-.4 2.05-.62 3.16-.62s2.19.22 3.16.62a7.41 7.41 0 013.2 2.61c.42.71.7 1.5.8 2.35a.75.75 0 001.5-.06c-.1-.96-.44-1.89-.94-2.72a8.91 8.91 0 00-3.35-2.42C12.52 3.9 11.31 3.5 10 3.5zm0 2c-.93 0-1.8.25-2.56.7a6.01 6.01 0 00-2.3 2.04c-.33.56-.54 1.18-.63 1.83a.75.75 0 001.5.05c.08-.56.26-1.07.54-1.54a4.51 4.51 0 011.75-1.55C8.03 5.7 8.98 5.5 10 5.5s1.97.2 2.7.55a4.51 4.51 0 011.75 1.55c.28.47.46.98.54 1.54a.75.75 0 001.5-.05c-.09-.65-.3-1.27-.63-1.83a6.01 6.01 0 00-2.3-2.04C11.8 5.75 10.93 5.5 10 5.5zm.5-3.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM6 2a.75.75 0 000 1.5h.5a.75.75 0 000-1.5H6zm8.5.75a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0v-.5zM6.25 4a.75.75 0 00-1.5 0v.5a.75.75 0 001.5 0V4zm-2.5 4.5a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zm12.5 0a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM10 12.5a.75.75 0 00-1 1.28v1.72a.75.75 0 001.5 0v-1.72a.75.75 0 00-.5-1.28z" clip-rule="evenodd" /></svg>
-                  <span class="sr-only">Add stem sentence</span>
+                  <img src="https://cdn-icons-png.flaticon.com/512/868/868681.png" alt="" class="stem-sentence-icon" loading="lazy" />
+                  <span class="stem-sentence-label">Writing Context</span>
                 </button>
               </div>
               <p class="text-lg text-slate-400 italic mt-0 mb-4">How does Miller's analysis connect all the sources (A, B, C, D) together?</p>
