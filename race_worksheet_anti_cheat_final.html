@@ -68,6 +68,20 @@
     .toast{position:fixed; z-index:60; inset:auto 0 1rem 0; display:flex; justify-content:center; pointer-events:none}
     .toast .card{pointer-events:auto; background:#111827; color:#e5e7eb; border:1px solid #374151; padding:.75rem 1rem; border-radius:.75rem; box-shadow:0 10px 30px rgba(0,0,0,.25)}
 
+    /* Celebration */
+    .fireworks-overlay{position:fixed; inset:0; display:none; pointer-events:none; overflow:hidden; z-index:85}
+    .fireworks-overlay.active{display:block}
+    .fireworks-overlay .spark{position:absolute; left:50%; top:40%; width:10px; height:10px; border-radius:999px; opacity:0; transform:translate(-50%,-50%) scale(.2); animation:sparkBurst .9s ease-out forwards}
+    @keyframes sparkBurst{
+      0%{opacity:.9; transform:translate(-50%,-50%) scale(.2)}
+      70%{opacity:1; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1)}
+      100%{opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.35)}
+    }
+    .save-popup{position:fixed; top:18%; left:50%; transform:translate(-50%,-20px); background:linear-gradient(135deg,#1d4ed8,#9333ea); color:#fff; padding:1.1rem 1.6rem; border-radius:1rem; box-shadow:0 20px 45px rgba(79,70,229,.35); z-index:95; opacity:0; pointer-events:none; transition:opacity .3s ease, transform .3s ease; text-align:center; min-width:240px; font-weight:600; letter-spacing:.01em; display:flex; flex-direction:column; gap:.35rem}
+    .save-popup.visible{opacity:1; transform:translate(-50%,0)}
+    .save-popup .tag{font-size:.75rem; text-transform:uppercase; letter-spacing:.18em; opacity:.8}
+    .save-popup .message{font-size:1.05rem}
+
     /* Print styles */
     @media print{
       body{background-color:#fff; margin:0; padding:0}
@@ -203,6 +217,12 @@
     <div class="card" id="toastCard">Message</div>
   </div>
 
+  <div class="fireworks-overlay" id="fireworks" aria-hidden="true"></div>
+  <div class="save-popup" id="savePopup" role="status" aria-live="polite">
+    <span class="tag">Progress saved</span>
+    <span class="message">Keep pushing—you’ve got this!</span>
+  </div>
+
   <script>
   (function(){
     const etFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour12: true, year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
@@ -221,6 +241,8 @@
     const saveBtn = document.getElementById('saveBtn');
     const pdfBtn = document.getElementById('pdfBtn');
     const helper = document.getElementById('submitHelper');
+    const fireworks = document.getElementById('fireworks');
+    const savePopup = document.getElementById('savePopup');
 
     const counts = {
       respR:document.getElementById('countR'),
@@ -251,7 +273,7 @@
       payload.savedAt = new Date().toISOString();
       try{
         localStorage.setItem(KEY, JSON.stringify(payload));
-        toast('Progress saved');
+        celebrateSave('Progress saved! Keep pushing—you’ve got this!');
       }catch(e){
         toast('Unable to save locally.');
       }
@@ -284,6 +306,43 @@
       const c = document.getElementById('toastCard');
       c.textContent = msg; t.hidden=false; clearTimeout(toastT);
       toastT = setTimeout(()=>{t.hidden=true}, 2200);
+    }
+
+    function celebrateSave(message){
+      toast('Progress saved');
+      fireworks.innerHTML='';
+      fireworks.classList.add('active');
+      const colors = ['#facc15','#fb7185','#38bdf8','#a855f7','#34d399','#f97316'];
+      const bursts = 14;
+      for(let i=0;i<bursts;i++){
+        const spark = document.createElement('span');
+        spark.className='spark';
+        const angle = (Math.PI*2*i)/bursts;
+        const distance = 120 + Math.random()*70;
+        spark.style.setProperty('--dx', `${Math.cos(angle)*distance}px`);
+        spark.style.setProperty('--dy', `${Math.sin(angle)*distance}px`);
+        const color = colors[i % colors.length];
+        spark.style.background = color;
+        spark.style.boxShadow = `0 0 14px ${color}`;
+        spark.style.animationDelay = `${Math.random()*0.15}s`;
+        fireworks.appendChild(spark);
+        spark.addEventListener('animationend', ()=>{
+          spark.remove();
+          if(!fireworks.querySelector('.spark')){
+            fireworks.classList.remove('active');
+          }
+        });
+      }
+
+      const tag = savePopup.querySelector('.tag');
+      const messageEl = savePopup.querySelector('.message');
+      if(tag) tag.textContent = 'Progress saved';
+      if(messageEl) messageEl.textContent = message;
+      savePopup.classList.add('visible');
+      clearTimeout(savePopup._hideTimer);
+      savePopup._hideTimer = setTimeout(()=>{
+        savePopup.classList.remove('visible');
+      }, 2600);
     }
 
     // Anti-cheat: block paste, drop, and context menu inside textareas
