@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RACE Response (Online Version) — Anti‑Cheat</title>
+
+  <style>
+    :root{
+      --ink:#18181b; --muted:#3f3f46; --line:#d4d4d8; --line-dark:#71717A; --bg:#ffffff; --bg-soft:#f4f4f5; --primary:#2563eb; --warn:#f59e0b; --danger:#ef4444; --okay:#10b981;
+    }
+
+    /* Basic page setup */
+    html,body{height:100%}
+    body{
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin:0; padding:0; color:var(--ink); background:#fff;
+    }
+
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background:#0f172a; color:#e5e7eb; border-bottom:1px solid #1f2937;
+      display:flex; gap:.75rem; align-items:center; justify-content:space-between;
+      padding:.5rem .75rem; font-size:.95rem;
+    }
+    .topbar .pill{display:inline-flex; align-items:center; gap:.4rem; padding:.25rem .55rem; border-radius:999px; background:#111827; border:1px solid #374151}
+    .topbar strong{font-weight:700}
+
+    .container{width:100%; max-width:1100px; margin:0 auto; padding:1rem; box-sizing:border-box}
+
+    /* Header */
+    .header{text-align:center; margin-bottom:24px; border-bottom:2px solid #e4e4e7; padding-bottom:16px}
+    .header h1{margin:0; font-size:2.35rem; font-weight:800; letter-spacing:.2px}
+
+    /* Name lines */
+    .header-fields{display:flex; flex-wrap:wrap; justify-content:space-between; gap:1.25rem; margin-bottom:24px}
+    .name-line{font-size:1.05em; color:var(--muted); display:flex; align-items:center; font-weight:600; flex:1 1 300px}
+    .name-line span{flex-shrink:0; margin-right:8px}
+    .name-line input{border:none; border-bottom:2px solid #a1a1aa; width:100%; font-size:1em; padding:4px 0; background:transparent; transition:border-color .2s;}
+    .name-line input:focus{outline:none; border-bottom-color:var(--primary)}
+
+    /* Instructions box */
+    .instructions{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:24px}
+    .instructions p{margin:.25rem 0 0; font-size:1rem; color:var(--muted); line-height:1.5}
+    .prompt-question{font-size:1.15rem; font-weight:800; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:12px; text-align:center; margin-top:.5rem}
+    .absent-instructions{background:#fffbeb; border:1px solid #fde047; padding:10px; border-radius:6px; font-weight:600; color:#b45309; margin-top:16px; margin-bottom:0}
+
+    /* Table */
+    table{width:100%; border-collapse:collapse; margin-top:24px; border:2px solid #52525B}
+    td{border:1px solid var(--line-dark); padding:16px; vertical-align:top; text-align:left}
+    .letter-column{width:10%; text-align:center; font-size:2.4rem; font-weight:900; color:var(--ink); padding:20px 8px; border-right:2px solid var(--line-dark)}
+    .description-column{width:26%; font-size:.95em; color:var(--muted); line-height:1.5; border-right:2px solid var(--line-dark)}
+    .response-column{width:64%}
+
+    .starter-text{font-size:.86em; margin-bottom:8px; color:#71717a; font-style:italic}
+    .response-textarea{width:100%; border:1px solid #a1a1aa; border-radius:6px; padding:10px; font-size:1rem; line-height:1.5; background:#fafafa; resize:vertical; transition:all .2s;}
+    .response-textarea:focus{outline:none; border-color:var(--primary); background:#fff; box-shadow:0 0 0 2px rgba(37,99,235,.2)}
+    .count-row{display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-top:.5rem; font-size:.85rem; color:#6b7280}
+
+    /* Controls */
+    .controls{display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; justify-content:flex-end; margin-top:20px}
+    .btn{appearance:none; border:1px solid #1f2937; background:#111827; color:#e5e7eb; padding:.55rem .85rem; border-radius:.65rem; font-weight:700; cursor:pointer}
+    .btn[disabled]{opacity:.5; cursor:not-allowed}
+    .btn.secondary{background:#fff; color:#111827}
+    .helper{font-size:.9rem; color:#374151; margin-top:.35rem}
+
+    /* Toast */
+    .toast{position:fixed; z-index:60; inset:auto 0 1rem 0; display:flex; justify-content:center; pointer-events:none}
+    .toast .card{pointer-events:auto; background:#111827; color:#e5e7eb; border:1px solid #374151; padding:.75rem 1rem; border-radius:.75rem; box-shadow:0 10px 30px rgba(0,0,0,.25)}
+
+    /* Print styles */
+    @media print{
+      body{background-color:#fff; margin:0; padding:0}
+      .container{width:100%; height:100%; margin:0; padding:.5in; box-shadow:none}
+      .name-line input{border-bottom:1px solid #000 !important; color:#000 !important}
+      .response-textarea{display:none}
+      .print-only-message{display:block !important; padding:20px; border:1px dashed #71717A; border-radius:6px; color:#52525B; text-align:center}
+      .absent-instructions{border-color:#d4d4d8 !important; background:#f4f4f5 !important; color:#3f3f46 !important}
+      table,td{border-color:#52525B !important}
+      .topbar,.controls,.toast{display:none !important}
+    }
+  </style>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sticky integrity bar -->
+  <div class="topbar" role="region" aria-label="Academic integrity status">
+    <div class="left">
+      <span class="pill" id="integrityMode"><strong>Honesty Mode</strong>: ON</span>
+      <span class="pill">Pastes blocked: <strong id="pasteCount">0</strong></span>
+    </div>
+    <div class="right">
+      <span class="pill">Eastern Time: <strong id="etClock">—:—:—</strong></span>
+    </div>
+  </div>
+
+  <form id="worksheetForm" class="container" autocomplete="off" novalidate>
+    <div class="header">
+      <h1>RACE Response</h1>
+    </div>
+
+    <div class="header-fields">
+      <label class="name-line" style="flex-basis:60%">
+        <span>Name:</span>
+        <input id="studentName" name="studentName" type="text" aria-label="Name" required />
+      </label>
+      <label class="name-line" style="flex-basis:40%">
+        <span>Period:</span>
+        <input id="classPeriod" name="classPeriod" type="text" aria-label="Class Period" required />
+      </label>
+    </div>
+
+    <div class="instructions">
+      <p><strong>Your Task:</strong> Read the question below. Use what you have learned to fill in each box of the RACECE chart. You must use <strong>two pieces of evidence</strong> from the sources provided.</p>
+      <div class="prompt-question">How did the “Doctrine of Discovery” lead to Manifest Destiny in the United States?</div>
+      <p class="absent-instructions"><strong>IF ABSENT:</strong> You can print this page as a PDF (File &gt; Print &gt; Save as PDF) and attach the file to the Google Classroom assignment.</p>
+    </div>
+
+    <table aria-label="RACE organizer">
+      <tr>
+        <td class="letter-column">R</td>
+        <td class="description-column"><strong>RESTATE</strong> the question, ending with a transition word or phrase.</td>
+        <td class="response-column">
+          <div class="starter-text">...due to... // ...because... // ...by showing...</div>
+          <textarea class="response-textarea" rows="3" aria-label="Restate response" id="respR" name="respR" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countR">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="letter-column">A</td>
+        <td class="description-column"><strong>ANSWER</strong> the question with your main claim or idea.</td>
+        <td class="response-column">
+          <textarea class="response-textarea" rows="4" aria-label="Answer response" id="respA" name="respA" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countA">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="letter-column">C</td>
+        <td class="description-column"><strong>CITE</strong> your <strong>first</strong> piece of evidence from a <em>document</em> (e.g., <strong>Doc A</strong>). Paraphrase it in your own words.</td>
+        <td class="response-column">
+          <div class="starter-text">According to <strong>Doc A</strong>... // In <strong>Document A</strong>... // The document states...</div>
+          <textarea class="response-textarea" rows="4" aria-label="Cite first evidence response" id="respC1" name="respC1" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countC1">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="letter-column">E</td>
+        <td class="description-column"><strong>EXPLAIN</strong> how your <strong>first</strong> piece of evidence supports your answer.</td>
+        <td class="response-column">
+          <div class="starter-text">This explains... // This shows... // This proves... // This means...</div>
+          <textarea class="response-textarea" rows="4" aria-label="Explain first evidence response" id="respE1" name="respE1" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countE1">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="letter-column">C</td>
+        <td class="description-column"><strong>CITE</strong> a second piece of evidence from a <em>document</em> (e.g., <strong>Doc B</strong>). Paraphrase it in your own words.</td>
+        <td class="response-column">
+          <div class="starter-text">According to <strong>Doc B</strong>... // In <strong>Document B</strong>... // The document states...</div>
+          <textarea class="response-textarea" rows="4" aria-label="Cite second evidence response" id="respC2" name="respC2" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countC2">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="letter-column">E</td>
+        <td class="description-column"><strong>EXPLAIN</strong> how your <strong>second</strong> piece of evidence supports your answer.</td>
+        <td class="response-column">
+          <div class="starter-text">This explains... // This shows... // This proves... // This means...</div>
+          <textarea class="response-textarea" rows="4" aria-label="Explain second evidence response" id="respE2" name="respE2" required spellcheck="false"></textarea>
+          <div class="count-row"><span id="countE2">0 characters</span></div>
+          <div class="print-only-message">Lines for writing.</div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="controls">
+      <button type="button" id="focusBtn" class="btn secondary" title="Hide distractions">Enter Focus Mode</button>
+      <button type="button" id="saveBtn" class="btn secondary">Save Progress</button>
+      <button type="button" id="logBtn" class="btn secondary" title="Download event log for teacher">Download Attempt Log</button>
+      <button type="submit" id="submitBtn" class="btn" disabled>Submit Work</button>
+    </div>
+    <div class="helper" id="submitHelper">All fields must be filled. Paste is blocked. If you are not done, click Save Progress.</div>
+    <div class="helper">Now: <span id="nowET">—</span> (Eastern Time)</div>
+  </form>
+
+  <!-- Toast -->
+  <div class="toast" aria-live="polite" aria-atomic="true" id="toast" hidden>
+    <div class="card" id="toastCard">Message</div>
+  </div>
+
+  <script>
+  (function(){
+    const etFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour12: true, year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const etClock = document.getElementById('etClock');
+    const nowET = document.getElementById('nowET');
+
+    function tick(){
+      const now = new Date();
+      etClock.textContent = etFormatter.format(now);
+      nowET.textContent = etFormatter.format(now);
+    }
+    tick(); setInterval(tick, 1000);
+
+    const form = document.getElementById('worksheetForm');
+    const fields = ['studentName','classPeriod','respR','respA','respC1','respE1','respC2','respE2'].map(id=>document.getElementById(id));
+    const submitBtn = document.getElementById('submitBtn');
+    const helper = document.getElementById('submitHelper');
+
+    const counts = {
+      respR:document.getElementById('countR'),
+      respA:document.getElementById('countA'),
+      respC1:document.getElementById('countC1'),
+      respE1:document.getElementById('countE1'),
+      respC2:document.getElementById('countC2'),
+      respE2:document.getElementById('countE2')
+    };
+
+    // Character counters
+    fields.forEach(el=>{
+      if(el.tagName === 'TEXTAREA'){
+        el.addEventListener('input', ()=>{
+          const c = el.value.length;
+          counts[el.id].textContent = c + (c===1?' character':' characters');
+          validate();
+        });
+      } else {
+        el.addEventListener('input', validate);
+      }
+    });
+
+    // Autosave to localStorage
+    const KEY='raceWorksheet_v1';
+    function saveDraft(){
+      const payload = Object.fromEntries(fields.map(el=>[el.id, el.value]));
+      payload.savedAt = new Date().toISOString();
+      localStorage.setItem(KEY, JSON.stringify(payload));
+      toast('Progress saved');
+    }
+    function loadDraft(){
+      try{
+        const raw = localStorage.getItem(KEY); if(!raw) return;
+        const data = JSON.parse(raw);
+        fields.forEach(el=>{ if(data[el.id]) el.value = data[el.id]; });
+        Object.keys(counts).forEach(id=>{ const el=document.getElementById(id.replace('count','resp')); if(el) counts[id].textContent = (el.value||'').length + ' characters'; });
+        validate();
+      }catch(e){}
+    }
+    document.getElementById('saveBtn').addEventListener('click', saveDraft);
+    window.addEventListener('load', loadDraft);
+
+    // Toast helper
+    let toastT;
+    function toast(msg){
+      const t = document.getElementById('toast');
+      const c = document.getElementById('toastCard');
+      c.textContent = msg; t.hidden=false; clearTimeout(toastT);
+      toastT = setTimeout(()=>{t.hidden=true}, 2200);
+    }
+
+    // Anti-cheat: block paste, drop, and context menu inside textareas
+    const pasteCountEl = document.getElementById('pasteCount');
+    let pasteCount = 0;
+    document.querySelectorAll('.response-textarea').forEach(area=>{
+      area.setAttribute('autocomplete','off');
+      area.setAttribute('autocapitalize','off');
+      area.setAttribute('autocorrect','off');
+      area.addEventListener('paste', e=>{
+        e.preventDefault(); pasteCount++; pasteCountEl.textContent=pasteCount; logEvent('paste_blocked', {id:area.id}); toast('Paste is blocked. Put it in your own words.'); validate();
+      });
+      area.addEventListener('drop', e=>{ e.preventDefault(); logEvent('drop_blocked', {id:area.id}); toast('Drop is blocked here.'); });
+      area.addEventListener('keydown', e=>{
+        const k = e.key.toLowerCase();
+        const meta = e.ctrlKey || e.metaKey;
+        if(meta && (k==='v' || k==='insert')){ e.preventDefault(); pasteCount++; pasteCountEl.textContent=pasteCount; logEvent('paste_combo_blocked', {id:area.id}); toast('Paste is blocked.'); validate(); }
+      });
+    });
+    document.addEventListener('contextmenu', e=>{ if(e.target.closest('.response-textarea')){ e.preventDefault(); toast('Right click is disabled during this task.'); logEvent('contextmenu_blocked',{});} });
+    document.addEventListener('copy', e=>{ if(!window.getSelection || String(window.getSelection()).length){ e.preventDefault(); toast('Copy is disabled during this task.'); logEvent('copy_blocked',{});} });
+
+    // Validation and submit blocking rules (no tab lock / allowed doc)
+    function allFilled(){
+      return fields.every(el=>{
+        if(el.type==='text') return el.value.trim().length>0;
+        if(el.tagName==='TEXTAREA') return el.value.trim().length>=10; // minimal effort
+        return true;
+      });
+    }
+
+    function validate(){
+      const ok = allFilled();
+      submitBtn.disabled = !ok;
+      helper.textContent = ok ? 'Ready to submit. Paste remains blocked.' : 'All fields must be filled. Paste is blocked. If you are not done, click Save Progress.';
+    }
+    validate();
+
+    // Attempt log for teacher
+    const attemptLog = [];
+    function logEvent(type, extra){
+      attemptLog.push({ type, at: new Date().toISOString(), ...extra });
+    }
+    document.getElementById('logBtn').addEventListener('click', ()=>{
+      const payload = {
+        whenET: etFormatter.format(new Date()),
+        name: document.getElementById('studentName').value || null,
+        period: document.getElementById('classPeriod').value || null,
+        tabSwitches: 0, pasteCount,
+        events: attemptLog,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'race_attempt_log.json'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Fullscreen focus mode
+    const focusBtn = document.getElementById('focusBtn');
+    focusBtn.addEventListener('click', async()=>{
+      try{
+        await document.documentElement.requestFullscreen();
+        focusBtn.textContent='Exit Focus Mode';
+      }catch(e){}
+    });
+    document.addEventListener('fullscreenchange', ()=>{
+      if(!document.fullscreenElement){ focusBtn.textContent='Enter Focus Mode'; }
+    });
+
+    // Submit: bundle answers and log. You can swap this to POST later.
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      if(!allFilled()){ toast('Fill all fields first.'); return; }
+
+      const submission = {
+        whenET: etFormatter.format(new Date()),
+        name: fields[0].value.trim(),
+        period: fields[1].value.trim(),
+        responses: {
+          R: document.getElementById('respR').value.trim(),
+          A: document.getElementById('respA').value.trim(),
+          C1: document.getElementById('respC1').value.trim(),
+          E1: document.getElementById('respE1').value.trim(),
+          C2: document.getElementById('respC2').value.trim(),
+          E2: document.getElementById('respE2').value.trim(),
+        },
+        integrity: { tabSwitches: 0, pasteCount, events: attemptLog }
+      };
+
+      const blob = new Blob([JSON.stringify(submission, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'race_submission.json'; a.click(); URL.revokeObjectURL(url);
+      toast('Submission file downloaded');
+    });
+
+    // Warn before unload if not empty
+    window.addEventListener('beforeunload', (e)=>{
+      const anyFilled = fields.some(el=> (el.value||'').trim().length>0 );
+      if(anyFilled){ e.preventDefault(); e.returnValue=''; }
+    });
+
+  })();
+  </script>
+</body>
+</html>
