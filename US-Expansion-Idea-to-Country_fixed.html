@@ -47,6 +47,18 @@
         .slide.hidden {
             display: none;
         }
+
+        /* Slide transition animations */
+        .slide {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
         /* Navigation buttons */
         .nav-button {
@@ -146,7 +158,7 @@
 
     <!-- Slide Deck Container --><div class="slide-container">
 
-        <!-- Slide 1: Title --><div id="slide-1" class="slide text-center">
+        <!-- Slide 1: Title --><div id="slide-1" class="slide text-center is-visible">
             <h1 class="text-6xl font-black mb-4">How We Got This Land</h1>
             <p class="text-4xl font-bold text-blue-600">From an Idea to a Country</p>
             <p class="text-2xl mt-6">U.S. History</p>
@@ -188,7 +200,7 @@
 
             <div>
                 <h3 class="text-xl font-bold uppercase tracking-wide text-blue-600 mb-2">Our Task:</h3>
-                <p class="text-3xl font-semibold mb-4">We will look at 5 historical sources. For each source, we will find the <strong class="text-red-600">CAUSE</strong> (the reason why) and the <strong class="text-red-600">EFFECT</strong> (the result).</p>
+                <p class="text-3xl font-semibold mb-4">We will look at 5 historical sources. Today we will focus on Sources A–D to find the <strong class="text-red-600">CAUSE</strong> (the reason why) and the <strong class="text-red-600">EFFECT</strong> (the result).</p>
             </div>
         </div>
 
@@ -344,10 +356,36 @@
             <p class="text-2xl font-bold mt-6 text-center">This map is a <span class="highlight">picture</span> of Manifest Destiny happening.</p>
         </div>
 
-        <!-- Slide 15: Source D (Worksheet) --><div id="slide-15" class="slide hidden">
+        <!-- Slide 15: Map Effect - Texas & Conflict --><div id="slide-15" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">What the Map Shows: <span class="text-blue-600">Texas & Conflict</span></h2>
+            <p class="text-xl mb-6">These changes are the <strong class="text-red-600">effects</strong> of the ideas from Sources A, B, and C.</p>
+
+            <ul class="list-disc list-inside text-xl space-y-3">
+                <li><strong>Texas votes to join the United States.</strong> That vote is possible because leaders believe the Pope's permission (Source A) still gives them a right to take non-Christian land.</li>
+                <li>The dark red "disputed" zone shows how that belief created <strong>constant conflict with Mexico</strong>.</li>
+                <li>President Jackson's argument that white settlers <em>deserve</em> the land (Source B) becomes real as settlers move into the disputed territory.</li>
+            </ul>
+
+            <p class="mt-6 text-2xl font-semibold text-center">The map proves that ideas turn into <span class="highlight">land grabs</span> and new borders.</p>
+        </div>
+
+        <!-- Slide 16: Map Effect - Trails & Expansion --><div id="slide-16" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6">What the Map Shows: <span class="text-blue-600">Trails & Expansion</span></h2>
+            <p class="text-xl mb-6">Manifest Destiny thinking (Source C) pushes Americans to move west.</p>
+
+            <ul class="list-disc list-inside text-xl space-y-3">
+                <li><strong>Oregon Country is "shared."</strong> Thousands of settlers travel the Oregon Trail expecting the U.S. will soon claim it.</li>
+                <li>New territories like <strong>Iowa</strong> and <strong>Wisconsin</strong> show how the U.S. government plans ahead for more states.</li>
+                <li>Each new trail and territory <strong>pushes Native Nations off their homelands</strong>, matching Jackson's removal plan (Source B).</li>
+            </ul>
+
+            <p class="mt-6 text-2xl font-semibold text-center">Belief in a "God-given" mission becomes <span class="highlight">movement on the ground.</span></p>
+        </div>
+
+        <!-- Slide 17: Source D (Worksheet) --><div id="slide-17" class="slide hidden">
             <h2 class="text-4xl font-bold mb-6">Source D: <span class="text-blue-600">Your Worksheet</span></h2>
             <p class="text-2xl mb-6">Go to the "Source D" box.</p>
-            
+
             <ul class="text-xl space-y-4 mb-6">
                 <li><strong class="text-red-600">CAUSE:</strong> What *events* (wars, purchases, treaties) led to the new borders shown on the map?</li>
                 <li><strong class="text-red-600">EFFECT:</strong> What does this map *show* as the physical result of the ideas in Sources A, B, and C?</li>
@@ -360,38 +398,15 @@
             </div>
         </div>
 
-        <!-- Slide 16: Source E (Historian) --><div id="slide-16" class="slide hidden">
-            <h2 class="text-4xl font-bold mb-4">Source E: <span class="text-blue-600">The Historian (2008)</span></h2>
-            <p class="text-xl mb-4">This source is from a modern expert (a <strong class="highlight">scholar</strong>), Robert J. Miller, who studied this history.</p>
-            <p class="text-lg mb-4"><strong>Key Words:</strong> `traces` (follows the path), `embedding` (putting inside)</p>
-            
-            <div class="bg-gray-100 p-6 rounded-lg shadow">
-                <h3 class="text-2xl font-bold mb-3">In Our Own Words:</h3>
-                <p class="text-xl leading-relaxed">"The historian, Miller, <strong class="text-blue-600">connects all the dots.</strong>
-                <p class="text-xl leading-relaxed mt-2">He says leaders like Thomas Jefferson took the Pope's 'Doctrine of Discovery' (Source A) and <strong class="underline">embedded it (put it) into U.S. law.</strong></p>
-                <p class="text-xl leading-relaxed mt-2">He argues this <span class="highlight">old idea</span> was the <strong class="text-red-600">legal reason</strong> the U.S. used to justify Indian Removal (Source B) and Manifest Destiny (Source C)."</p>
-            </div>
+        <!-- Slide 18: Source E Update --><div id="slide-18" class="slide hidden text-center">
+            <h2 class="text-4xl font-bold mb-6">Source E</h2>
+            <p class="text-2xl mb-4">We will <strong class="text-red-600">skip this document</strong> for today.</p>
+            <p class="text-xl">Focus your notes on Sources A–D so we can see how ideas became action and changed the map.</p>
         </div>
 
-        <!-- Slide 17: Source E (Worksheet) --><div id="slide-17" class="slide hidden">
-            <h2 class="text-4xl font-bold mb-6">Source E: <span class="text-blue-600">Your Worksheet</span></h2>
-            <p class="text-2xl mb-6">Go to the "Source E" box.</p>
-            
-            <ul class="text-xl space-y-4 mb-6">
-                <li><strong class="text-red-600">CAUSE:</strong> According to Miller, what is the *foundation* (the starting idea) for Manifest Destiny?</li>
-                <li><strong class="text-red-600">EFFECT:</strong> How does Miller's analysis *connect* all the other sources together?</li>
-            </ul>
-            
-            <div class="sentence-starter">
-                <h4 class="text-lg font-bold mb-2 text-gray-800">Sentence Starters to Help You:</h4>
-                <p class="mb-2">* Cause: "Miller argues the foundation for Manifest Destiny was the..."</p>
-                <p>* Effect: "Miller connects all the sources by showing how..."</p>
-            </div>
-        </div>
-
-        <!-- Slide 18: Connect the Dots --><div id="slide-18" class="slide hidden">
+        <!-- Slide 19: Connect the Dots --><div id="slide-19" class="slide hidden">
             <h2 class="text-4xl font-bold mb-8 text-center">Let's Connect the Dots!</h2>
-            
+
             <div class="space-y-2 text-xl">
                 <div class="p-3 bg-blue-100 rounded-lg shadow"><strong>Source A: The "Discovery" IDEA</strong><br>(Pope says Christians can claim non-Christian land)</div>
                 <div class="text-center font-black text-blue-600 text-3xl">↓</div>
@@ -400,26 +415,98 @@
                 <div class="p-3 bg-yellow-100 rounded-lg shadow"><strong>Source C: The "Destiny" BELIEF</strong><br>(O'Sullivan says it's America's *obvious right* to expand)</div>
                 <div class="text-center font-black text-yellow-600 text-3xl">↓</div>
                 <div class="p-3 bg-green-100 rounded-lg shadow"><strong>Source D: The "Expansion" RESULT</strong><br>(The U.S. map gets bigger and bigger)</div>
-                <div class="text-center font-black text-green-600 text-3xl">↓</div>
-                <div class="p-3 bg-gray-200 rounded-lg shadow"><strong>Source E: The "Connection" ANALYSIS</strong><br>(A historian confirms the <strong class="text-blue-600">IDEA</strong> from A was used to *justify* B, C, and D)</div>
             </div>
         </div>
 
-        <!-- Slide 19: Final Check --><div id="slide-19" class="slide hidden text-center">
+        <!-- Slide 20: Final Check --><div id="slide-20" class="slide hidden text-center">
             <h2 class="text-4xl font-bold mb-8">Final Check</h2>
             <ol class="list-decimal list-inside text-2xl space-y-6 text-left w-fit mx-auto">
-                <li>Look over your worksheet. Do you have a "Cause" and "Effect" for all 5 sources?</li>
+                <li>Look over your worksheet. Do you have a "Cause" and "Effect" for Sources A–D?</li>
                 <li>Click the <span class="font-bold bg-gray-200 px-2 py-1 rounded">"Save Progress"</span> button at the bottom.</li>
                 <li>When you are all finished, click the <span class="font-bold bg-blue-500 text-white px-2 py-1 rounded">"Submit Timeline"</span> button.</li>
             </ol>
             <p class="text-3xl font-bold mt-12 text-green-700">Great work today on this difficult topic!</p>
         </div>
 
+        <!-- Slide 21: Doctrine to Destiny --><div id="slide-21" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6 text-center">Doctrine of Discovery ➜ Manifest Destiny</h2>
+            <p class="text-xl text-center mb-6">Put the pieces together using the sources we studied.</p>
+
+            <div class="space-y-4 text-xl">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg shadow">
+                    <strong>Document A (Pope Alexander VI)</strong>: Gives Christian rulers "permission" to take non-Christian lands, spread Christianity, and control Native labor.
+                </div>
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg shadow">
+                    <strong>Document B (President Jackson)</strong>: Uses that idea to argue white settlers <em>deserve</em> Native homelands, clearing the way for removal and new settlements.
+                </div>
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg shadow">
+                    <strong>Document C (Manifest Destiny)</strong>: Claims God wants Americans to spread their culture and government across the continent.
+                </div>
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow">
+                    <strong>On the Map (Source D)</strong>: Votes to annex Texas and disputes with Mexico turn belief into action—new borders and less Native land.
+                </div>
+            </div>
+
+            <p class="mt-8 text-2xl font-semibold text-center">An old religious claim becomes a "destiny" to control land, people, and power.</p>
+        </div>
+
+        <!-- Slide 22: Today's Writing Objective --><div id="slide-22" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6 text-center">Today's Objective: RACE Writing</h2>
+            <p class="text-2xl text-center mb-4">We will turn our big question into a strong answer that uses evidence.</p>
+            <div class="bg-purple-100 border-l-4 border-purple-500 p-6 rounded-lg shadow text-xl space-y-3">
+                <p><strong>Goal:</strong> Restate the question, answer it clearly, and back it up with sources.</p>
+                <ul class="list-disc list-inside space-y-1">
+                    <li><strong>R = Restate</strong> the question.</li>
+                    <li><strong>A = Answer</strong> with your claim.</li>
+                    <li><strong>C = Cite</strong> your evidence.</li>
+                    <li><strong>E = Explain</strong> how the evidence proves it.</li>
+                </ul>
+                <p><strong>Remember:</strong> Your restate and answer are about the <em>same question</em>. You are just changing the question into a statement.</p>
+                <p><strong>We will do it step by step</strong> so it feels simple and clear.</p>
+            </div>
+        </div>
+
+        <!-- Slide 23: Step 1 Restate --><div id="slide-23" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6 text-center">Step 1: Restate the Question</h2>
+            <p class="text-2xl mb-6 text-center">Turn the sorting question into a statement that starts your answer.</p>
+            <div class="grid gap-4 text-xl">
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg shadow">
+                    <p><strong>Question:</strong> "How did the Doctrine of Discovery lead to Manifest Destiny?"</p>
+                </div>
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow">
+                    <p><strong>Restated:</strong> "The Doctrine of Discovery led to Manifest Destiny because..."</p>
+                </div>
+            </div>
+            <p class="text-xl mt-6 text-center">You did not change the topic. You simply moved from a question mark to a strong opening sentence.</p>
+        </div>
+
+        <!-- Slide 24: Step 2 Answer with a Claim --><div id="slide-24" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6 text-center">Step 2: Answer with Your Claim</h2>
+            <p class="text-2xl mb-4 text-center">Your answer sentence explains <em>why</em> the restated statement is true.</p>
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 p-6 rounded-lg shadow text-xl space-y-3">
+                <p><strong>Your Claim:</strong> This is where you share the big reason that connects the ideas.</p>
+                <p>This answer sentence is where you <strong>insert the claim</strong> you will explain with your evidence.</p>
+                <p><strong>Example:</strong> "...because the Pope's order let European and American leaders say God wanted them to take Native lands."</p>
+                <p>We will explain this claim with evidence in the next step.</p>
+            </div>
+        </div>
+
+        <!-- Slide 25: Step 3 Evidence the Right Way --><div id="slide-25" class="slide hidden">
+            <h2 class="text-4xl font-bold mb-6 text-center">Step 3: Use Evidence the Right Way</h2>
+            <p class="text-2xl text-center mb-6">Strong writing uses evidence that is cited and explained in your own words.</p>
+            <ul class="list-disc list-inside text-xl space-y-3">
+                <li><strong>Cite your source:</strong> Name the document letter when you use it. (Example: <em>According to Source B...</em>)</li>
+                <li><strong>Paraphrase, don't quote:</strong> Tell the important detail using <em>your</em> words instead of copying the sentence, but keep the key facts from the source.</li>
+                <li><strong>Explain how it proves your claim:</strong> Add one more sentence that shows how the detail supports your answer.</li>
+            </ul>
+            <p class="text-xl mt-6 text-center">This is how we show respect for the sources and make our writing powerful.</p>
+        </div>
+
     </div>
 
     <!-- Navigation --><div class="flex justify-between w-full max-w-sm mx-auto mt-4 mb-8">
         <button id="prevBtn" class="nav-button" disabled>Previous</button>
-        <span id="slideCounter" class="text-lg font-medium self-center">Slide 1 / 19</span>
+        <span id="slideCounter" class="text-lg font-medium self-center">Slide 1 / 25</span>
         <button id="nextBtn" class="nav-button">Next</button>
     </div>
 
@@ -427,7 +514,8 @@
         // JavaScript for slide navigation
         document.addEventListener('DOMContentLoaded', () => {
             let currentSlide = 1;
-            const totalSlides = document.querySelectorAll('.slide').length;
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const slideCounter = document.getElementById('slideCounter');
@@ -435,26 +523,34 @@
             let closeTrailOfTearsPopover = () => {};
 
             function showSlide(slideNumber) {
+                currentSlide = slideNumber;
+
                 // Hide all slides
-                document.querySelectorAll('.slide').forEach((slide) => {
+                slides.forEach((slide) => {
                     slide.classList.add('hidden');
+                    slide.classList.remove('is-visible');
                 });
 
                 // Show the current slide
                 const slide = document.getElementById(`slide-${slideNumber}`);
                 if (slide) {
                     slide.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            slide.classList.add('is-visible');
+                        });
+                    });
                 }
 
                 // Ensure the definition popover is closed when switching slides
                 closeTrailOfTearsPopover();
 
                 // Update counter
-                slideCounter.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+                slideCounter.textContent = `Slide ${slideNumber} / ${totalSlides}`;
 
                 // Update button states
-                prevBtn.disabled = (currentSlide === 1);
-                nextBtn.disabled = (currentSlide === totalSlides);
+                prevBtn.disabled = (slideNumber === 1);
+                nextBtn.disabled = (slideNumber === totalSlides);
             }
 
             // Event listener for "Next" button
