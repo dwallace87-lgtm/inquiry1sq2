@@ -190,11 +190,11 @@
 
     <div class="controls">
       <button type="button" id="focusBtn" class="btn secondary" title="Hide distractions">Enter Focus Mode</button>
-      <button type="button" id="saveBtn" class="btn secondary">Save Progress</button>
+      <button type="button" id="pdfBtn" class="btn secondary">Save as PDF</button>
       <button type="button" id="logBtn" class="btn secondary" title="Download event log for teacher">Download Attempt Log</button>
       <button type="submit" id="submitBtn" class="btn" disabled>Submit Work</button>
     </div>
-    <div class="helper" id="submitHelper">All fields must be filled. Paste is blocked. If you are not done, click Save Progress.</div>
+    <div class="helper" id="submitHelper">All fields must be filled. Paste is blocked. When ready, choose Save as PDF.</div>
     <div class="helper">Now: <span id="nowET">—</span> (Eastern Time)</div>
   </form>
 
@@ -243,25 +243,10 @@
       }
     });
 
-    // Autosave to localStorage
-    const KEY='raceWorksheet_v1';
-    function saveDraft(){
-      const payload = Object.fromEntries(fields.map(el=>[el.id, el.value]));
-      payload.savedAt = new Date().toISOString();
-      localStorage.setItem(KEY, JSON.stringify(payload));
-      toast('Progress saved');
-    }
-    function loadDraft(){
-      try{
-        const raw = localStorage.getItem(KEY); if(!raw) return;
-        const data = JSON.parse(raw);
-        fields.forEach(el=>{ if(data[el.id]) el.value = data[el.id]; });
-        Object.keys(counts).forEach(id=>{ const el=document.getElementById(id.replace('count','resp')); if(el) counts[id].textContent = (el.value||'').length + ' characters'; });
-        validate();
-      }catch(e){}
-    }
-    document.getElementById('saveBtn').addEventListener('click', saveDraft);
-    window.addEventListener('load', loadDraft);
+    // Save as PDF via print dialog
+    document.getElementById('pdfBtn').addEventListener('click', ()=>{
+      window.print();
+    });
 
     // Toast helper
     let toastT;
