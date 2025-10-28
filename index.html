@@ -17,6 +17,37 @@
     }
     .source-title { transition: all .3s ease; }
     .source-title:hover { color: #67e8f9; }
+    .instruction-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1.05rem;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.24), rgba(6, 182, 212, 0.24));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #f8fafc;
+      box-shadow: 0 12px 32px rgba(8, 145, 178, 0.18);
+      flex: 0 1 auto;
+      flex-wrap: wrap;
+      line-height: 1.4;
+      width: fit-content;
+    }
+    .instruction-pill::before {
+      content: '★';
+      font-size: 0.95rem;
+      color: #f472b6;
+      text-shadow: 0 0 10px rgba(236, 72, 153, 0.45);
+    }
+    .instruction-pill--sunny {
+      background: linear-gradient(135deg, rgba(253, 224, 71, 0.92), rgba(250, 204, 21, 0.85));
+      border-color: rgba(250, 204, 21, 0.65);
+      color: #422006;
+      box-shadow: 0 12px 32px rgba(250, 204, 21, 0.25);
+    }
+    .instruction-pill--sunny::before {
+      color: #f59e0b;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.55);
+    }
     .context-button {
       display: inline-flex; align-items: center; justify-content: center;
       gap: 0.5rem; padding: 0.5rem 1.5rem; font-size: 0.875rem; font-weight: 600;
@@ -273,7 +304,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           <!-- First Name -->
           <div>
-            <p class="text-sm font-semibold text-slate-200">Instruction: Type your first name in this box.</p>
+            <p class="instruction-pill text-sm font-semibold text-slate-200">Instruction: Type your first name in this box.</p>
             <label for="first-name" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.firstNameLabel">First Name</label>
             <input
               id="first-name" name="first_name" type="text" inputmode="text" autocomplete="given-name" required
@@ -284,7 +315,7 @@
           </div>
           <!-- Last Name -->
           <div>
-            <p class="text-sm font-semibold text-slate-200">Instruction: Type your last name in this box.</p>
+            <p class="instruction-pill text-sm font-semibold text-slate-200">Instruction: Type your last name in this box.</p>
             <label for="last-name" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.lastNameLabel">Last Name</label>
             <input
               id="last-name" name="last_name" type="text" inputmode="text" autocomplete="family-name" required
@@ -295,7 +326,7 @@
           </div>
           <!-- Class Period -->
           <div>
-            <p class="text-sm font-semibold text-slate-200">Instruction: Pick the class period you are in.</p>
+            <p class="instruction-pill text-sm font-semibold text-slate-200">Instruction: Pick the class period you are in.</p>
             <label for="class-period" class="block text-sm font-semibold text-slate-300" data-i18n="studentInfo.periodLabel">Class Period</label>
             <select
               id="class-period" name="class_period" required data-persist
@@ -362,7 +393,7 @@
 
     <div id="source-a-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
-        <p class="text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
+        <p class="instruction-pill text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <h2 class="text-2xl font-bold text-white" data-i18n="sourceA.title">SQ2: Featured Source A - Excerpt from "Inter Caetera"</h2>
           <button type="button" class="context-button" data-source="A" aria-expanded="false" data-i18n="buttons.historicalContext">
@@ -393,7 +424,7 @@
     <!-- Featured Source B (with Jackson portrait) -->
     <div id="source-b-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
-        <p class="text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
+        <p class="instruction-pill text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <h2 class="text-2xl font-bold text-white" data-i18n="sourceB.title">SQ2: Featured Source B - Excerpt from President Andrew Jackson's Message to Congress (1830)</h2>
           <button type="button" class="context-button" data-source="B" aria-expanded="false" data-i18n="buttons.historicalContext">
@@ -446,7 +477,7 @@
     <!-- Featured Source C -->
     <div id="source-c-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
-        <p class="text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
+        <p class="instruction-pill text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <h2 class="text-2xl font-bold text-white" data-i18n="sourceC.title">SQ2: Featured Source C - Excerpt from John O'Sullivan, "Annexation" (1845)</h2>
           <button type="button" class="context-button" data-source="C" aria-expanded="false" data-i18n="buttons.historicalContext">
@@ -473,7 +504,7 @@
     <!-- Featured Source D (Map with clickable full image) -->
     <div id="source-d-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
-        <p class="text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
+        <p class="instruction-pill text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <h2 class="text-2xl font-bold text-white" data-i18n="sourceD.title">SQ2: Featured Source D – United States Map (1842–1845)</h2>
           <button type="button" class="context-button" data-source="D" aria-expanded="false" data-i18n="buttons.historicalContext">
@@ -507,7 +538,7 @@
     <!-- Featured Source E -->
     <div id="source-e-doc" class="mb-12 md:mb-16">
       <div class="bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700 max-w-5xl mx-auto">
-        <p class="text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
+        <p class="instruction-pill text-sm font-semibold text-slate-200 mb-2">Instruction: Read this source slowly and notice what it says about causes and effects.</p>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <h2 class="text-2xl font-bold text-white" data-i18n="sourceE.title">SQ2: Featured Source E - Robert J. Miller, <em>Native America, Discovered and Conquered</em> (2008)</h2>
           <button type="button" class="context-button" data-source="E" aria-expanded="false" data-i18n="buttons.historicalContext">
@@ -540,13 +571,13 @@
       <section id="entry-source-a">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source A.</p>
+            <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source A.</p>
             <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryA.title">
               Source A: Pope Alexander VI, "Inter Caetera Bull of May 4, 1493 (Doctrine of Discovery)"
             </h2>
           </div>
 
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
           <div class="flex items-center gap-4 mb-3">
             <label for="date-a" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-a" data-stem="The Pope issued a 'Papal Bull' that... ">
@@ -558,7 +589,7 @@
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-a" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-a" data-stem="The primary motivation for this doctrine was... ">
@@ -576,7 +607,7 @@
             </div>
 
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-a" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-a" data-stem="As a result, European nations were given the power to... ">
@@ -605,13 +636,13 @@
       <section id="entry-source-b">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source B.</p>
+            <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source B.</p>
             <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryB.title">
               Source B: President Andrew Jackson's Message to Congress on Indian Removal, 6 Dec 1830
             </h2>
           </div>
 
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
           <div class="flex items-center gap-4 mb-3">
             <label for="date-b" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-b" data-stem="President Jackson proposed a policy to... ">
@@ -623,7 +654,7 @@
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-b" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-b" data-stem="This policy was caused by... ">
@@ -641,7 +672,7 @@
             </div>
 
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-b" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-b" data-stem="The immediate effect of this policy was... ">
@@ -670,13 +701,13 @@
       <section id="entry-source-c">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source C.</p>
+            <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source C.</p>
             <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryC.title">
               Source C: John O'Sullivan, "Annexation," 1845
             </h2>
           </div>
 
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
           <div class="flex items-center gap-4 mb-3">
             <label for="date-c" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-c" data-stem="John O'Sullivan argued that America should... ">
@@ -688,7 +719,7 @@
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-c" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-c" data-stem="This idea was based on a belief that... ">
@@ -706,7 +737,7 @@
             </div>
 
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-c" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-c" data-stem="The idea of Manifest Destiny led to... ">
@@ -735,13 +766,13 @@
       <section id="entry-source-d">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-            <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source D.</p>
+            <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source D.</p>
             <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryD.title">
               Source D: United States, 1842-1856 Map
             </h2>
           </div>
 
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
           <div class="flex items-center gap-4 mb-3">
             <label for="date-d" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-d" data-stem="The map illustrates... ">
@@ -753,7 +784,7 @@
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-d" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-d" data-stem="These new borders were the result of... ">
@@ -771,7 +802,7 @@
             </div>
 
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-d" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-d" data-stem="This map shows the physical result, which was... ">
@@ -800,13 +831,13 @@
       <section id="entry-source-e">
         <div class="full-bleed bg-slate-800 bg-opacity-70 backdrop-blur-md p-6 md:p-10 border-t border-b border-slate-700">
           <div class="mb-8">
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source E.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Use this section to write the event, cause, and effect for Source E.</p>
           <h2 class="text-4xl font-extrabold text-white source-title hover:text-cyan-300 transition cursor-default leading-tight" data-i18n="entryE.title">
             Source E: Robert J. Miller, "Native America, Discovered and Conquered: Thomas Jefferson, Lewis and Clark, and Manifest Destiny"
           </h2>
           </div>
 
-          <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
+          <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Tell in one short sentence what happened in this source.</p>
           <div class="flex items-center gap-4 mb-3">
             <label for="date-e" class="block text-3xl font-bold text-slate-400" data-i18n="entries.eventLabel">Event</label>
             <button type="button" class="stem-sentence-btn" data-target="date-e" data-stem="The historian Robert J. Miller explains how... ">
@@ -818,7 +849,7 @@
 
           <div class="cause-effect-grid grid sm:grid-cols-[1fr_auto_1fr] items-start gap-8 sm:gap-12">
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Explain what started this event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="cause-e" class="block text-3xl font-bold text-pink-400" data-i18n="entries.causeLabel">Cause</label>
                 <button type="button" class="stem-sentence-btn" data-target="cause-e" data-stem="According to Miller, the legal foundation for this was... ">
@@ -836,7 +867,7 @@
             </div>
 
             <div>
-              <p class="text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
+              <p class="instruction-pill text-base font-semibold text-slate-200 mb-2">Instruction: Describe what happened because of the event.</p>
               <div class="flex items-center gap-4 mb-3">
                 <label for="effect-e" class="block text-3xl font-bold text-cyan-400" data-i18n="entries.effectLabel">Effect</label>
                 <button type="button" class="stem-sentence-btn" data-target="effect-e" data-stem="Miller's analysis connects these sources by showing that... ">
@@ -861,6 +892,11 @@
           </div>
         </div>
       </section>
+      <div class="mt-14 flex justify-center">
+        <p class="instruction-pill instruction-pill--sunny text-base font-semibold text-center max-w-3xl">
+          Instruction: Now that you have learned from your source documents, take what you learned and get a copy of the RACE writing paragraph and cite two documents as evidence. Follow the instructions on the RACE response paper and turn it in.
+        </p>
+      </div>
       <!-- Sticky bottom action bar -->
       <div class="sticky bottom-0 full-bleed bg-slate-900/90 backdrop-blur border-t border-slate-700 py-4">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-3 md:gap-4">
