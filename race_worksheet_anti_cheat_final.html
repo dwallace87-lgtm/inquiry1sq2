@@ -190,11 +190,11 @@
 
     <div class="controls">
       <button type="button" id="focusBtn" class="btn secondary" title="Hide distractions">Enter Focus Mode</button>
-      <button type="button" id="pdfBtn" class="btn secondary">Save as PDF</button>
+      <button type="button" id="saveBtn" class="btn secondary">Save Progress</button>
       <button type="button" id="logBtn" class="btn secondary" title="Download event log for teacher">Download Attempt Log</button>
-      <button type="submit" id="submitBtn" class="btn" disabled>Submit Work</button>
+      <button type="button" id="pdfBtn" class="btn" disabled>Save as PDF</button>
     </div>
-    <div class="helper" id="submitHelper">All fields must be filled. Paste is blocked. When ready, choose Save as PDF.</div>
+    <div class="helper" id="submitHelper">All fields must be filled. Paste is blocked. If you are not done, click Save Progress.</div>
     <div class="helper">Now: <span id="nowET">—</span> (Eastern Time)</div>
   </form>
 
@@ -218,7 +218,8 @@
 
     const form = document.getElementById('worksheetForm');
     const fields = ['studentName','classPeriod','respR','respA','respC1','respE1','respC2','respE2'].map(id=>document.getElementById(id));
-    const submitBtn = document.getElementById('submitBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const pdfBtn = document.getElementById('pdfBtn');
     const helper = document.getElementById('submitHelper');
 
     const counts = {
@@ -243,10 +244,38 @@
       }
     });
 
-    // Save as PDF via print dialog
-    document.getElementById('pdfBtn').addEventListener('click', ()=>{
-      window.print();
-    });
+    // Autosave to localStorage
+    const KEY='raceWorksheet_v1';
+    function saveDraft(){
+      const payload = Object.fromEntries(fields.map(el=>[el.id, el.value]));
+      payload.savedAt = new Date().toISOString();
+      try{
+        localStorage.setItem(KEY, JSON.stringify(payload));
+        toast('Progress saved');
+      }catch(e){
+        toast('Unable to save locally.');
+      }
+    }
+    function loadDraft(){
+      try{
+        const raw = localStorage.getItem(KEY); if(!raw) return;
+        const data = JSON.parse(raw);
+        fields.forEach(el=>{ if(data[el.id]) el.value = data[el.id]; });
+        Object.keys(counts).forEach(id=>{
+          const fieldId = id.replace('count','resp');
+          const el = document.getElementById(fieldId);
+          if(el){
+            const c = (el.value || '').length;
+            counts[id].textContent = c + (c===1?' character':' characters');
+          }
+        });
+        validate();
+      }catch(e){
+        // ignore corrupted drafts
+      }
+    }
+    saveBtn.addEventListener('click', saveDraft);
+    window.addEventListener('load', loadDraft);
 
     // Toast helper
     let toastT;
@@ -288,8 +317,8 @@
 
     function validate(){
       const ok = allFilled();
-      submitBtn.disabled = !ok;
-      helper.textContent = ok ? 'Ready to submit. Paste remains blocked.' : 'All fields must be filled. Paste is blocked. If you are not done, click Save Progress.';
+      pdfBtn.disabled = !ok;
+      helper.textContent = ok ? 'Ready to save as PDF. Paste remains blocked.' : 'All fields must be filled. Paste is blocked. If you are not done, click Save Progress.';
     }
     validate();
 
@@ -323,30 +352,13 @@
       if(!document.fullscreenElement){ focusBtn.textContent='Enter Focus Mode'; }
     });
 
-    // Submit: bundle answers and log. You can swap this to POST later.
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      if(!allFilled()){ toast('Fill all fields first.'); return; }
-
-      const submission = {
-        whenET: etFormatter.format(new Date()),
-        name: fields[0].value.trim(),
-        period: fields[1].value.trim(),
-        responses: {
-          R: document.getElementById('respR').value.trim(),
-          A: document.getElementById('respA').value.trim(),
-          C1: document.getElementById('respC1').value.trim(),
-          E1: document.getElementById('respE1').value.trim(),
-          C2: document.getElementById('respC2').value.trim(),
-          E2: document.getElementById('respE2').value.trim(),
-        },
-        integrity: { tabSwitches: 0, pasteCount, events: attemptLog }
-      };
-
-      const blob = new Blob([JSON.stringify(submission, null, 2)], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'race_submission.json'; a.click(); URL.revokeObjectURL(url);
-      toast('Submission file downloaded');
+    // Save as PDF via print dialog once responses are complete
+    pdfBtn.addEventListener('click', ()=>{
+      if(!allFilled()){
+        toast('Fill all fields first.');
+        return;
+      }
+      window.print();
     });
 
     // Warn before unload if not empty
